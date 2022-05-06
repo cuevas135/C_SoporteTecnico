@@ -1,0 +1,2 @@
+TZUTIL: Invalid command line parameter /1.
+Use TZUTIL /? for a list of valid parameters.
