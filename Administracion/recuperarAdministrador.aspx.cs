@@ -11,7 +11,9 @@ public partial class Administracion_recuperarAdministrador : System.Web.UI.Page
 	static string Cliente = "";
 	string NuevaContraseña = "";
     DataTable TablaDatos;
-	public void Lista_Datos(string opcion, string nro_dcto, string Correo)
+    string strTextoEncriptado;
+
+    public void Lista_Datos(string opcion, string nro_dcto, string Correo)
 	{
 		__mensaje.Value = "";
 		__pagina.Value = "";
@@ -84,8 +86,8 @@ public partial class Administracion_recuperarAdministrador : System.Web.UI.Page
 									"",//6
 									"",//7
 									"",//8
-									contraseña.Trim(),//9
-									"",//10
+									"",//9
+                                    contraseña.Trim(),//10
 									"",//11
 									"",//12
 									"",//13
@@ -98,7 +100,7 @@ public partial class Administracion_recuperarAdministrador : System.Web.UI.Page
 				{
 					servidor.cerrarconexiontrans();
 					__mensaje.Value = servidor.getMensaje();
-					__pagina.Value = "recuperarAdministrador.aspx";
+                    __pagina.Value = "acceso.aspx";
 				}
 				else
 				{
@@ -133,7 +135,7 @@ public partial class Administracion_recuperarAdministrador : System.Web.UI.Page
 
         NuevaContraseña = CrearPassword(4);
         encriptar en = new encriptar();
-        String strTextoEncriptado = en.EncriptarCadena(this.NuevaContraseña.Trim());
+        strTextoEncriptado = en.EncriptarCadena(this.NuevaContraseña.Trim());
         //Title = Convert.ToString(TablaDatos.Rows.Count);
         //Title = Convert.ToString(strTextoEncriptado.Trim());
 

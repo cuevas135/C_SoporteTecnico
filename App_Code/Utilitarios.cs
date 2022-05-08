@@ -48,7 +48,8 @@ public class Utilitarios
         smtp.Port = settings.Smtp.Network.Port; //Puerto de salida
         smtp.Credentials = new NetworkCredential(settings.Smtp.From, settings.Smtp.Network.Password); //Cuenta de correo
         ServicePointManager.ServerCertificateValidationCallback = delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-        smtp.EnableSsl = settings.Smtp.Network.EnableSsl;//True si el servidor de correo permite ssl
+        //smtp.EnableSsl = settings.Smtp.Network.EnableSsl;//True si el servidor de correo permite ssl
+        smtp.EnableSsl = true;//True si el servidor de correo permite ssl
         smtp.Send(correo);
     }
 }
