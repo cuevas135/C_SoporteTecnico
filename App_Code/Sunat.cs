@@ -115,7 +115,7 @@ public class Sunat
         {
             //A este link le pasamos los datos , RUC y valor del captcha
             //string myUrl = String.Format("http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias?accion=consPorRuc&nroRuc={0}&codigo={1}", numRuc, TextoCapcha);
-            string myUrl = String.Format("http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias?accion=consPorRuc&nroRuc={0}&codigo={1}", numRuc, TextoCapcha);
+            string myUrl = string.Format("http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias?accion=consPorRuc&nroRuc={0}&codigo={1}", numRuc, TextoCapcha);
             HttpWebRequest myWebRequest = (HttpWebRequest)WebRequest.Create(myUrl);
             myWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0";
             myWebRequest.CookieContainer = myCookie;
@@ -127,7 +127,7 @@ public class Sunat
             //Leemos los datos
             string xDat = HttpUtility.HtmlDecode(myStreamReader.ReadToEnd());
             string[] _split = xDat.Split(new char[] { '<', '>', '\n', '\r' });
-            List<String> _result = new List<String>();
+            List<string> _result = new List<string>();
             //quitamos todos los caracteres nul
             for (int i = 0; i < _split.Length; i++)
             {
@@ -188,7 +188,7 @@ public class Sunat
             tabla[3] = tabla[3].Replace("</td>\r\n </tr>\r\n \r\n <tr>\r\n ", "");
             tabla[8] = tabla[8].Replace("=\"bgn\" colspan=1 >", "");
             tabla[8] = tabla[8].Replace("</td>\r\n ", "");
-            String NuevoRUS = tabla[8].Trim();
+            string NuevoRUS = tabla[8].Trim();
             //Nuevos RUS
             if (NuevoRUS == "Afecto al Nuevo RUS:")
             {

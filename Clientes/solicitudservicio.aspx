@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="solicitudservicio.aspx.cs"
     Inherits="Clientes_solicitudservicio" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Solicitud servicio</title>
@@ -25,45 +25,43 @@
     <link href="../Otros_css_js/Menu.css" rel="stylesheet" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <style type="text/css">
-        body
-        {
+        body {
             background-color: #fafafa;
             font-family: 'Roboto';
         }
-        .container
-        {
+
+        .container {
             margin: 10px auto;
             max-width: 1250px;
         }
-        .container table.restables-clone
-        {
-            display: none;
-        }
-        .container table.restables-clone td
-        {
-            width: 50%;
-            color: Black;
-            text-align: left;
-        }
-        .container table.restables-clone td:first-child
-        {
-            font-weight: bold;
-            color: #1E90FF;
-            text-align: right;
-        }
-        .container table.restables-clone tr:first-child td
-        {
-            background: #333;
-            color: #fff;
-        }
-        @media (max-width: 991px)
-        {
-            .container table.restables-origin
-            {
+
+            .container table.restables-clone {
                 display: none;
             }
-            .container table.restables-clone
-            {
+
+                .container table.restables-clone td {
+                    width: 50%;
+                    color: Black;
+                    text-align: left;
+                }
+
+                    .container table.restables-clone td:first-child {
+                        font-weight: bold;
+                        color: #1E90FF;
+                        text-align: right;
+                    }
+
+                .container table.restables-clone tr:first-child td {
+                    background: #333;
+                    color: #fff;
+                }
+
+        @media (max-width: 991px) {
+            .container table.restables-origin {
+                display: none;
+            }
+
+            .container table.restables-clone {
                 display: table;
             }
         }
@@ -111,118 +109,118 @@
 </head>
 <body onload="MostrarMensaje()">
     <form id="frmSolicitudServidio" runat="server" class="form-horizontal" role="form">
-    <br />
-    <center>
-           <div class="btn-group btn-group-toggle" data-toggle="buttons"> 
-              <center>
-              <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label><br /><br />
-              <label> 
-                  <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud" 
-                   Width="140px" class="btn btn-success" CausesValidation="False" 
-                    UseSubmitBehavior="False" onclick="btnGenerarSolicitud_Click" 
-                      PostBackUrl="~/Clientes/solicitudservicio.aspx" />        
-              </label>
-              <label>
-                  <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes" 
-                   Width="140px" class="btn btn-warning" CausesValidation="False" 
-                   UseSubmitBehavior="False" onclick="btnCancelarSolicitud_Click" />
-               </label>
-               <label>
-                   <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion" 
-                      Width="140px" class="btn btn-danger"
-                      PostBackUrl="~/Clientes/CerrarSession.aspx" UseSubmitBehavior="False" />
-               </label>         
-               </center>  
-           </div> 
-           </center>
-    <%-- <div class="panel panel-primary" style="border-style: hidden; margin: 20px;">   --%>
-    <asp:Panel ID="PANEL_GENERAR_SOLCITUD" class="panel panel-primary" runat="server"
-        Style="margin: 20px;" Visible="False">
-        <div class="panel-heading" style="text-align: center">
-            <h3 class="panel-title">
-                Seleccione servicio y modalidad</h3>
-        </div>
-        <div class="panel-body">
-            <div class="container">
-                <%--<div class="form-group">
+        <br />
+        <center>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <center>
+                    <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label><br />
+                    <br />
+                    <label>
+                        <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud"
+                            Width="140px" class="btn btn-success" CausesValidation="False"
+                            UseSubmitBehavior="False" OnClick="btnGenerarSolicitud_Click"
+                            PostBackUrl="~/Clientes/solicitudservicio.aspx" />
+                    </label>
+                    <label>
+                        <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes"
+                            Width="140px" class="btn btn-warning" CausesValidation="False"
+                            UseSubmitBehavior="False" OnClick="btnCancelarSolicitud_Click" />
+                    </label>
+                    <label>
+                        <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion"
+                            Width="140px" class="btn btn-danger"
+                            PostBackUrl="~/Clientes/CerrarSession.aspx" UseSubmitBehavior="False" />
+                    </label>
+                </center>
+            </div>
+        </center>
+        <%-- <div class="panel panel-primary" style="border-style: hidden; margin: 20px;">   --%>
+        <asp:Panel ID="PANEL_GENERAR_SOLCITUD" class="panel panel-primary" runat="server"
+            Style="margin: 20px;" Visible="False">
+            <div class="panel-heading" style="text-align: center">
+                <h3 class="panel-title">Seleccione servicio y modalidad</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <%--<div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
                              <h5><b>Seleccione servicio y modalidad</b></h5>
                         </div>                    
                      </div>--%>
-                <div class="form-group">
-                    <label for="FechaEmision" class="col-sm-2 control-label">
-                        Fecha emision</label>
-                    <div class="col-sm-10">
-                        <asp:TextBox ID="Fecha_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                    <div class="form-group">
+                        <label for="FechaEmision" class="col-sm-2 control-label">
+                            Fecha emision</label>
+                        <div class="col-sm-10">
+                            <asp:TextBox ID="Fecha_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="Codigo_P" class="col-sm-2 control-label">
-                        Codigo cliente</label>
-                    <div class="col-sm-10">
-                        <asp:TextBox ID="CodigoPersona_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                    <div class="form-group">
+                        <label for="Codigo_P" class="col-sm-2 control-label">
+                            Codigo cliente</label>
+                        <div class="col-sm-10">
+                            <asp:TextBox ID="CodigoPersona_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="Nombre_P" class="col-sm-2 control-label">
-                        Nombre</label>
-                    <div class="col-sm-10">
-                        <asp:TextBox ID="Nombre_P" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                    <div class="form-group">
+                        <label for="Nombre_P" class="col-sm-2 control-label">
+                            Nombre</label>
+                        <div class="col-sm-10">
+                            <asp:TextBox ID="Nombre_P" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="Servicios_S" class="col-sm-2 control-label">
-                        Servicio</label>
-                    <div class="col-sm-10">
-                        <asp:DropDownList ID="Servicios" runat="server" class="form-control" AutoPostBack="True"
-                            OnSelectedIndexChanged="Servicios_SelectedIndexChanged">
-                        </asp:DropDownList>
+                    <div class="form-group">
+                        <label for="Servicios_S" class="col-sm-2 control-label">
+                            Servicio</label>
+                        <div class="col-sm-10">
+                            <asp:DropDownList ID="Servicios" runat="server" class="form-control" AutoPostBack="True"
+                                OnSelectedIndexChanged="Servicios_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="Modalidad_S" class="col-sm-2 control-label">
-                        Modalidad</label>
-                    <div class="col-sm-10">
-                        <asp:DropDownList ID="Modalidades" runat="server" class="form-control">
-                            <asp:ListItem Value="-1">-----Seleccione modalidad-----</asp:ListItem>
-                        </asp:DropDownList>
+                    <div class="form-group">
+                        <label for="Modalidad_S" class="col-sm-2 control-label">
+                            Modalidad</label>
+                        <div class="col-sm-10">
+                            <asp:DropDownList ID="Modalidades" runat="server" class="form-control">
+                                <asp:ListItem Value="-1">-----Seleccione modalidad-----</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
-                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" Width="140px" class="btn btn-success"
-                            CausesValidation="False" OnClick="btnAgregar_Click" />
-                        <%--<asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion" 
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
+                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" Width="140px" class="btn btn-success"
+                                CausesValidation="False" OnClick="btnAgregar_Click" />
+                            <%--<asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion" 
                            Width="115px" class="btn btn-danger" CausesValidation="False" 
                               PostBackUrl="~/Clientes/CerrarSession.aspx"/>--%>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
-                        <h5>
-                            <b>Servicios solicitados</b></h5>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
+                            <h5>
+                                <b>Servicios solicitados</b></h5>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="table-responsive">
-                            <asp:Table ID="Table_" runat="server" class="table table-bordered table-hover text-center"
-                                BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
-                                Style="text-align: left">
-                                <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
-                                    <asp:TableHeaderCell ID="CODIGOSERVICIO_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Visible="False">CODIGOSERVICIO </asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="SERVICIO_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="40%">SERVICIO</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="CODIGOMODALIDAD_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Visible="False">CODIGOMODALIDAD</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="MODALIDAD_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="40%">MODALIDAD</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="QUITAR" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="#FFFF66">&nbsp;</asp:TableHeaderCell>
-                                </asp:TableHeaderRow>
-                            </asp:Table>
-                            <%--<asp:Table ID="Table_" runat="server"
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="table-responsive">
+                                <asp:Table ID="Table_" runat="server" class="table table-bordered table-hover text-center"
+                                    BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
+                                    Style="text-align: left">
+                                    <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
+                                        <asp:TableHeaderCell ID="CODIGOSERVICIO_" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Visible="False">CODIGOSERVICIO </asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="SERVICIO_" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="40%">SERVICIO</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="CODIGOMODALIDAD_" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Visible="False">CODIGOMODALIDAD</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="MODALIDAD_" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="40%">MODALIDAD</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="QUITAR" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="#FFFF66">&nbsp;</asp:TableHeaderCell>
+                                    </asp:TableHeaderRow>
+                                </asp:Table>
+                                <%--<asp:Table ID="Table_" runat="server"
                                    class="table table-bordered table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="X-Small"
                                     GridLines="Both" Style="text-align: left">
@@ -276,50 +274,49 @@
                                     <RowStyle BackColor="#F7F7DE" />
                                     <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />          
                                 </asp:GridView>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
+                            <asp:Button ID="btnEnviarSolicitudServicio" runat="server" Text="Enviar" Width="140px"
+                                class="btn btn-primary" CausesValidation="False" OnClick="btnEnviarSolicitudServicio_Click"
+                                OnClientClick="return Confirmar('¿Desea enviar su solicitud de servicio.?');" />
+                            <asp:HiddenField ID="__pagina" runat="server" />
+                            <asp:HiddenField ID="__mensaje" runat="server" />
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10" style="text-align: center">
-                        <asp:Button ID="btnEnviarSolicitudServicio" runat="server" Text="Enviar" Width="140px"
-                            class="btn btn-primary" CausesValidation="False" OnClick="btnEnviarSolicitudServicio_Click"
-                            OnClientClick="return Confirmar('¿Desea enviar su solicitud de servicio.?');" />
-                        <asp:HiddenField ID="__pagina" runat="server" />
-                        <asp:HiddenField ID="__mensaje" runat="server" />
-                    </div>
-                </div>
             </div>
-        </div>
-    </asp:Panel>
-    <asp:Panel ID="PANEL_CANCELAR_SOLCITUD" class="panel panel-success" runat="server"
-        Style="margin: 20px;" Visible="False">
-        <div class="panel-heading" style="text-align: center">
-            <h3 class="panel-title">
-                Solicitudes pendientes servicios solicitados</h3>
-        </div>
-        <div class="panel-body">
-            <div class="container">
-                <%--<div class="form-group">
+        </asp:Panel>
+        <asp:Panel ID="PANEL_CANCELAR_SOLCITUD" class="panel panel-success" runat="server"
+            Style="margin: 20px;" Visible="False">
+            <div class="panel-heading" style="text-align: center">
+                <h3 class="panel-title">Solicitudes pendientes servicios solicitados</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <%--<div class="form-group">
                             <div class="col-sm-offset-1 col-sm-10" style="text-align: center">
                                  <h5><b>Solicitudes pendientes servicios solicitados</b></h5>
                             </div>                    
                         </div> --%>
-                <div class="form-group">
-                    <div class="col-sm-offset-1 col-sm-10">
-                        <div class="table-responsive">
-                            <asp:Table ID="TableSPSS" runat="server" class="table table-bordered table-hover text-center"
-                                BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
-                                Style="text-align: left">
-                                <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" TableSection="TableHeader">
-                                    <asp:TableHeaderCell ID="TableHeaderCell1" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="2%" Visible="true">SELECCIONA</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="CODIGOSOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="2%" Visible="true">NRO. SOLICTUD </asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="FECHA" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="2%">FECHA</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="ESTADO" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="2%">ESTADO</asp:TableHeaderCell>
-                                    <%-- <asp:TableHeaderCell  ID="VER" runat="server" BackColor="Black" BorderColor="Black"
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <div class="table-responsive">
+                                <asp:Table ID="TableSPSS" runat="server" class="table table-bordered table-hover text-center"
+                                    BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
+                                    Style="text-align: left">
+                                    <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" TableSection="TableHeader">
+                                        <asp:TableHeaderCell ID="TableHeaderCell1" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="2%" Visible="true">SELECCIONA</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="CODIGOSOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="2%" Visible="true">NRO. SOLICTUD </asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="FECHA" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="2%">FECHA</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="ESTADO" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="2%">ESTADO</asp:TableHeaderCell>
+                                        <%-- <asp:TableHeaderCell  ID="VER" runat="server" BackColor="Black" BorderColor="Black"
                                                     ForeColor="#FFFF66" Width="2%">VER</asp:TableHeaderCell> 
                                                 
                                                 <asp:TableHeaderCell  ID="CANCELAR" runat="server" BackColor="Black" BorderColor="Black"
@@ -327,68 +324,67 @@
                                                     
                                                <asp:TableHeaderCell  ID="ELIMINAR" runat="server" BackColor="Black" BorderColor="Black"
                                                     ForeColor="#FFFF66" Width="2%">ELIMINAR</asp:TableHeaderCell>    --%>
-                                </asp:TableHeaderRow>
-                            </asp:Table>
+                                    </asp:TableHeaderRow>
+                                </asp:Table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
+                            <asp:Button ID="btnCancelarSolicitudes" runat="server" Text="Cancelar Solicitud"
+                                Width="140px" class="btn btn-primary" CausesValidation="False" OnClientClick="return Confirmar('¿Desea cancelar solicitud(es)?');"
+                                OnClick="btnCancelarSolicitudes_Click" />
+                            <asp:Button ID="btnEliminarSolicitud" runat="server" Text="Eliminar Solicitud" Width="140px"
+                                class="btn btn-danger" CausesValidation="False" OnClick="btnEliminarSolicitud_Click"
+                                OnClientClick="return Confirmar('¿Desea eliminar  solicitud(es)?');" />
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
-                        <asp:Button ID="btnCancelarSolicitudes" runat="server" Text="Cancelar Solicitud"
-                            Width="140px" class="btn btn-primary" CausesValidation="False" OnClientClick="return Confirmar('¿Desea cancelar solicitud(es)?');"
-                            OnClick="btnCancelarSolicitudes_Click" />
-                        <asp:Button ID="btnEliminarSolicitud" runat="server" Text="Eliminar Solicitud" Width="140px"
-                            class="btn btn-danger" CausesValidation="False" OnClick="btnEliminarSolicitud_Click"
-                            OnClientClick="return Confirmar('¿Desea eliminar  solicitud(es)?');" />
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="panel-heading" style="text-align: center">
-            <h3 class="panel-title">
-                Detalle solicitud de servicio</h3>
-        </div>
-        <div class="panel-body">
-            <div class="container">
-                <%--<div class="form-group">
+            <div class="panel-heading" style="text-align: center">
+                <h3 class="panel-title">Detalle solicitud de servicio</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <%--<div class="form-group">
                             <div class="col-sm-offset-1 col-sm-10" style="text-align: center">
                                  <h5><b>Solicitudes pendientes servicios solicitados</b></h5>
                             </div>                    
                         </div> --%>
-                <div class="form-group">
-                    <div class="col-sm-offset-1 col-sm-10">
-                        <div class="table-responsive">
-                            <asp:Table ID="TableDSPSS" runat="server" class="table table-bordered table-hover text-center"
-                                BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
-                                Style="text-align: left">
-                                <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
-                                    <asp:TableHeaderCell ID="TableHeaderCell2" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="2%" Visible="true">SELECCIONA</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="CODIGO_DETALLE_SOLICITUD" runat="server" BackColor="Black"
-                                        BorderColor="Black" ForeColor="White" Width="20%" Visible="false">CODIGO_DETALLE_SOLICITUD </asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="CODIGO_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="20%" Visible="false">NRO. SOLICITUD</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="SERVIVIO" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="20%">SERVIVIO</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell ID="MODALIDAD" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White" Width="20%">MODALIDAD</asp:TableHeaderCell>
-                                </asp:TableHeaderRow>
-                            </asp:Table>
-                            <asp:HiddenField ID="_respuesta" runat="server" />
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <div class="table-responsive">
+                                <asp:Table ID="TableDSPSS" runat="server" class="table table-bordered table-hover text-center"
+                                    BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
+                                    Style="text-align: left">
+                                    <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
+                                        <asp:TableHeaderCell ID="TableHeaderCell2" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="2%" Visible="true">SELECCIONA</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="CODIGO_DETALLE_SOLICITUD" runat="server" BackColor="Black"
+                                            BorderColor="Black" ForeColor="White" Width="20%" Visible="false">CODIGO_DETALLE_SOLICITUD </asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="CODIGO_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="20%" Visible="false">NRO. SOLICITUD</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="SERVIVIO" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="20%">SERVIVIO</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="MODALIDAD" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White" Width="20%">MODALIDAD</asp:TableHeaderCell>
+                                    </asp:TableHeaderRow>
+                                </asp:Table>
+                                <asp:HiddenField ID="_respuesta" runat="server" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
+                            <asp:Button ID="btnEliminarDetalleSolicitud" runat="server" Text="Eliminar Detalle"
+                                Width="140px" class="btn btn-danger" CausesValidation="False" OnClientClick="return Confirmar('¿Desea eliminar  detalle(s)?');"
+                                OnClick="btnEliminarDetalleSolicitud_Click" />
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
-                        <asp:Button ID="btnEliminarDetalleSolicitud" runat="server" Text="Eliminar Detalle"
-                            Width="140px" class="btn btn-danger" CausesValidation="False" OnClientClick="return Confirmar('¿Desea eliminar  detalle(s)?');"
-                            OnClick="btnEliminarDetalleSolicitud_Click" />
-                    </div>
-                </div>
             </div>
-        </div>
-    </asp:Panel>
-    <%--<div class="form-group">
+        </asp:Panel>
+        <%--<div class="form-group">
                             <div class="col-sm-offset-1 col-sm-10" style="text-align: center">
                                  <h5><b>Solicitudes pendientes servicios solicitados</b></h5>
                             </div>                    

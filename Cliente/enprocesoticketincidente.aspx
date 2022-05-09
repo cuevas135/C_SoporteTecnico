@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head id="Head1" runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <script type="text/javascript">
         function MostrarMensaje() {
@@ -26,16 +26,16 @@
                 return false;
         }
     </script>
-   
+
 </head>
-<body onload ="MostrarMensaje()">
+<body onload="MostrarMensaje()">
     <form id="form1" runat="server">
-    <div>
-    
-        <asp:HiddenField ID="__mensaje" runat="server" />
-        <asp:HiddenField ID="__pagina" runat="server" />
-    
-    </div>
+        <div>
+
+            <asp:HiddenField ID="__mensaje" runat="server" />
+            <asp:HiddenField ID="__pagina" runat="server" />
+
+        </div>
     </form>
 </body>
 </html>

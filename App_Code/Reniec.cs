@@ -105,7 +105,7 @@ public class Reniec
     {
         try
         {
-            string myUrl = String.Format("https://cel.reniec.gob.pe/valreg/valreg.do?accion=buscar&nuDni={0}&imagen={1}", numDni, ImgCapcha);
+            string myUrl = string.Format("https://cel.reniec.gob.pe/valreg/valreg.do?accion=buscar&nuDni={0}&imagen={1}", numDni, ImgCapcha);
             HttpWebRequest myWebRequest = (HttpWebRequest)WebRequest.Create(myUrl);
             myWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0";//esto creo que lo puse por gusto :/
             myWebRequest.CookieContainer = myCookie;
@@ -139,10 +139,10 @@ public class Reniec
             }
             if (state == Resul.Ok)
             {
-                this._Dni = numDni;
-                this._Nombres = _resul[185];
-                this._ApePaterno = _resul[186];
-                this._ApeMaterno = _resul[187];
+                _Dni = numDni;
+                _Nombres = _resul[185];
+                _ApePaterno = _resul[186];
+                _ApeMaterno = _resul[187];
             }
             myHttpWebResponse.Close();
         }

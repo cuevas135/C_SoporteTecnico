@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 public partial class Cliente_ticketincidente : System.Web.UI.Page
 {
 
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
     Lista _Lista = new Lista();
     System.Data.DataTable dt;
 
-    void Busca(System.Web.UI.WebControls.DropDownList control, String strcampo)
+    void Busca(System.Web.UI.WebControls.DropDownList control, string strcampo)
     {
         if (dt.Rows.Count == 0) return;
 
@@ -45,32 +45,32 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                     {
                         servidor.cerrarconexion();
 
-                        this.__mensaje.Value = "Error, al intentar recuperar datos de Ticket Incidente.";
+                    __mensaje.Value = "Error, al intentar recuperar datos de Ticket Incidente.";
 
-                        this.__pagina.Value = "CerrarSession.aspx";
+                    __pagina.Value = "CerrarSession.aspx";
                     }
                     else
                     {
 
-                        this.btnAceptar.OnClientClick = "return Confirmar('¿Desea modificar los datos de Ticket Incidente?');";
+                    btnAceptar.OnClientClick = "return Confirmar('¿Desea modificar los datos de Ticket Incidente?');";
 
-                        this.ID_TIKET.Value = dt.Rows[0]["IDTIKET"].ToString();
+                    ID_TIKET.Value = dt.Rows[0]["IDTIKET"].ToString();
 
-                        this.ID_INCI.Value = this.ID_TIKET.Value;
+                    ID_INCI.Value = ID_TIKET.Value;
 
-                        this.NRO_TICKET.Text = dt.Rows[0]["NRO TICKET"].ToString().Trim();
+                    NRO_TICKET.Text = dt.Rows[0]["NRO TICKET"].ToString().Trim();
 
-                        this.ID_USUA.Value = dt.Rows[0]["IDUSUARIO"].ToString();
+                    ID_USUA.Value = dt.Rows[0]["IDUSUARIO"].ToString();
 
-                        //this.NOMBRES.Text = dt.Rows[0]["COLABORADOR"].ToString().Trim();
+                    //this.NOMBRES.Text = dt.Rows[0]["COLABORADOR"].ToString().Trim();
 
-                        this.FECHAEMISON.Text = dt.Rows[0]["FECHA EMISON"].ToString().Trim();
+                    FECHAEMISON.Text = dt.Rows[0]["FECHA EMISON"].ToString().Trim();
 
                         Busca(CANAL, "CANAL");
 
                         Busca(AREA, "AREA");
 
-                        this.DESCRIPCION.Text = dt.Rows[0]["INCIDENTE"].ToString().Trim();
+                    DESCRIPCION.Text = dt.Rows[0]["INCIDENTE"].ToString().Trim();
 
                         Busca(PRIORIDAD, "PRIORIDAD");
 
@@ -87,18 +87,18 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
             {
                 servidor.cerrarconexion();
 
-                this.__mensaje.Value = servidor.getMensageError();
+                __mensaje.Value = servidor.getMensageError();
 
-                this.__pagina.Value = "CerrarSession.aspx";
+                __pagina.Value = "CerrarSession.aspx";
             }
 
         }
         catch (Exception)
         {
 
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
 
-            this.__pagina.Value = "CerrarSession.aspx";
+            __pagina.Value = "CerrarSession.aspx";
         }
     }
 
@@ -117,10 +117,10 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 }
                 else
                 {
-                    this.IMPACTO.DataSource = dt;
-                    this.IMPACTO.DataTextField = "NOMBRE";
-                    this.IMPACTO.DataValueField = "CODIGO";
-                    this.IMPACTO.DataBind();
+                    IMPACTO.DataSource = dt;
+                    IMPACTO.DataTextField = "NOMBRE";
+                    IMPACTO.DataValueField = "CODIGO";
+                    IMPACTO.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -152,10 +152,10 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 }
                 else
                 {
-                    this.PRIORIDAD.DataSource = dt;
-                    this.PRIORIDAD.DataTextField = "NOMBRE";
-                    this.PRIORIDAD.DataValueField = "CODIGO";
-                    this.PRIORIDAD.DataBind();
+                    PRIORIDAD.DataSource = dt;
+                    PRIORIDAD.DataTextField = "NOMBRE";
+                    PRIORIDAD.DataValueField = "CODIGO";
+                    PRIORIDAD.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -187,10 +187,10 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 }
                 else
                 {
-                    this.AREA.DataSource = dt;
-                    this.AREA.DataTextField = "NOMBRE";
-                    this.AREA.DataValueField = "CODIGO";
-                    this.AREA.DataBind();
+                    AREA.DataSource = dt;
+                    AREA.DataTextField = "NOMBRE";
+                    AREA.DataValueField = "CODIGO";
+                    AREA.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -207,9 +207,9 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
         }
     }
 
-    private String obtenernumeroticketincidente()
+    private string obtenernumeroticketincidente()
     {
-        String numero = "";
+        string numero = "";
         try
         {
             servidor.cadenaconexion = Ruta;
@@ -242,9 +242,9 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
         return numero;
     }
 
-    private String obtenerfechasistema()
+    private string obtenerfechasistema()
     {
-        String fecha ="";
+        string fecha ="";
         try
         {
             servidor.cadenaconexion = Ruta;
@@ -292,10 +292,10 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 }
                 else
                 {
-                    this.CANAL.DataSource = dt;
-                    this.CANAL.DataTextField = "NOMBRE";
-                    this.CANAL.DataValueField = "CODIGO";
-                    this.CANAL.DataBind();
+                    CANAL.DataSource = dt;
+                    CANAL.DataTextField = "NOMBRE";
+                    CANAL.DataValueField = "CODIGO";
+                    CANAL.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -321,38 +321,38 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
     {
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "../CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "../CerrarSession.aspx";
             return;
         }
         //=============================================================================================================
-        
-        
+
+
         //Codigo del ticket.
-        this.ID_TIKET.Value = Request.QueryString.Get("CodigoT").Trim();
+        ID_TIKET.Value = Request.QueryString.Get("CodigoT").Trim();
 
         //Nuevo registro.
-        if (Convert.ToInt32(this.ID_TIKET.Value) == 0)
+        if (Convert.ToInt32(ID_TIKET.Value) == 0)
         {
             //CAPTURAMOS EL CODIGO DEL USUARIO QUE INICIO SESION.
-            this.ID_USUA.Value = Datos[0];
- 
-            this.NRO_TICKET.Text = obtenernumeroticketincidente().Trim();
-            this.FECHAEMISON.Text = obtenerfechasistema().ToString().Trim();
+            ID_USUA.Value = Datos[0];
+
+            NRO_TICKET.Text = obtenernumeroticketincidente().Trim();
+            FECHAEMISON.Text = obtenerfechasistema().ToString().Trim();
         }
 
-        this.ObtenerCanales();
-        this.ObtenerArea();
-        this.ObtenerPrioridad();
-        this.ObtenerImpacto();
+        ObtenerCanales();
+        ObtenerArea();
+        ObtenerPrioridad();
+        ObtenerImpacto();
 
-        if (Convert.ToInt32(this.ID_TIKET.Value) > 0){
-            this.consultarticketincidente(Convert.ToInt32(this.ID_TIKET.Value));
+        if (Convert.ToInt32(ID_TIKET.Value) > 0){
+            consultarticketincidente(Convert.ToInt32(ID_TIKET.Value));
         }
   
     }
@@ -383,7 +383,7 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
 
         //Nuevo registro.
-        if (Convert.ToInt32(this.ID_TIKET.Value) == 0)
+        if (Convert.ToInt32(ID_TIKET.Value) == 0)
         {
             try
             {
@@ -396,26 +396,26 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
                     servidor.ejecutar("[dbo].[mantenimiento_ticket]",
                                      false,
-                                     Convert.ToInt32(this.ID_TIKET.Value),
-                                     Convert.ToInt32(this.ID_USUA.Value),//id usuario
-                                     this.CANAL.SelectedValue,
+                                     Convert.ToInt32(ID_TIKET.Value),
+                                     Convert.ToInt32(ID_USUA.Value),//id usuario
+                                     CANAL.SelectedValue,
                                      "N",
                                      0, "");
 
                     int _IDTIKET = servidor.getRespuesta();
 
-                    this.ID_INCI.Value = _IDTIKET.ToString();
+                    ID_INCI.Value = _IDTIKET.ToString();
 
                     if (_IDTIKET > 0)
                     {
 
                         servidor.ejecutar("[dbo].[mantenimiento_incidente]",
                                      false,
-                                     Convert.ToInt32(this.ID_INCI.Value),
-                                     this.DESCRIPCION.Text.Trim(),
-                                     this.PRIORIDAD.SelectedValue,
-                                     this.IMPACTO.SelectedValue,
-                                     this.AREA.SelectedValue,
+                                     Convert.ToInt32(ID_INCI.Value),
+                                     DESCRIPCION.Text.Trim(),
+                                     PRIORIDAD.SelectedValue,
+                                     IMPACTO.SelectedValue,
+                                     AREA.SelectedValue,
                                      "N",
                                      0, "");
 
@@ -424,26 +424,26 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
                             servidor.cerrarconexiontrans();
 
-                            this.__mensaje.Value = servidor.getMensaje();
+                            __mensaje.Value = servidor.getMensaje();
 
-                            this.__pagina.Value = "ticketsincidentes.aspx";
+                            __pagina.Value = "ticketsincidentes.aspx";
                         }
                         else
                         {
                             servidor.cancelarconexiontrans();
 
-                            this.__mensaje.Value = servidor.getMensaje();
+                            __mensaje.Value = servidor.getMensaje();
 
-                            this.__pagina.Value = "ticketsincidentes.aspx";
+                            __pagina.Value = "ticketsincidentes.aspx";
                         }
                     }
                     else
                     {
                         servidor.cancelarconexiontrans();
 
-                        this.__mensaje.Value = servidor.getMensaje();
+                        __mensaje.Value = servidor.getMensaje();
 
-                        this.__pagina.Value = "ticketsincidentes.aspx";
+                        __pagina.Value = "ticketsincidentes.aspx";
                     }
 
                 }
@@ -451,18 +451,18 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 {
                     servidor.cerrarconexion();
 
-                    this.__mensaje.Value = servidor.getMensageError();
+                    __mensaje.Value = servidor.getMensageError();
 
-                    this.__pagina.Value = "CerrarSession.aspx";
+                    __pagina.Value = "CerrarSession.aspx";
                 }
 
             }
             catch (Exception)
             {
 
-                this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+                __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
 
-                this.__pagina.Value = "";
+                __pagina.Value = "";
             }
         }
         else
@@ -478,9 +478,9 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
                     servidor.ejecutar("[dbo].[mantenimiento_ticket]",
                                      false,
-                                     Convert.ToInt32(this.ID_TIKET.Value),
-                                     Convert.ToInt32(this.ID_USUA.Value),//id usuario
-                                     this.CANAL.SelectedValue,
+                                     Convert.ToInt32(ID_TIKET.Value),
+                                     Convert.ToInt32(ID_USUA.Value),//id usuario
+                                     CANAL.SelectedValue,
                                      "M",
                                      0, "");
                   
@@ -490,11 +490,11 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
                         servidor.ejecutar("[dbo].[mantenimiento_incidente]",
                                      false,
-                                     Convert.ToInt32(this.ID_INCI.Value),
-                                     this.DESCRIPCION.Text.Trim(),
-                                     this.PRIORIDAD.SelectedValue,
-                                     this.IMPACTO.SelectedValue,
-                                     this.AREA.SelectedValue,
+                                     Convert.ToInt32(ID_INCI.Value),
+                                     DESCRIPCION.Text.Trim(),
+                                     PRIORIDAD.SelectedValue,
+                                     IMPACTO.SelectedValue,
+                                     AREA.SelectedValue,
                                      "M",
                                      0, "");
 
@@ -503,26 +503,26 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
 
                             servidor.cerrarconexiontrans();
 
-                            this.__mensaje.Value = servidor.getMensaje();
+                            __mensaje.Value = servidor.getMensaje();
 
-                            this.__pagina.Value = "ticketsincidentes.aspx";
+                            __pagina.Value = "ticketsincidentes.aspx";
                         }
                         else
                         {
                             servidor.cancelarconexiontrans();
 
-                            this.__mensaje.Value = servidor.getMensaje();
+                            __mensaje.Value = servidor.getMensaje();
 
-                            this.__pagina.Value = "ticketsincidentes.aspx";
+                            __pagina.Value = "ticketsincidentes.aspx";
                         }
                     }
                     else
                     {
                         servidor.cancelarconexiontrans();
 
-                        this.__mensaje.Value = servidor.getMensaje();
+                        __mensaje.Value = servidor.getMensaje();
 
-                        this.__pagina.Value = "ticketsincidentes.aspx";
+                        __pagina.Value = "ticketsincidentes.aspx";
                     }
 
                 }
@@ -530,18 +530,18 @@ public partial class Cliente_ticketincidente : System.Web.UI.Page
                 {
                     servidor.cerrarconexion();
 
-                    this.__mensaje.Value = servidor.getMensageError();
+                    __mensaje.Value = servidor.getMensageError();
 
-                    this.__pagina.Value = "CerrarSession.aspx";
+                    __pagina.Value = "CerrarSession.aspx";
                 }
 
             }
             catch (Exception)
             {
 
-                this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+                __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
 
-                this.__pagina.Value = "";
+                __pagina.Value = "";
             }
         }
     }

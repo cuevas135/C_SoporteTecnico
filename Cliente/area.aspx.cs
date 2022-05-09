@@ -7,15 +7,15 @@ using System.Web.UI.WebControls;
 
 public partial class Cliente_area : System.Web.UI.Page
 {
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     System.Web.UI.WebControls.TableRow tRow;
     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
     Lista _Lista = new Lista();
 
     private void oculta(bool ok)
     {
-        this.btnModificar.Visible = ok;
-        this.btnEliminar.Visible = ok;
+        btnModificar.Visible = ok;
+        btnEliminar.Visible = ok;
         //this.btnCancelar.Visible = ok;
     }
 
@@ -34,10 +34,10 @@ public partial class Cliente_area : System.Web.UI.Page
                 }
                 else
                 {
-                    this.CARGO.DataSource = dt;
-                    this.CARGO.DataTextField = "NOMBRE";
-                    this.CARGO.DataValueField = "CODIGO";
-                    this.CARGO.DataBind();
+                    CARGO.DataSource = dt;
+                    CARGO.DataTextField = "NOMBRE";
+                    CARGO.DataValueField = "CODIGO";
+                    CARGO.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -56,13 +56,13 @@ public partial class Cliente_area : System.Web.UI.Page
 
     private void listarcargos()
     {
-        this.__mensaje.Value = "";
+        __mensaje.Value = "";
 
-        this.__pagina.Value = "";
+        __pagina.Value = "";
 
-        for (int i = 1; i < this.Tableareas.Rows.Count; i++)
+        for (int i = 1; i < Tableareas.Rows.Count; i++)
         {
-            this.Tableareas.Rows[i].Cells.Clear();
+            Tableareas.Rows[i].Cells.Clear();
         }
 
         try
@@ -152,7 +152,7 @@ public partial class Cliente_area : System.Web.UI.Page
                             }
                         }
 
-                        this.Tableareas.Rows.Add(tRow);
+                        Tableareas.Rows.Add(tRow);
                     }
 
                     servidor.cerrarconexion();
@@ -225,36 +225,36 @@ public partial class Cliente_area : System.Web.UI.Page
     {
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "../CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "../CerrarSession.aspx";
             return;
         }
         //=============================================================================================================
 
-        this.lblusurio.Text = "TIPO USUARIO : " + Datos[1] + "    " + "   USUARIO : " + Datos[2];
-        
-        this.ObtenerCargo();
-        this.listarcargos();
+        lblusurio.Text = "TIPO USUARIO : " + Datos[1] + "    " + "   USUARIO : " + Datos[2];
+
+        ObtenerCargo();
+        listarcargos();
        
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Convert.ToInt32(this.ID_AREA.Value.Trim()) == 0)
+        if (Convert.ToInt32(ID_AREA.Value.Trim()) == 0)
         {
-            this.btnRegistrar.Visible = true;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = true;
+            btnCancelar.Visible = true;
             oculta(false);
         }
         else
         {
-            this.btnRegistrar.Visible = false;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = false;
+            btnCancelar.Visible = true;
             oculta(true);
 
         }
@@ -271,10 +271,10 @@ public partial class Cliente_area : System.Web.UI.Page
 
         mantenimientoarea(Convert.ToInt32(ID_AREA.Value.Trim()),
             Convert.ToString(AREA.Text.Trim()),
-            Convert.ToInt32(this.CARGO.SelectedValue),
+            Convert.ToInt32(CARGO.SelectedValue),
             "N");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}"); 
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}"); 
     }
     protected void btnModificar_Click(object sender, EventArgs e)
     {
@@ -288,10 +288,10 @@ public partial class Cliente_area : System.Web.UI.Page
 
         mantenimientoarea(Convert.ToInt32(ID_AREA.Value.Trim()),
             Convert.ToString(AREA.Text.Trim()),
-            Convert.ToInt32(this.CARGO.SelectedValue),
+            Convert.ToInt32(CARGO.SelectedValue),
             "M");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}");
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}");
     }
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
@@ -305,10 +305,10 @@ public partial class Cliente_area : System.Web.UI.Page
 
         mantenimientoarea(Convert.ToInt32(ID_AREA.Value.Trim()),
             Convert.ToString(AREA.Text.Trim()),
-            Convert.ToInt32(this.CARGO.SelectedValue),
+            Convert.ToInt32(CARGO.SelectedValue),
             "E");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}");
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Area(); </script>}");
     }
     protected void btnCancelar_Click(object sender, EventArgs e)
     {

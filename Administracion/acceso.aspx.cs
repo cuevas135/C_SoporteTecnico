@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data;
-//using Servicios;
+﻿//using Servicios;
 using SEGURIDAD;
+using System;
+using System.Data;
 
 
 /*
@@ -17,10 +12,10 @@ using SEGURIDAD;
 
 public partial class acceso : System.Web.UI.Page
 {
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.login.Focus();
+        login.Focus();
     }
     protected void Aceptar_Click(object sender, EventArgs e)
     {
@@ -35,11 +30,11 @@ public partial class acceso : System.Web.UI.Page
             return;
         }
 
-        String strLogin, strPassword;
-        strLogin = this.login.Text.Trim();
+        string strLogin, strPassword;
+        strLogin = login.Text.Trim();
 
         encriptar en = new encriptar();
-        strPassword = en.EncriptarCadena(this.password.Text.Trim());
+        strPassword = en.EncriptarCadena(password.Text.Trim());
 
 
         try
@@ -55,12 +50,12 @@ public partial class acceso : System.Web.UI.Page
                 if (dt.Rows[0]["CODIGO"].ToString().Trim() == "")
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = dt.Rows[0]["PERSONA"].ToString().Trim();
-                    this.__pagina.Value = "";
+                    __mensaje.Value = dt.Rows[0]["PERSONA"].ToString().Trim();
+                    __pagina.Value = "";
                 }
                 else
                 {
-                    String Persona = dt.Rows[0]["TIPOPERSONA"].ToString().Trim();
+                    string Persona = dt.Rows[0]["TIPOPERSONA"].ToString().Trim();
                     
                     if (Persona.Equals("CO")){
                         Session["__JSAR__"] = new string[] { dt.Rows[0]["CODIGO"].ToString(),
@@ -73,14 +68,14 @@ public partial class acceso : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.__mensaje.Value = servidor.getMensageError();
-                this.__pagina.Value = "";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "";
             }
         }
         catch (Exception)
         {
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "";
         }
 
        

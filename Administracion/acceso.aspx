@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Acceso al Sistema</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
@@ -22,6 +21,7 @@
     <script src="../bootstrap/js/jquery-1.12.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>
+
     <script type="text/javascript">
         function MostrarMensaje() {
             var mensaje = document.getElementById("__mensaje").value;
@@ -61,8 +61,7 @@
 
     </script>
     <style>
-        body
-        {
+        body {
             margin: 0;
             padding: 0;
             background-color: #66ccff;
@@ -73,36 +72,38 @@
 <body onload="MostrarMensaje()">
     <div class="loginBox">
         <img alt="" src="../Imagenes/user.png" class="user" />
-        <center><label for="Titulo">Ingrese usuario y contraseña</label></center>
-        <h2>
-        </h2>
+        <label for="Titulo">Ingrese usuario y contraseña</label>
+        <%--<h2>
+        </h2>--%>
+
         <form id="frmAcceso" role="form" runat="server">
-        <div class="form-group">
-            <label for="NombreUusraio">
-                Usuario</label>
-            <asp:TextBox ID="login" runat="server" placeholder="Ingresar Usuario" autocomplete="off"
-                CssClass="form-control input" onchange="" onkeypress="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfvlogin" runat="server" ControlToValidate="login"
-                Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-        </div>
-        <div class="form-group">
-            <label for="ContraseñaUusraio">
-                Contraseña</label>
-            <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Ingresar Contraseña"
-                autocomplete="off" CssClass="form-control input" onchange="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfvpassword" runat="server" ControlToValidate="password"
-                Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-        </div>
-        <div class="form-group">
-            <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-primary btn-block"
-                OnClick="Aceptar_Click"></asp:Button>
-            <asp:HiddenField ID="__mensaje" runat="server" />
-            <asp:HiddenField ID="__pagina" runat="server" />
-        </div>
-        <div class="form-group">
-            <asp:HyperLink ID="hlRecuperarCuenta" runat="server" NavigateUrl="~/Administracion/recuperarAdministrador.aspx"
-                class="btn btn-link" ForeColor="#3333CC">Recuperar Cuenta</asp:HyperLink>
-        </div>
+            <div class="form-group">
+                <br />
+                <label for="NombreUusraio">
+                    Usuario</label>
+                <asp:TextBox ID="login" runat="server" placeholder="Ingresar Usuario" autocomplete="off"
+                    CssClass="form-control input" onchange="" onkeypress="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvlogin" runat="server" ControlToValidate="login"
+                    Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+            </div>
+            <div class="form-group">
+                <label for="ContraseñaUusraio">
+                    Contraseña</label>
+                <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Ingresar Contraseña"
+                    autocomplete="off" CssClass="form-control input" onchange="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvpassword" runat="server" ControlToValidate="password"
+                    Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+            </div>
+            <div class="form-group">
+                <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-primary btn-block"
+                    OnClick="Aceptar_Click"></asp:Button>
+                <asp:HiddenField ID="__mensaje" runat="server" />
+                <asp:HiddenField ID="__pagina" runat="server" />
+            </div>
+            <div class="form-group">
+                <asp:HyperLink ID="hlRecuperarCuenta" runat="server" NavigateUrl="~/Administracion/recuperarAdministrador.aspx"
+                    class="btn btn-link" ForeColor="#3333CC">Recuperar Cuenta</asp:HyperLink>
+            </div>
         </form>
     </div>
     <%-- <script type="text/javascript" src="../bootstrap/js/jquery-1.12.4.min.js"></script>

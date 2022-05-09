@@ -84,13 +84,13 @@
         function CambiaLetraMayuscula(Caja) {
             document.getElementById(Caja).value = document.getElementById(Caja).value.toUpperCase();
         }
-    
+
     </script>
 </head>
 <body onload="MostrarMensaje()">
     <form id="form1" runat="server">
-    <asp:HiddenField ID="__mensaje" runat="server" />
-    <asp:HiddenField ID="__pagina" runat="server" />
+        <asp:HiddenField ID="__mensaje" runat="server" />
+        <asp:HiddenField ID="__pagina" runat="server" />
     </form>
 </body>
 </html>

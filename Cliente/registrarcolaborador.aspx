@@ -2,10 +2,10 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat=server>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head id="Head1" runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" type="image/png" href="Imagenes/icono.png" />
     <title>Colaborador Cliente</title>
     <meta name="MobileOptimized" content="width">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Bootstrap -->
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    
+
     <!-- Calendario -->
     <%--<link href="css/dcalendar.picker.css" rel="stylesheet">--%>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -26,22 +26,21 @@
     <link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
     <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <style type="text/css">
-        #deceased
-        {
+        #deceased {
             background-color: #FFF3F5;
             padding-top: 10px;
             margin-bottom: 10px;
         }
-        .remove_field
-        {
+
+        .remove_field {
             float: right;
             cursor: pointer;
             position: absolute;
         }
-        .remove_field:hover
-        {
-            text-decoration: none;
-        }
+
+            .remove_field:hover {
+                text-decoration: none;
+            }
     </style>
     <script type='text/javascript'>
         $(function () {
@@ -133,7 +132,7 @@
         function SoloLetrasMinusculas() {
             if (!(event.keyCode >= 97 && event.keyCode <= 122 || event.keyCode == 32 || event.keyCode == 193 || event.keyCode == 201 || event.keyCode == 205 || event.keyCode == 209 || event.keyCode == 211 || event.keyCode == 218 || event.keyCode == 220 || event.keyCode == 241)) {
                 event.returnValue = false;
-            }           
+            }
         }
 
         function LetrasNumeros(e) {
@@ -176,144 +175,139 @@
         function CambiaLetraMayuscula(Caja) {
             document.getElementById(Caja).value = document.getElementById(Caja).value.toUpperCase();
         }
-                   
+
     </script>
 
 </head>
-<body onload ="MostrarMensaje()">
+<body onload="MostrarMensaje()">
     <form id="form2" runat="server">
-    <div class="panel panel-primary" style="margin: 20px;">
-        <div style="text-align: center">
-            <asp:HyperLink ID="hlCerrarSesion" runat="server" ForeColor="Red" 
-                        NavigateUrl="~/CerrarSession.aspx">Cerrar Sesion</asp:HyperLink>
-            
+        <div class="panel panel-primary" style="margin: 20px;">
+            <div style="text-align: center">
+                <asp:HyperLink ID="hlCerrarSesion" runat="server" ForeColor="Red"
+                    NavigateUrl="~/CerrarSession.aspx">Cerrar Sesion</asp:HyperLink>
+            </div>
+            <br />
+            <div class="panel-heading">
+                <h3 class="panel-title">Registrar Colaborador</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12 col-sm-12">
 
-        </div>
-        <br />
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Registrar Colaborador</h3>
-        </div>
-        <div class="panel-body">
-            <div class="col-md-12 col-sm-12">
-
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="TIPOCOLABORADOR">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="TIPOCOLABORADOR">--%>
                         Tipo colaborador:
                         <asp:RangeValidator ID="rvTIPOCOLABORADOR" runat="server" BackColor="Yellow" ControlToValidate="TIPOCOLABORADOR"
                             ErrorMessage="*" ForeColor="Red" MaximumValue="99999" MinimumValue="1" SetFocusOnError="True"
                             Type="Integer"></asp:RangeValidator>
-                    <%--</label>--%>
-                    <asp:DropDownList ID="TIPOCOLABORADOR" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"> </asp:DropDownList>
-                </div>
+                        <%--</label>--%>
+                        <asp:DropDownList ID="TIPOCOLABORADOR" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"></asp:DropDownList>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="APELLIDOPATERNO">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="APELLIDOPATERNO">--%>
                         Apellido paterno:
                         <asp:RequiredFieldValidator ID="rfvAPELLIDOPATERNO" runat="server" BackColor="Yellow"
                             ControlToValidate="APELLIDOPATERNO" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                    <%--</label>--%>
-                    <asp:TextBox ID="APELLIDOPATERNO" runat="server" class="form-control input-sm" 
-                        onkeypress ="return SoloLetrasMinusculas()" 
-                        onchange="CambiaLetraMayuscula('APELLIDOPATERNO')" MaxLength="15"></asp:TextBox>
-                </div>
+                        <%--</label>--%>
+                        <asp:TextBox ID="APELLIDOPATERNO" runat="server" class="form-control input-sm"
+                            onkeypress="return SoloLetrasMinusculas()"
+                            onchange="CambiaLetraMayuscula('APELLIDOPATERNO')" MaxLength="15"></asp:TextBox>
+                    </div>
 
-                
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="APELLIDOMATERNO">--%>
+
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="APELLIDOMATERNO">--%>
                         Apellido materno:
                         <asp:RequiredFieldValidator ID="rfvTAPELLIDOMATERNO" runat="server" BackColor="Yellow" ControlToValidate="APELLIDOMATERNO"
                             ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                    <%--</label>--%>
-                    <asp:TextBox ID="APELLIDOMATERNO" runat="server" class="form-control input-sm" onkeypress ="return SoloLetrasMinusculas()" 
-                        onchange="CambiaLetraMayuscula('APELLIDOMATERNO')" MaxLength="15"></asp:TextBox>
-                </div>
+                        <%--</label>--%>
+                        <asp:TextBox ID="APELLIDOMATERNO" runat="server" class="form-control input-sm" onkeypress="return SoloLetrasMinusculas()"
+                            onchange="CambiaLetraMayuscula('APELLIDOMATERNO')" MaxLength="15"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                   <%-- <label for="NOMBRES">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%-- <label for="NOMBRES">--%>
                         Nombres:
                         <asp:RequiredFieldValidator ID="rfvNOMBRES" runat="server" BackColor="Yellow"
                             ControlToValidate="NOMBRES" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                    <%--</label>--%>
-                    <asp:TextBox ID="NOMBRES" runat="server" class="form-control input-sm" onkeypress ="return SoloLetrasMinusculas()" 
-                        onchange="CambiaLetraMayuscula('NOMBRES')" MaxLength="15"></asp:TextBox>
-                </div>
+                        <%--</label>--%>
+                        <asp:TextBox ID="NOMBRES" runat="server" class="form-control input-sm" onkeypress="return SoloLetrasMinusculas()"
+                            onchange="CambiaLetraMayuscula('NOMBRES')" MaxLength="15"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="FIJO">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="FIJO">--%>
                         Nro. fijo:
                         <%--</label>--%>
-                    <asp:TextBox ID="FIJO" runat="server" class="form-control input-sm" onkeypress ="return SoloNumeros()" 
-                        onchange="" MaxLength="9"></asp:TextBox>
-                </div>
+                        <asp:TextBox ID="FIJO" runat="server" class="form-control input-sm" onkeypress="return SoloNumeros()"
+                            onchange="" MaxLength="9"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="CELULAR">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="CELULAR">--%>
                         Nro. celular:
                         <asp:RequiredFieldValidator ID="rfvCELULAR" runat="server" BackColor="Yellow"
                             ControlToValidate="CELULAR" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                    <%--</label>--%>
-                    <asp:TextBox ID="CELULAR" runat="server" class="form-control input-sm" onkeypress ="return SoloNumeros()" 
-                        onchange="" MaxLength="9"></asp:TextBox>
-                </div>
+                        <%--</label>--%>
+                        <asp:TextBox ID="CELULAR" runat="server" class="form-control input-sm" onkeypress="return SoloNumeros()"
+                            onchange="" MaxLength="9"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="DIRECCION">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="DIRECCION">--%>
                         Direccion:
                     <%--</label>--%>
-                    <asp:TextBox ID="DIRECCION" runat="server" class="form-control input-sm" onchange="CambiaLetraMayuscula('DIRECCION')"></asp:TextBox>
-                </div>
+                        <asp:TextBox ID="DIRECCION" runat="server" class="form-control input-sm" onchange="CambiaLetraMayuscula('DIRECCION')"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="Email">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="Email">--%>
                         Correo:
                         <asp:RequiredFieldValidator ID="rfvEMAIL" runat="server" BackColor="Yellow" ControlToValidate="EMAIL"
                             ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                             <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" SetFocusOnError="True" 
-                            ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" ControlToValidate="EMAIL" 
+                        <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" SetFocusOnError="True"
+                            ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" ControlToValidate="EMAIL"
                             ErrorMessage="Correo Invalido" BackColor="Yellow" ForeColor="Red"></asp:RegularExpressionValidator>
-                   <%-- </label>--%>
-                    <asp:TextBox ID="EMAIL" runat="server" class="form-control input-sm"></asp:TextBox>
-                </div>
+                        <%-- </label>--%>
+                        <asp:TextBox ID="EMAIL" runat="server" class="form-control input-sm"></asp:TextBox>
+                    </div>
 
-                <div class="form-group col-md-4 col-sm-4">
-                    <%--<label for="ESTADO">--%>
+                    <div class="form-group col-md-4 col-sm-4">
+                        <%--<label for="ESTADO">--%>
                         Estado:                 
                     <%--</label>--%>
-                    
-                    <asp:CheckBox ID="ESTADO" runat="server" Text=""  class="form-check-input"/>
-                     <label class="form-check-label" for="ESTADO">
-                        ACTIVO / INACTIVO
-                     </label>
 
+                        <asp:CheckBox ID="ESTADO" runat="server" Text="" class="form-check-input" />
+                        <label class="form-check-label" for="ESTADO">
+                            ACTIVO / INACTIVO
+                        </label>
+
+                    </div>
+
+
+                    <%--</div>--%>
+
+
+                    <div class="col-md-12 col-sm-12" style="text-align: center">
+                        <div class="form-group col-md-3 col-sm-3" style="text-align: center">
+                            <asp:LinkButton ID="btnAceptar" runat="server"
+                                OnClientClick="return Confirmar('¿Desea guardar colaborador?');"
+                                Style="font-family: Calibri; font-size: medium"
+                                Text="Aceptar <span class='glyphicon glyphicon-ok'></span>"
+                                CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:LinkButton ID="btnCancelar" runat="server" CausesValidation="False"
+                        Text="Cancelar <span class='glyphicon glyphicon-remove'></span>"
+                        Style="font-family: Calibri; font-size: medium"
+                        UseSubmitBehavior="False" class="btn btn-danger"
+                        OnClientClick="return Confirmar('¿Desea Cancelar Registro?');"
+                        PostBackUrl="~/Cliente/listarcolaboradores.aspx" />
+                        </div>
+                    </div>
+                    <asp:HiddenField ID="__mensaje" runat="server" />
+                    <asp:HiddenField ID="__pagina" runat="server" />
                 </div>
-               
- 
-            <%--</div>--%>
-
-           
-            <div class="col-md-12 col-sm-12" style="text-align: center">
-                <div class="form-group col-md-3 col-sm-3" style="text-align: center">
-                     <asp:LinkButton ID="btnAceptar" runat="server" 
-                         onclientclick="return Confirmar('¿Desea guardar colaborador?');" 
-                       style="font-family: Calibri;  font-size: medium" 
-                    Text="Aceptar <span class='glyphicon glyphicon-ok'></span>" 
-                         CssClass="btn btn-primary" onclick="btnAceptar_Click" 
-                                   />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:LinkButton ID="btnCancelar" runat="server" CausesValidation="False" 
-                         Text="Cancelar <span class='glyphicon glyphicon-remove'></span>" 
-                        style="font-family: Calibri; font-size: medium"  
-                        UseSubmitBehavior="False" class="btn btn-danger" 
-                                    onclientclick="return Confirmar('¿Desea Cancelar Registro?');" 
-                         PostBackUrl="~/Cliente/listarcolaboradores.aspx" />
-                </div>               
             </div>
-                            <asp:HiddenField ID="__mensaje" runat="server" />
-                            <asp:HiddenField ID="__pagina" runat="server" />
-        </div>
-    </div>
-
     </form>
 </body>
 </html>

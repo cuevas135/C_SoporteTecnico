@@ -59,40 +59,39 @@
     <div class="loginBox">
         <img alt="" src="../Imagenes/user.png" class="user" />
         <center><label for="Titulo">Ingrese usuario y contraseña</label></center>
-        <h2>
-        </h2>
+        <h2></h2>
         <form id="frmAcceso" role="form" runat="server">
-        <div class="form-group">
-            <label for="NombreUusraio">
-                Usuario</label>
-            <asp:TextBox ID="login" runat="server" placeholder="Ingresar Usuario" autocomplete="off"
-                CssClass="form-control input" onchange="" onkeypress="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfvlogin" runat="server" ControlToValidate="login"
-                Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-        </div>
-        <div class="form-group">
-            <label for="ContraseñaUusraio">
-                Contraseña</label>
-            <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Ingresar Contraseña"
-                autocomplete="off" CssClass="form-control input" onchange="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfvpassword" runat="server" ControlToValidate="password"
-                Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-        </div>
-        <div class="form-group">
-            <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-primary btn-block"
-                OnClick="Aceptar_Click"></asp:Button>
-            <asp:HiddenField ID="__mensaje" runat="server" />
-            <asp:HiddenField ID="__pagina" runat="server" />
-        </div>
-        <div class="form-group">
-            <asp:HyperLink ID="hlRegistro" runat="server" NavigateUrl="~/Clientes/persona.aspx"
-                class="btn btn-link" ForeColor="#3333CC">Si ud. no tiene usuario y contraseña registrese. </asp:HyperLink>
-        </div>
-        <br />
-        <div class="form-group">
-            <asp:HyperLink ID="hlRecuperarCuenta" runat="server" NavigateUrl="~/Clientes/recuperarClientes.aspx"
-                class="btn btn-link" ForeColor="#3333CC">Recuperar Cuenta</asp:HyperLink>
-        </div>
+            <div class="form-group">
+                <label for="NombreUusraio">
+                    Usuario</label>
+                <asp:TextBox ID="login" runat="server" placeholder="Ingresar Usuario" autocomplete="off"
+                    CssClass="form-control input" onchange="" onkeypress="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvlogin" runat="server" ControlToValidate="login"
+                    Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+            </div>
+            <div class="form-group">
+                <label for="ContraseñaUusraio">
+                    Contraseña</label>
+                <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Ingresar Contraseña"
+                    autocomplete="off" CssClass="form-control input" onchange="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvpassword" runat="server" ControlToValidate="password"
+                    Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
+            </div>
+            <div class="form-group">
+                <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-primary btn-block"
+                    OnClick="Aceptar_Click"></asp:Button>
+                <asp:HiddenField ID="__mensaje" runat="server" />
+                <asp:HiddenField ID="__pagina" runat="server" />
+            </div>
+            <div class="form-group">
+                <asp:HyperLink ID="hlRegistro" runat="server" NavigateUrl="~/Clientes/persona.aspx"
+                    class="btn btn-link" ForeColor="#3333CC">Si ud. no tiene usuario y contraseña registrese. </asp:HyperLink>
+            </div>
+            <br />
+            <div class="form-group">
+                <asp:HyperLink ID="hlRecuperarCuenta" runat="server" NavigateUrl="~/Clientes/recuperarClientes.aspx"
+                    class="btn btn-link" ForeColor="#3333CC">Recuperar Cuenta</asp:HyperLink>
+            </div>
         </form>
     </div>
     <script type="text/javascript" src="../bootstrap/js/jquery-1.12.4.min.js"></script>

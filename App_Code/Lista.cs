@@ -111,7 +111,7 @@ public class Lista
         }
         return fila;
     }
-    public void Busca(System.Web.UI.WebControls.DropDownList control, String Text)
+    public void Busca(System.Web.UI.WebControls.DropDownList control, string Text)
     {
         for (int i = 0; i < control.Items.Count; i++){
             if (control.Items[i].Text.Trim().Equals(Text)){
@@ -280,7 +280,7 @@ public class Lista
     }
 
     // =============================== *** FIN *** =========================================
-    public void Search_DropDownList(DataTable Tabla, System.Web.UI.WebControls.DropDownList control, String strcampo)
+    public void Search_DropDownList(DataTable Tabla, System.Web.UI.WebControls.DropDownList control, string strcampo)
     {
         if (Tabla.Rows.Count == 0) return;
         for (int i = 0; i < control.Items.Count; i++){

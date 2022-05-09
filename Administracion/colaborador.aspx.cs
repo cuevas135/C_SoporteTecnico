@@ -11,7 +11,7 @@ using SEGURIDAD;
 public partial class Administracion_colaborador : System.Web.UI.Page
 {
 
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
     System.Web.UI.WebControls.TableRow tRow;
     Lista _Lista = new Lista();
@@ -93,8 +93,8 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
     private void oculta(bool ok)
     {
-        this.btnModificar.Visible = ok;
-        this.btnEliminar.Visible = ok;
+        btnModificar.Visible = ok;
+        btnEliminar.Visible = ok;
         //this.btnCancelar.Visible = ok;
     }
 
@@ -110,15 +110,15 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay tipo colaboradores.";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay tipo colaboradores.";
+                    __pagina.Value = "";
                 }
                 else
                 {
-                    this.TipoColaborador.DataSource = dt;
-                    this.TipoColaborador.DataTextField = "Nombre";
-                    this.TipoColaborador.DataValueField = "Codigo";
-                    this.TipoColaborador.DataBind();
+                    TipoColaborador.DataSource = dt;
+                    TipoColaborador.DataTextField = "Nombre";
+                    TipoColaborador.DataValueField = "Codigo";
+                    TipoColaborador.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -147,15 +147,15 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay areas.";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay areas.";
+                    __pagina.Value = "";
                 }
                 else
                 {
-                    this.Area.DataSource = dt;
-                    this.Area.DataTextField = "Nombre";
-                    this.Area.DataValueField = "Codigo";
-                    this.Area.DataBind();
+                    Area.DataSource = dt;
+                    Area.DataTextField = "Nombre";
+                    Area.DataValueField = "Codigo";
+                    Area.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -177,16 +177,16 @@ public partial class Administracion_colaborador : System.Web.UI.Page
     {
 
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
-        for (int i = 1; i < this.Table_.Rows.Count; i++)
+        for (int i = 1; i < Table_.Rows.Count; i++)
         {
-            this.Table_.Rows[i].Cells.Clear();
+            Table_.Rows[i].Cells.Clear();
         }
 
         try
@@ -199,9 +199,9 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay colaboradores para mostrar";
-                    this.__pagina.Value = "";
-                    this.Nombre.Text = "";
+                    __mensaje.Value = "No hay colaboradores para mostrar";
+                    __pagina.Value = "";
+                    Nombre.Text = "";
                 }
                 else
                 {
@@ -226,7 +226,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                                 case 0:
                                     encriptar en = new encriptar();
 
-                                    String strTextoEncriptado = en.DesEncriptarCadena(dt.Rows[i]["CONATRASEÑA"].ToString());
+                                    string strTextoEncriptado = en.DesEncriptarCadena(dt.Rows[i]["CONATRASEÑA"].ToString());
 
                                     System.Web.UI.WebControls.ImageButton hl = new System.Web.UI.WebControls.ImageButton();
                                     hl.CssClass = "media-object";
@@ -367,7 +367,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                             }
                         }
 
-                        this.Table_.Rows.Add(tRow);
+                        Table_.Rows.Add(tRow);
                         k++;
                     }
                     servidor.cerrarconexion();
@@ -376,15 +376,15 @@ public partial class Administracion_colaborador : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.__mensaje.Value = servidor.getMensageError();
-                this.__pagina.Value = "CerrarSession.aspx";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "CerrarSession.aspx";
             }
 
         }
         catch (Exception)
         {
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "CerrarSession.aspx";
         }
     }
 
@@ -392,30 +392,30 @@ public partial class Administracion_colaborador : System.Web.UI.Page
     {
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "CerrarSession.aspx";
             return;
         }
         //============================================================================================================
 
-        this.lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
+        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
 
-        if (Convert.ToInt32(this.ID_PERSONAL.Value.Trim()) > 0)
+        if (Convert.ToInt32(ID_PERSONAL.Value.Trim()) > 0)
         {
-            this.btnRegistrar.Visible = false;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = false;
+            btnCancelar.Visible = true;
             oculta(true);
 
         }
-        if (Convert.ToInt32(this.ID_PERSONAL.Value.Trim()) == 0)
+        if (Convert.ToInt32(ID_PERSONAL.Value.Trim()) == 0)
         {
-            this.btnRegistrar.Visible = true;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = true;
+            btnCancelar.Visible = true;
             oculta(false);
         }
 
@@ -467,7 +467,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
         encriptar en = new encriptar();
 
-        String strTextoEncriptado = en.EncriptarCadena(this.Password.Text.Trim());
+        string strTextoEncriptado = en.EncriptarCadena(Password.Text.Trim());
 
         mantenimiento_colaborador(Convert.ToInt32(ID_PERSONAL.Value.Trim()),
            Convert.ToString(NroDNI.Text.Trim()),
@@ -482,11 +482,11 @@ public partial class Administracion_colaborador : System.Web.UI.Page
            Convert.ToString(Email.Text.Trim()),
            Convert.ToString(Faceboock.Text.Trim()),
            Convert.ToString(Twiter.Text.Trim()),
-           this.Estado.Checked,
-           Convert.ToInt32(this.TipoColaborador.SelectedValue),
-           Convert.ToInt32(this.Area.SelectedValue),
+           Estado.Checked,
+           Convert.ToInt32(TipoColaborador.SelectedValue),
+           Convert.ToInt32(Area.SelectedValue),
            'N');
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}");     
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}");     
     }
     protected void btnModificar_Click(object sender, EventArgs e)
     {
@@ -514,7 +514,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
         encriptar en = new encriptar();
 
-        String strTextoEncriptado = en.EncriptarCadena(this.Password.Text.Trim());
+        string strTextoEncriptado = en.EncriptarCadena(Password.Text.Trim());
 
         mantenimiento_colaborador(Convert.ToInt32(ID_PERSONAL.Value.Trim()),
            Convert.ToString(NroDNI.Text.Trim()),
@@ -529,11 +529,11 @@ public partial class Administracion_colaborador : System.Web.UI.Page
            Convert.ToString(Email.Text.Trim()),
            Convert.ToString(Faceboock.Text.Trim()),
            Convert.ToString(Twiter.Text.Trim()),
-           this.Estado.Checked,
-           Convert.ToInt32(this.TipoColaborador.SelectedValue),
-           Convert.ToInt32(this.Area.SelectedValue),
+           Estado.Checked,
+           Convert.ToInt32(TipoColaborador.SelectedValue),
+           Convert.ToInt32(Area.SelectedValue),
            'M');
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}");        
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}");        
     }
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
@@ -572,11 +572,11 @@ public partial class Administracion_colaborador : System.Web.UI.Page
            Convert.ToString(Email.Text.Trim()),
            Convert.ToString(Faceboock.Text.Trim()),
            Convert.ToString(Twiter.Text.Trim()),
-           this.Estado.Checked,
-           Convert.ToInt32(this.TipoColaborador.SelectedValue),
-           Convert.ToInt32(this.Area.SelectedValue),
+           Estado.Checked,
+           Convert.ToInt32(TipoColaborador.SelectedValue),
+           Convert.ToInt32(Area.SelectedValue),
            'E');
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}"); 
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Colaborador(); </script>}"); 
     }
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
