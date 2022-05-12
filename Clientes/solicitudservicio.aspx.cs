@@ -5,69 +5,100 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Drawing;
+using System.Text;
 
-public partial class Clientes_solicitudservicio : System.Web.UI.Page
+public partial class Clientes_solicitudservicio : Page
 {
 
     private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
 
-    System.Web.UI.WebControls.TableRow tRow;
+    TableRow tRow;
 
     Lista _Lista = new Lista();
 
     bool OSPSS = true;
 
-    private void ObtenerSolicitudes(){
-        policia.clsaccesodatos servidor = new policia.clsaccesodatos();        
-        try{
+    public void MensajeValidaciones(string Message)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<script type = 'text/javascript'>");
+        sb.Append("alert('");
+        sb.Append(Message + "');");
+        sb.Append("</script>");
+        ScriptManager.RegisterStartupScript(this, GetType(), "alert", string.Format("alert('{0}');", Message), true);
+    }
+
+    private void ObtenerSolicitudes()
+    {
+        policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+        try
+        {
             servidor.cadenaconexion = Ruta;
-            if (servidor.abrirconexion() == true){
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_servcios]").Tables[0];
-                if (dt.Rows.Count == 0){
+            if (servidor.abrirconexion() == true)
+            {
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_servcios]").Tables[0];
+                if (dt.Rows.Count == 0)
+                {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay servcios.";
-                    this.__pagina.Value =""; 
-                }else{
-                    this.Servicios.DataSource = dt;
-                    this.Servicios.DataTextField = "Nombre";
-                    this.Servicios.DataValueField = "Codigo";
-                    this.Servicios.DataBind();
+                    __mensaje.Value = "No hay servcios.";
+                    __pagina.Value = "";
+                }
+                else
+                {
+                    Servicios.DataSource = dt;
+                    Servicios.DataTextField = "Nombre";
+                    Servicios.DataValueField = "Codigo";
+                    Servicios.DataBind();
                     servidor.cerrarconexion();
                 }
-            }else{
+            }
+            else
+            {
                 servidor.cerrarconexion();
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
-        }catch (Exception){
+        }
+        catch (Exception)
+        {
             servidor.cerrarconexion();
             _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSession.aspx");
         }
     }
 
 
-    private void ObtenerModalidades( int Codigo_Servicio)
+    private void ObtenerModalidades(int Codigo_Servicio)
     {
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-        try{
+        try
+        {
             servidor.cadenaconexion = Ruta;
-            if (servidor.abrirconexion() == true){
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_modalidades]", Codigo_Servicio).Tables[0];
-                if (dt.Rows.Count == 0){
+            if (servidor.abrirconexion() == true)
+            {
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_modalidades]", Codigo_Servicio).Tables[0];
+                if (dt.Rows.Count == 0)
+                {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay modalidades.";
-                    this.__pagina.Value = "";
-                }else{
-                    this.Modalidades.DataSource = dt;
-                    this.Modalidades.DataTextField = "Nombre";
-                    this.Modalidades.DataValueField = "Codigo";
-                    this.Modalidades.DataBind();
+                    __mensaje.Value = "No hay modalidades.";
+                    __pagina.Value = "";
+                }
+                else
+                {
+                    Modalidades.DataSource = dt;
+                    Modalidades.DataTextField = "Nombre";
+                    Modalidades.DataValueField = "Codigo";
+                    Modalidades.DataBind();
                     servidor.cerrarconexion();
                 }
-            }else{
+            }
+            else
+            {
                 servidor.cerrarconexion();
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
-        }catch (Exception){
+        }
+        catch (Exception)
+        {
             servidor.cerrarconexion();
             _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSession.aspx");
         }
@@ -76,66 +107,76 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
     private String ObtenerFechaSistema()
     {
-        String Fecha = "";        
+        String Fecha = "";
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-        try{
+        try
+        {
             servidor.cadenaconexion = Ruta;
-            if (servidor.abrirconexion() == true){
-                System.Data.DataTable dt = servidor.consultar("[dbo].[obtenerfechasistema]").Tables[0];
-                if (dt.Rows.Count == 0){
+            if (servidor.abrirconexion() == true)
+            {
+                DataTable dt = servidor.consultar("[dbo].[obtenerfechasistema]").Tables[0];
+                if (dt.Rows.Count == 0)
+                {
                     servidor.cerrarconexion();
-                    Fecha = ""; 
-                }else{
-                    Fecha = dt.Rows[0]["Fecha"].ToString(); 
+                    Fecha = "";
+                }
+                else
+                {
+                    Fecha = dt.Rows[0]["Fecha"].ToString();
                     servidor.cerrarconexion();
                 }
-            }else{
+            }
+            else
+            {
                 servidor.cerrarconexion();
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
-        }catch (Exception){
+        }
+        catch (Exception)
+        {
             servidor.cerrarconexion();
             _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSession.aspx");
         }
         return Fecha;
     }
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
     }
 
     protected void Page_init(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
         /*No se porque se tiene que activarse el boton desde aqui para ver si se inicio sesion.*/
-        this.btnGenerarSolicitud_Click(sender, e);
+        btnGenerarSolicitud_Click(sender, e);
 
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
-        if (Datos == null){
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+        if (Datos == null)
+        {
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "CerrarSession.aspx";
             return;
         }
         //============================================================================================================
 
-        this.lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
+        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>";
 
         //CAPTURAMOS EL CODIGO DEL USUARIO QUE INICIO SESION.
-        this.CodigoPersona_S.Text = Convert.ToString(Datos[0]);
+        CodigoPersona_S.Text = Convert.ToString(Datos[0]);
 
         //CAPTURAMOS EL NOMBRE DEL USUARIO QUE INICIO SESION.
-        this.Nombre_P.Text = Convert.ToString(Datos[1]);
+        Nombre_P.Text = Convert.ToString(Datos[1]);
 
         ObtenerSolicitudes();
-        
-        this.Fecha_S.Text = ObtenerFechaSistema();
+
+        Fecha_S.Text = ObtenerFechaSistema();
 
         //Inicialmente empezamos por crear la cabecera de la tabla.
         if (Session["Tabla"] == null)//Preguntamos si la sesion tiene informacion.
@@ -156,10 +197,12 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
         ActualizaDetalleSolicitud((DataTable)Session["Tabla"]);
 
-        try{
+        try
+        {
             /*Eliminamos la primera fila que es agregada por defecto.*/
-            if (this.Table_.Rows[1].Cells[0].Text.Trim() == ""){
-                this.Table_.Rows[1].Cells.Clear();
+            if (Table_.Rows[1].Cells[0].Text.Trim() == "")
+            {
+                Table_.Rows[1].Cells.Clear();
             }
         }
         catch (Exception) { }
@@ -167,52 +210,55 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
         ObtenerSolicitudesPendientesServiciosSolicitados(Convert.ToString(Datos[0]));
 
-        try{
+        try
+        {
             Detalle_Solicitudes_Pendientes_Servicios_Solicitados(sender, e);
         }
         catch (Exception) { }
 
     }
     protected void btnAgregar_Click(object sender, EventArgs e)
-    {     
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+    {
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
         //Validamos datos
-        if (Convert.ToInt32(this.Servicios.Items[this.Servicios.SelectedIndex].Value) == -1)
+        if (Convert.ToInt32(Servicios.Items[Servicios.SelectedIndex].Value) == -1)
         {
-            this.__mensaje.Value = "Seleccione servicio.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "Seleccione servicio.";
+            __pagina.Value = "";
             return;
         }
 
-        if (Convert.ToInt32(this.Modalidades.Items[this.Modalidades.SelectedIndex].Value) == -1)
+        if (Convert.ToInt32(Modalidades.Items[Modalidades.SelectedIndex].Value) == -1)
         {
-            this.__mensaje.Value = "Seleccione modalidad.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "Seleccione modalidad.";
+            __pagina.Value = "";
             return;
         }
 
         DataTable dt = (DataTable)Session["Tabla"];
 
-        if (Valida_Datos_Detalle((DataTable)Session["Tabla"], this.Servicios.Items[this.Servicios.SelectedIndex].Text, this.Modalidades.Items[this.Modalidades.SelectedIndex].Text) == true)
+        if (Valida_Datos_Detalle((DataTable)Session["Tabla"], Servicios.Items[Servicios.SelectedIndex].Text, Modalidades.Items[Modalidades.SelectedIndex].Text) == true)
         {
-            this.__mensaje.Value = "Servicio y modalidad ya existen.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "Servicio y modalidad ya existen.";
+            __pagina.Value = "";
             return;
         }
 
-        try{
-            if (dt.Rows[0].ItemArray[0].ToString() == ""){
+        try
+        {
+            if (dt.Rows[0].ItemArray[0].ToString() == "")
+            {
                 dt.Rows[0].Delete();
             }
         }
-        catch (Exception){}
+        catch (Exception) { }
 
-        dt.Rows.Add(this.Servicios.SelectedValue,
-               this.Servicios.Items[this.Servicios.SelectedIndex].Text,
-               this.Modalidades.SelectedValue,
-               this.Modalidades.Items[this.Modalidades.SelectedIndex].Text
+        dt.Rows.Add(Servicios.SelectedValue,
+               Servicios.Items[Servicios.SelectedIndex].Text,
+               Modalidades.SelectedValue,
+               Modalidades.Items[Modalidades.SelectedIndex].Text
                );
 
         Session["Tabla"] = dt;
@@ -225,93 +271,97 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
     protected void Servicios_SelectedIndexChanged(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
-        ObtenerModalidades(Convert.ToInt32(this.Servicios.SelectedValue));
+        __mensaje.Value = "";
+        __pagina.Value = "";
+        ObtenerModalidades(Convert.ToInt32(Servicios.SelectedValue));
     }
 
 
     private void ActualizaDetalleSolicitud(DataTable dt)
     {
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger"};
+        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
-        
-        for (int i = 1; i < this.Table_.Rows.Count; i++){
-            this.Table_.Rows[i].Cells.Clear();
+
+        for (int i = 1; i < Table_.Rows.Count; i++)
+        {
+            Table_.Rows[i].Cells.Clear();
         }
 
-        if (dt.Rows.Count == 0){
-                    ;
+        if (dt.Rows.Count == 0)
+        {
+            ;
         }
-        else{
-                   for (int i = 0; i < dt.Rows.Count; i++){
-                        tRow = new TableRow();
-                        if (k < 4)
-                        {
-                            tRow.CssClass = ResaltarFilaColor[k];
-                        }
-                        else
-                        {
-                            k = 0;
-                            tRow.CssClass = ResaltarFilaColor[k];
-                        }
-                        for (int j = 0; j < 5; j++)//Cabecera de la tabla
-                        {
-                            TableCell tCell = new TableCell();
-                            switch (j)
-                            {
-                                case 0:
-                                    tCell.Text = dt.Rows[i]["CODIGOSERVICIO"].ToString();
-                                    tCell.Visible = false;
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
-                                    tRow.Cells.Add(tCell);
-                                    break;
-
-                                case 1:
-                                    tCell.Text = dt.Rows[i]["SERVICIO"].ToString();
-                                    tCell.Visible = true;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
-                                    tRow.Cells.Add(tCell);
-                                    break;
-
-                                case 2:
-                                    tCell.Text = dt.Rows[i]["CODIGOMODALIDAD"].ToString();
-                                    tCell.Visible = false;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
-                                    tRow.Cells.Add(tCell);
-                                    break;
-
-                                case 3:
-                                    tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
-                                    tCell.Visible = true;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
-                                    tRow.Cells.Add(tCell);
-                                    break;
-
-                                case 4:
-                                    System.Web.UI.WebControls.Button b = new System.Web.UI.WebControls.Button();
-                                    b.Text = "QUITAR";
-                                    b.CssClass = "btn btn-danger btn-sm btn-block";
-                                    b.BorderStyle = BorderStyle.None;
-                                    b.CausesValidation = false;
-                                    b.UseSubmitBehavior = true;
-                                    //b.OnClientClick = "return Confirmar('¿Desea quitar servicio?');";
-                                    b.PostBackUrl = "solicitudservicio.aspx?FILA=" + i.ToString();
-                                    b.Click += new System.EventHandler(Quitar_Servicio);
-                                    tCell.HorizontalAlign = HorizontalAlign.Center;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
-                                    tCell.Controls.Add(b);
-                                    tRow.Cells.Add(tCell);
-                                    break;
-                            }
-                        }
-
-                        this.Table_.Rows.Add(tRow);
-                        k++;
-                    }
-                    
+        else
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tRow = new TableRow();
+                if (k < 4)
+                {
+                    tRow.CssClass = ResaltarFilaColor[k];
                 }
-                      
+                else
+                {
+                    k = 0;
+                    tRow.CssClass = ResaltarFilaColor[k];
+                }
+                for (int j = 0; j < 5; j++)//Cabecera de la tabla
+                {
+                    TableCell tCell = new TableCell();
+                    switch (j)
+                    {
+                        case 0:
+                            tCell.Text = dt.Rows[i]["CODIGOSERVICIO"].ToString();
+                            tCell.Visible = false;
+                            tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 1:
+                            tCell.Text = dt.Rows[i]["SERVICIO"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 2:
+                            tCell.Text = dt.Rows[i]["CODIGOMODALIDAD"].ToString();
+                            tCell.Visible = false;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 3:
+                            tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 4:
+                            Button b = new Button();
+                            b.Text = "QUITAR";
+                            b.CssClass = "btn btn-danger btn-sm btn-block";
+                            b.BorderStyle = BorderStyle.None;
+                            b.CausesValidation = false;
+                            b.UseSubmitBehavior = true;
+                            //b.OnClientClick = "return Confirmar('¿Desea quitar servicio?');";
+                            b.PostBackUrl = "solicitudservicio.aspx?FILA=" + i.ToString();
+                            b.Click += new EventHandler(Quitar_Servicio);
+                            tCell.HorizontalAlign = HorizontalAlign.Center;
+                            tCell.ForeColor = Color.Black;
+                            tCell.Controls.Add(b);
+                            tRow.Cells.Add(tCell);
+                            break;
+                    }
+                }
+
+                Table_.Rows.Add(tRow);
+                k++;
+            }
+
+        }
+
     }
 
 
@@ -352,30 +402,30 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
     private void ObtenerSolicitudesPendientesServiciosSolicitados(String CodgoPersona)
     {
-        for (int i = 1; i < this.TableDSPSS.Rows.Count; i++)
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
         {
             for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
             {
-                this.TableDSPSS.Rows[i].Cells.RemoveAt(j);
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
             }
         }
-        
-        
+
+
         String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
-        for (int i = 1; i < this.TableSPSS.Rows.Count; i++)
+        for (int i = 1; i < TableSPSS.Rows.Count; i++)
         {
-            this.TableSPSS.Rows[i].Cells.Clear();
+            TableSPSS.Rows[i].Cells.Clear();
         }
-        
+
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
         try
         {
             servidor.cadenaconexion = Ruta;
             if (servidor.abrirconexion() == true)
             {
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Solicitudes_Pendientes_Servicios_Solicitados]", CodgoPersona).Tables[0];
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Solicitudes_Pendientes_Servicios_Solicitados]", CodgoPersona).Tables[0];
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
@@ -409,14 +459,14 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     //tRow.Cells.Add(tCell);
 
-                                    System.Web.UI.WebControls.CheckBox cb = new System.Web.UI.WebControls.CheckBox();
-                                    cb.ID ="OSPSS" + i.ToString() + j.ToString();
+                                    CheckBox cb = new CheckBox();
+                                    cb.ID = "OSPSS" + i.ToString() + j.ToString();
                                     //l.Text = dt.Rows[i]["Codigo"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(cb);
                                     tRow.Cells.Add(tCell);
 
-                                    
+
                                     break;
 
                                 case 1:
@@ -425,14 +475,14 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     //tRow.Cells.Add(tCell);
 
-                                    System.Web.UI.WebControls.Label l = new System.Web.UI.WebControls.Label();
+                                    Label l = new Label();
                                     l.ID = "OSPSS" + i.ToString() + j.ToString();
                                     l.Text = dt.Rows[i]["Codigo"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(l);
                                     tRow.Cells.Add(tCell);
 
-                                    System.Web.UI.WebControls.Button b = new System.Web.UI.WebControls.Button();
+                                    Button b = new Button();
                                     b.Text = "VER DETALLE";
                                     b.CssClass = "btn btn-info btn-sm btn-block";
                                     b.BorderStyle = BorderStyle.None;
@@ -442,7 +492,7 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     b.PostBackUrl = "solicitudservicio.aspx?CODIGOSOLICTUDSERVICIO=" + dt.Rows[i]["Codigo"].ToString();
                                     b.Click += new System.EventHandler(Detalle_Solicitudes_Pendientes_Servicios_Solicitados);
                                     tCell.HorizontalAlign = HorizontalAlign.Center;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Controls.Add(b);
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -453,13 +503,13 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black;
                                     //tRow.Cells.Add(tCell);
 
-                                    l = new System.Web.UI.WebControls.Label();
+                                    l = new Label();
                                     l.ID = "OSPSS" + i.ToString() + j.ToString();
                                     l.Text = dt.Rows[i]["Fecha"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(l);
                                     tRow.Cells.Add(tCell);
-                                   
+
                                     break;
 
                                 case 3:
@@ -468,18 +518,18 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black;
                                     //tRow.Cells.Add(tCell);
 
-                                    l = new System.Web.UI.WebControls.Label();
+                                    l = new Label();
                                     l.ID = "OSPSS" + i.ToString() + j.ToString();
                                     l.Text = dt.Rows[i]["Estado"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(l);
                                     tRow.Cells.Add(tCell);
-                                  
-                                    break;                               
+
+                                    break;
                             }
                         }
 
-                        this.TableSPSS.Rows.Add(tRow);
+                        TableSPSS.Rows.Add(tRow);
                         k++;
                     }
                     servidor.cerrarconexion();
@@ -500,34 +550,47 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
     protected void Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(int _Codigo_Solicitud)
     {
-        for (int i = 1; i < this.TableDSPSS.Rows.Count; i++){
-            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                this.TableDSPSS.Rows[i].Cells.RemoveAt(j);
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+            {
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
             }
         }
-        
-        
+
+
         String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
-        for (int i = 1; i < this.TableDSPSS.Rows.Count; i++){
-            this.TableDSPSS.Rows[i].Cells.Clear();
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            TableDSPSS.Rows[i].Cells.Clear();
         }
 
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-        try{
+        try
+        {
             servidor.cadenaconexion = Ruta;
-            if (servidor.abrirconexion() == true){
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados]", _Codigo_Solicitud).Tables[0];
-                if (dt.Rows.Count == 0){
+            if (servidor.abrirconexion() == true)
+            {
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados]", _Codigo_Solicitud).Tables[0];
+                if (dt.Rows.Count == 0)
+                {
                     servidor.cerrarconexion();
-                    this.Page.RegisterClientScriptBlock("", "<script> alert('Solicitud seleccionada no tiene servicios.');</script>");
-                }else{
-                    for (int i = 0; i < dt.Rows.Count; i++){
+                    MensajeValidaciones("Solicitud seleccionada no tiene servicios.");
+                    //Page.RegisterClientScriptBlock("", "<script> alert('Solicitud seleccionada no tiene servicios.');</script>");
+                }
+                else
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
                         tRow = new TableRow();
-                        if (k < 4){
+                        if (k < 4)
+                        {
                             tRow.CssClass = ResaltarFilaColor[k];
-                        }else{
+                        }
+                        else
+                        {
                             k = 0;
                             tRow.CssClass = ResaltarFilaColor[k];
                         }
@@ -537,10 +600,10 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                             switch (j)
                             {
                                 case 0:
-                                    System.Web.UI.WebControls.CheckBox cb = new System.Web.UI.WebControls.CheckBox();
+                                    CheckBox cb = new CheckBox();
                                     //l.Text = dt.Rows[i]["Codigo"].ToString();
                                     cb.ID = "ODSPSS" + i.ToString() + j.ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(cb);
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -551,11 +614,11 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     //tRow.Cells.Add(tCell);
 
-                                    System.Web.UI.WebControls.Label l = new System.Web.UI.WebControls.Label();
+                                    Label l = new Label();
                                     l.Text = dt.Rows[i]["CODIGO_DETALLE_SOLICITUD"].ToString();
                                     l.ID = "ODSPSS" + i.ToString() + j.ToString();
                                     tCell.Visible = false;
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(l);
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -566,11 +629,11 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                     //tCell.ForeColor = System.Drawing.Color.Black;
                                     //tRow.Cells.Add(tCell);
 
-                                    l = new System.Web.UI.WebControls.Label();
+                                    l = new Label();
                                     l.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
                                     l.ID = "ODSPSS" + i.ToString() + j.ToString();
                                     tCell.Visible = false;
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(l);
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -578,20 +641,20 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                                 case 3:
                                     tCell.Text = dt.Rows[i]["SERVIVIO"].ToString();
                                     tCell.Visible = true;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 4:
                                     tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
                                     tCell.Visible = true;
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tRow.Cells.Add(tCell);
                                     break;
                             }
                         }
 
-                        this.TableDSPSS.Rows.Add(tRow);
+                        TableDSPSS.Rows.Add(tRow);
                         k++;
                     }
                     servidor.cerrarconexion();
@@ -600,21 +663,21 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
             }
         }
         catch (Exception)
         {
             servidor.cerrarconexion();
-            this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+            Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
         }
     }
 
     protected void Detalle_Solicitudes_Pendientes_Servicios_Solicitados(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";  
-        
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
         int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
 
         Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
@@ -665,7 +728,7 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
         //                            tCell.Controls.Add(cb);
         //                            tRow.Cells.Add(tCell);
         //                            break;
-                                
+
         //                        case 1:
         //                            //tCell.Text = dt.Rows[i]["CODIGO_DETALLE_SOLICITUD"].ToString();
         //                            //tCell.Visible = false;
@@ -734,8 +797,10 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
     {
 
         DataTable dt = (DataTable)Session["Tabla"];
-        try{
-            if (dt.Rows[0].ItemArray[0].ToString() == ""){
+        try
+        {
+            if (dt.Rows[0].ItemArray[0].ToString() == "")
+            {
                 dt.Rows[0].Delete();
             }
         }
@@ -743,8 +808,8 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
         int Filas = dt.Rows.Count;
         if (Filas == 0)
         {
-            this.__mensaje.Value = "No hay servicio(s) para enviar.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "No hay servicio(s) para enviar.";
+            __pagina.Value = "";
             return;
         }
 
@@ -752,125 +817,140 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
         {
             policia.clsaccesodatos servidor = new policia.clsaccesodatos();
             servidor.cadenaconexion = Ruta;
-             if (servidor.abrirconexiontrans() == true){
-                 servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
-                 false,
-                 0,/*Codigo de la solicitud de servicio.*/
-                 0,/*Codigo estado solicitud de servicio.*/
-                 this.CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
-                 "N",
-                 0, "");
-                 int ID_CODIGO_SOLICITUD_SERVCIO = servidor.getRespuesta();
-                 if (ID_CODIGO_SOLICITUD_SERVCIO > 0)
-                 {
-                     String Mensage = "";
-                     /*Verificar si existen solicitudes para el mismo servicio en la misma fecha*/
-                     for (int i = 0; i < dt.Rows.Count; i++) {
-                         servidor.ejecutar("[dbo].[_pa_verificar_Existencia_Solicitud_Servicio_Fecha_Actual]",
-                                                              false,
-                                                              this.CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
-                                                              Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
-                                                              0, "");
-                         if (servidor.getRespuesta() == 1){
-                             Mensage += (i+1).ToString() + ") " + dt.Rows[i]["SERVICIO"].ToString() + " DE UNA " + dt.Rows[i]["MODALIDAD"].ToString() + ".\n";
-                         }
-                     }
-                     if (Mensage.Trim() != ""){
-                         servidor.cancelarconexiontrans();
-                         Mensage = "Ud. hasta el " + Convert.ToDateTime(ObtenerFechaSistema()).ToShortDateString() + " tiene solicitudes pendientes por los siguientes servicios:" + "\n" + Mensage;
-                         _Lista.ShowMessage(__mensaje, __pagina, Mensage, "");
-                         return;
-                     }
-                     
-                     for (int i = 0; i < dt.Rows.Count; i++)
-                     {
-                         servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
-                                                              false,
-                                                              0,/*Codigo detalle solicitud de servicio*/
-                                                              ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
-                                                              Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
-                                                              "N",
-                                                              0, "");
+            if (servidor.abrirconexiontrans() == true)
+            {
+                servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
+                false,
+                0,/*Codigo de la solicitud de servicio.*/
+                0,/*Codigo estado solicitud de servicio.*/
+                CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
+                "N",
+                0, "");
+                int ID_CODIGO_SOLICITUD_SERVCIO = servidor.getRespuesta();
+                if (ID_CODIGO_SOLICITUD_SERVCIO > 0)
+                {
+                    String Mensage = "";
+                    /*Verificar si existen solicitudes para el mismo servicio en la misma fecha*/
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_verificar_Existencia_Solicitud_Servicio_Fecha_Actual]",
+                                                             false,
+                                                             CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
+                                                             Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
+                                                             0, "");
+                        if (servidor.getRespuesta() == 1)
+                        {
+                            Mensage += (i + 1).ToString() + ") " + dt.Rows[i]["SERVICIO"].ToString() + " DE UNA " + dt.Rows[i]["MODALIDAD"].ToString() + ".\n";
+                        }
+                    }
+                    if (Mensage.Trim() != "")
+                    {
+                        servidor.cancelarconexiontrans();
+                        Mensage = "Ud. hasta el " + Convert.ToDateTime(ObtenerFechaSistema()).ToShortDateString() + " tiene solicitudes pendientes por los siguientes servicios:" + "\n" + Mensage;
+                        _Lista.ShowMessage(__mensaje, __pagina, Mensage, "");
+                        return;
+                    }
 
-                     }
-                     if (servidor.getRespuesta() == 1){
-                         servidor.cerrarconexiontrans();
-                         Session["Tabla"] = null;
-                         _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx");
-                     }
-                     else{
-                         servidor.cancelarconexiontrans();
-                         _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
-                     }
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
+                                                             false,
+                                                             0,/*Codigo detalle solicitud de servicio*/
+                                                             ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
+                                                             Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
+                                                             "N",
+                                                             0, "");
 
-                 }else{
-                     servidor.cancelarconexiontrans();
-                     _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
-                 }
+                    }
+                    if (servidor.getRespuesta() == 1)
+                    {
+                        servidor.cerrarconexiontrans();
+                        Session["Tabla"] = null;
+                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx");
+                    }
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
+                    }
 
-             }
-             else{
-                 servidor.cancelarconexiontrans();
-                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
-             }
+                }
+                else
+                {
+                    servidor.cancelarconexiontrans();
+                    _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
+                }
+
+            }
+            else
+            {
+                servidor.cancelarconexiontrans();
+                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
+            }
         }
         catch (Exception)
         {
             _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "");
         }
-        
+
     }
 
     protected void btnGenerarSolicitud_Click(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";        
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
-        this.PANEL_GENERAR_SOLCITUD.Visible = true;
-        this.PANEL_CANCELAR_SOLCITUD.Visible = false;
+        PANEL_GENERAR_SOLCITUD.Visible = true;
+        PANEL_CANCELAR_SOLCITUD.Visible = false;
 
-               
+
     }
 
     protected void btnCancelarSolicitud_Click(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";     
-        
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
         Session["Tabla"] = null;
 
-        this.PANEL_GENERAR_SOLCITUD.Visible = false;
-        this.PANEL_CANCELAR_SOLCITUD.Visible = true;
-        
+        PANEL_GENERAR_SOLCITUD.Visible = false;
+        PANEL_CANCELAR_SOLCITUD.Visible = true;
+
         if (OSPSS == false)
-            this.Page.RegisterClientScriptBlock("", "<script> alert('No hay solicitudes pendeientes de servicios solicitados.');</script>");
-      
+            Page.RegisterClientScriptBlock("", "<script> alert('No hay solicitudes pendeientes de servicios solicitados.');</script>");
+
     }
 
     protected void btnEliminarSolicitud_Click(object sender, EventArgs e)
     {
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";  
-        
-        for (int i = 1; i < this.TableDSPSS.Rows.Count; i++){
-            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                this.TableDSPSS.Rows[i].Cells.RemoveAt(j);
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+            {
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
             }
         }
-        
+
         bool ok = false;
-        for (int i = 1; i < this.TableSPSS.Rows.Count; i++){
-            System.Web.UI.WebControls.CheckBox cb;
-            cb = (System.Web.UI.WebControls.CheckBox)this.TableSPSS.Rows[i].Cells[0].Controls[0];
-            if (cb.Checked == true){
-                System.Web.UI.WebControls.Label l;
-                l = (System.Web.UI.WebControls.Label)this.TableSPSS.Rows[i].Cells[1].Controls[0];
+        for (int i = 1; i < TableSPSS.Rows.Count; i++)
+        {
+            CheckBox cb;
+            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
+            if (cb.Checked == true)
+            {
+                Label l;
+                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
                 ok = true;
-                try{
+                try
+                {
                     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
                     servidor.cadenaconexion = Ruta;
-                    if (servidor.abrirconexiontrans() == true){
+                    if (servidor.abrirconexiontrans() == true)
+                    {
                         servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
                         false,
                         Convert.ToInt32(l.Text),/*Codigo de la solicitud de servicio.*/
@@ -878,51 +958,65 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                         null,/*Codigo del cliente*/
                         "E",
                         0, "");
-                        if (servidor.getRespuesta() == 1){
+                        if (servidor.getRespuesta() == 1)
+                        {
                             servidor.cerrarconexiontrans();
-                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                                this.TableSPSS.Rows[i].Cells.RemoveAt(j);                             
-                            }                            
-                            this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }else{
-                            servidor.cancelarconexiontrans();
-                            this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                            {
+                                TableSPSS.Rows[i].Cells.RemoveAt(j);
+                            }
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
                         }
-                    }else{
-                        servidor.cancelarconexiontrans();
-                        this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
                     }
-                }catch (Exception){
-                    this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
-                }               
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                    }
+                }
+                catch (Exception)
+                {
+                    Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                }
             }
         }
 
-        if (ok == false){
-            this.Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");           
-        }       
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
+        }
     }
 
     protected void btnCancelarSolicitudes_Click(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";  
-        
-        for (int i = 1; i < this.TableDSPSS.Rows.Count; i++){
-            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                this.TableDSPSS.Rows[i].Cells.RemoveAt(j);
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+            {
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
             }
         }
-        
+
         bool ok = false;
-        for (int i = 1; i < this.TableSPSS.Rows.Count; i++){
-            System.Web.UI.WebControls.CheckBox cb;
-            cb = (System.Web.UI.WebControls.CheckBox)this.TableSPSS.Rows[i].Cells[0].Controls[0];
-            if (cb.Checked == true){
-                System.Web.UI.WebControls.Label l;
-                l = (System.Web.UI.WebControls.Label)this.TableSPSS.Rows[i].Cells[1].Controls[0];
+        for (int i = 1; i < TableSPSS.Rows.Count; i++)
+        {
+            CheckBox cb;
+            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
+            if (cb.Checked == true)
+            {
+                Label l;
+                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
                 ok = true;
-                try{
+                try
+                {
                     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
                     servidor.cadenaconexion = Ruta;
                     if (servidor.abrirconexiontrans() == true)
@@ -934,28 +1028,37 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                         null,/*Codigo del cliente*/
                         "M",
                         0, "");
-                        if (servidor.getRespuesta() == 1){
+                        if (servidor.getRespuesta() == 1)
+                        {
                             servidor.cerrarconexiontrans();
-                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                                this.TableSPSS.Rows[i].Cells.RemoveAt(j);
+                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                            {
+                                TableSPSS.Rows[i].Cells.RemoveAt(j);
                             }
-                            this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }else{
-                            servidor.cancelarconexiontrans();
-                            this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
                         }
-                    }else{
-                        servidor.cancelarconexiontrans();
-                        this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
                     }
-                }catch (Exception){
-                    this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                    }
+                }
+                catch (Exception)
+                {
+                    Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
                 }
             }
         }
 
-        if (ok == false){
-            this.Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
         }
     }
 
@@ -981,27 +1084,32 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
 
         //this.Page.RegisterClientScriptBlock("", "<script> alert('" + rpta + "');</script>");
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
         bool ok = false;
 
-        try{
-            int i = this.TableDSPSS.Rows.Count - 1;
-            while (i > 0 && i < this.TableDSPSS.Rows.Count){
-                System.Web.UI.WebControls.CheckBox cb;
-                cb = (System.Web.UI.WebControls.CheckBox)this.TableDSPSS.Rows[i].Cells[0].Controls[0];
-                if (cb.Checked == true){
-                    System.Web.UI.WebControls.Label ds;//codigo detalle solicitud
-                    ds = (System.Web.UI.WebControls.Label)this.TableDSPSS.Rows[i].Cells[1].Controls[0];
+        try
+        {
+            int i = TableDSPSS.Rows.Count - 1;
+            while (i > 0 && i < TableDSPSS.Rows.Count)
+            {
+                CheckBox cb;
+                cb = (CheckBox)TableDSPSS.Rows[i].Cells[0].Controls[0];
+                if (cb.Checked == true)
+                {
+                    Label ds;//codigo detalle solicitud
+                    ds = (Label)TableDSPSS.Rows[i].Cells[1].Controls[0];
 
-                    System.Web.UI.WebControls.Label cs;//codigo solicitud
-                    cs = (System.Web.UI.WebControls.Label)this.TableDSPSS.Rows[i].Cells[2].Controls[0];
+                    Label cs;//codigo solicitud
+                    cs = (Label)TableDSPSS.Rows[i].Cells[2].Controls[0];
                     ok = true;
-                    try{
+                    try
+                    {
                         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
                         servidor.cadenaconexion = Ruta;
-                        if (servidor.abrirconexiontrans() == true){
+                        if (servidor.abrirconexiontrans() == true)
+                        {
                             servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
                             false,
                             Convert.ToInt32(ds.Text),/*Codigo de la solicitud de servicio.*/
@@ -1009,42 +1117,52 @@ public partial class Clientes_solicitudservicio : System.Web.UI.Page
                             null,/*Codigo modalidad*/
                             "E",
                             0, "");
-                            if (servidor.getRespuesta() == 1){
+                            if (servidor.getRespuesta() == 1)
+                            {
                                 servidor.cerrarconexiontrans();
-                                for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--){
-                                    this.TableDSPSS.Rows[i].Cells.RemoveAt(j);
+                                for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                                {
+                                    TableDSPSS.Rows[i].Cells.RemoveAt(j);
                                 }
-                                this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                            }else{
+                                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            }
+                            else
+                            {
                                 servidor.cancelarconexiontrans();
-                                this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                            }                        
-                        }else{
-                            servidor.cancelarconexiontrans();
-                            this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            }
                         }
-                    }catch (Exception){
-                        this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
                     }
 
                 }
                 i = i - 1;
             }
-            ObtenerSolicitudesPendientesServiciosSolicitados(this.CodigoPersona_S.Text.Trim());        
+            ObtenerSolicitudesPendientesServiciosSolicitados(CodigoPersona_S.Text.Trim());
         }
-        catch (Exception){;}
+        catch (Exception) {; }
 
-        
-        try{
+
+        try
+        {
             int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
             Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
         }
-        catch (Exception) { ;}
+        catch (Exception) {; }
 
-        if (ok == false){
-            this.Page.RegisterClientScriptBlock("", "<script> alert('Seleccione detalle(s).');</script>");
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione detalle(s).');</script>");
         }
 
-        
+
     }
 }
