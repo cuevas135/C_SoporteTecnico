@@ -227,6 +227,7 @@ public partial class Clientes_solicitudservicio : Page
         {
             __mensaje.Value = "Seleccione servicio.";
             __pagina.Value = "";
+            Servicios.Focus();
             return;
         }
 
@@ -234,6 +235,7 @@ public partial class Clientes_solicitudservicio : Page
         {
             __mensaje.Value = "Seleccione modalidad.";
             __pagina.Value = "";
+            Modalidades.Focus();
             return;
         }
 
@@ -266,7 +268,7 @@ public partial class Clientes_solicitudservicio : Page
         Response.Clear();
         Response.Redirect("solicitudservicio.aspx");
         Response.Flush();
-
+        btnEnviarSolicitudServicio.Focus();
     }
 
     protected void Servicios_SelectedIndexChanged(object sender, EventArgs e)
@@ -274,6 +276,7 @@ public partial class Clientes_solicitudservicio : Page
         __mensaje.Value = "";
         __pagina.Value = "";
         ObtenerModalidades(Convert.ToInt32(Servicios.SelectedValue));
+        Modalidades.Focus();
     }
 
 
