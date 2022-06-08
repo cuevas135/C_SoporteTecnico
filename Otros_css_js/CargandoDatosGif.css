@@ -1,0 +1,200 @@
+﻿/* https://icons8.com/preloaders/ */
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+.CargandoDatosGif {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif1.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+/*PACMAN*/
+.CargandoDatosGif2 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif2.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+.CargandoDatosGif3 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif3.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+/* https://icons8.com/preloaders/en/horizontal/2/ */
+.CargandoDatosGif4 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif4.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+/* https://icons8.com/preloaders/en/circular/2/ */
+.CargandoDatosGif5 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif5.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) */
+/* https://icons8.com/preloaders/en/circular/2/ */
+.CargandoDatosGif6 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif6.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) * (CARGANDO USUARIO)/ 
+/* https://icons8.com/preloaders/en/circular/2/ */
+.CargandoDatosGif7 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif7.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) * (FORMULARIOS)/ 
+/* https://icons8.com/preloaders/en/people_and_animals */
+.CargandoDatosGif8 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif8.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) * (FORMULARIOS)/ 
+/* https://www.pinterest.com/pin/82612974405718363/ */
+/* BdPsjeManifiestoEncomiendas.aspx */
+.CargandoDatosGif9 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif9.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) * (ASIGNAR PROGRAMACION)/ 
+/* https://icons8.com/preloaders/en/science */
+/* BdPsjeAsigProg.aspx */
+.CargandoDatosGif10 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif10.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}
+/*=============================================================*/
+/* GRAFICO CUANDO SE CARGA DATOS (GIF) * (HOJA DE RUTA)/ 
+/* https://icons8.com/preloaders/en/science */
+/* BdPsjeAsigProg.aspx */
+.CargandoDatosGif11 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../Imagenes/Loading/Gif11.gif) 50% 50% no-repeat rgb(255,255,255);
+    /*top: 50%; 
+    left: 50%;*/
+    filter: Alpha(Opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.7;
+    text-align: center;
+}

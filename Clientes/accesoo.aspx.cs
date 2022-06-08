@@ -8,21 +8,20 @@ using System.Data;
 //using Servicios;
 using SEGURIDAD;
 
-public partial class Clientes_acceso2 : System.Web.UI.Page
+public partial class acceso : System.Web.UI.Page
 {
-    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     private int intentos = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        login.Focus();
+        this.login.Focus();
     }
-
     protected void Aceptar_Click(object sender, EventArgs e)
     {
-        __mensaje.Value = "";
-        __pagina.Value = "";
-        bool ok;
+        Boolean ok;
+
         ok = rfvlogin.IsValid;
+
         ok = ok && rfvpassword.IsValid;
 
         if (ok == false)
@@ -30,11 +29,12 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
             return;
         }
 
-        string strLogin, strPassword;
-        strLogin = login.Text.Trim();
+        String strLogin, strPassword;
+        strLogin = this.login.Text.Trim();
 
         encriptar en = new encriptar();
-        strPassword = en.EncriptarCadena(password.Text.Trim());
+        strPassword = en.EncriptarCadena(this.password.Text.Trim());
+
 
         try
         {
@@ -49,12 +49,12 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
                 if (dt.Rows[0]["CODIGO"].ToString().Trim() == "")
                 {
                     servidor.cerrarconexion();
-                    __mensaje.Value = dt.Rows[0]["PERSONA"].ToString().Trim();
-                    __pagina.Value = "";
+                    this.__mensaje.Value = dt.Rows[0]["PERSONA"].ToString().Trim();
+                    this.__pagina.Value = "";
                 }
                 else
                 {
-                    string Persona = dt.Rows[0]["TIPOPERSONA"].ToString().Trim();
+                    String Persona = dt.Rows[0]["TIPOPERSONA"].ToString().Trim();
                     /*Persona natural o juridica*/
                     if (Persona.Equals("PN") || Persona.Equals("PJ"))
                     {
@@ -71,8 +71,8 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                __mensaje.Value = servidor.getMensageError();
-                __pagina.Value = "";
+                this.__mensaje.Value = servidor.getMensageError();
+                this.__pagina.Value = "";
             }
         }
         catch (Exception)
@@ -81,5 +81,7 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
             //this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
             //this.__pagina.Value = "";
         }
+
+
     }
 }
