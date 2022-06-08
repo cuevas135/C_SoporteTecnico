@@ -443,4 +443,9 @@ public partial class Cliente_ticketsincidentes : System.Web.UI.Page
 
         listarticketsincidentes(canal_, area_, prioridad_, impacto_, fi.Trim(), ff.Trim(), CODIGO_USUARIO);
     }
+
+    protected void hlnuevo_Click(object sender, EventArgs e)
+    {
+
+    }
 }

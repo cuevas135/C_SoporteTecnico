@@ -107,7 +107,7 @@
                     <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud"
                         Width="140px" class="btn btn-success" CausesValidation="False"
                         UseSubmitBehavior="False" OnClick="btnGenerarSolicitud_Click"
-                        PostBackUrl="~/Clientes/solicitudservicio.aspx" />
+                        PostBackUrl="~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO" />
                 </div>
                 <div class="form-group col-md-4 col-sm-4">
                     <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes"
@@ -201,6 +201,7 @@
                                 <asp:Button ID="btnEnviarSolicitudServicio" runat="server" Text="Enviar" Width="140px"
                                     class="btn btn-primary" CausesValidation="False" OnClick="btnEnviarSolicitudServicio_Click"
                                     OnClientClick="return Confirmar('¿Desea enviar su solicitud de servicio.?');" />
+                               
                                 <asp:HiddenField ID="__pagina" runat="server" />
                                 <asp:HiddenField ID="__mensaje" runat="server" />
                             </div>

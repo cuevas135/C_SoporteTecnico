@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
+//using Newtonsoft.Json;
 using System.Drawing;
 using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+//using System.Net;
+//using System.Net.Sockets;
 
 public partial class Clientes_solicitudservicio : Page
 {
 
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
-
+    private String Ruta = ConfigurationManager.AppSettings.Get("CadenaConeccion");
     TableRow tRow;
-
     Lista _Lista = new Lista();
-
+    CsSignal _CsSignal = new CsSignal();
     bool OSPSS = true;
+    string EnviarNotificacion = "NO";
 
     public void MensajeValidaciones(string Message)
     {
@@ -142,7 +142,21 @@ public partial class Clientes_solicitudservicio : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        try
+        {
+            ////=====================================================
+            //EnviarNotificacion = Request.QueryString["EnviarNotificacion"]; // OPCION
+            //if (EnviarNotificacion == "SI")
+            //{
+            //    //ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
+            //    _CsSignal.EnviarNotificacionAdministrador();
+            //}
+            ////=====================================================
+        }
+        catch (Exception)
+        {
+            //throw;
+        }
     }
 
     protected void Page_init(object sender, EventArgs e)
@@ -215,6 +229,9 @@ public partial class Clientes_solicitudservicio : Page
             Detalle_Solicitudes_Pendientes_Servicios_Solicitados(sender, e);
         }
         catch (Exception) { }
+
+
+
 
     }
     protected void btnAgregar_Click(object sender, EventArgs e)
@@ -857,19 +874,24 @@ public partial class Clientes_solicitudservicio : Page
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
-                                                             false,
-                                                             0,/*Codigo detalle solicitud de servicio*/
-                                                             ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
-                                                             Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
-                                                             "N",
-                                                             0, "");
+                                            false,
+                                            0,/*Codigo detalle solicitud de servicio*/
+                                            ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
+                                            Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
+                                            "N",
+                                            0, "");
 
                     }
                     if (servidor.getRespuesta() == 1)
                     {
+                        //=====================================================
+                        //ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
+                        _CsSignal.EnviarNotificacionAdministrador();
+                        //=====================================================
+
                         servidor.cerrarconexiontrans();
                         Session["Tabla"] = null;
-                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx");
+                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx?EnviarNotificacion=SI");
                     }
                     else
                     {
@@ -891,9 +913,11 @@ public partial class Clientes_solicitudservicio : Page
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "");
+
+            _Lista.ShowMessage(__mensaje, __pagina, ex.Message.ToString()
+                + " Error inesperado al intentar conectarnos con el servidor.", "");
         }
 
     }
@@ -1168,4 +1192,6 @@ public partial class Clientes_solicitudservicio : Page
 
 
     }
+
+   
 }

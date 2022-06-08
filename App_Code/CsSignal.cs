@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
 using System.Web.Script.Serialization;
 
 /// <summary>
@@ -18,23 +14,26 @@ public class CsSignal
         // TODO: Agregar aquí la lógica del constructor
         //
     }
+    //ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
+    //ServicePointManager.SecurityProtocol = (SecurityProtocolType)768; //TLS 1.1
+
 
     public void EnviarNotificacionAdministrador()
     {
         //ENVIA NOTIFICACION SOLO A LOS ADMINISTRADORES
         //SE DEBE AGREGAR ID DE USUARIOS QUE SE GENERA, ESTO SE DEBE VER EN PAGINA DE ONE SIGNAL
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+        ServicePointManager.SecurityProtocol = (SecurityProtocolType)768 | (SecurityProtocolType)3072;
         var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
 
         request.KeepAlive = true;
         request.Method = "POST";
         request.ContentType = "application/json; charset=utf-8";
-
+        string mensaje = "Tiene una nueva solicitud de servicio. Verifique.";
         var serializer = new JavaScriptSerializer();
         var obj = new
         {
             app_id = "21b967f4-0513-4f69-ad17-5999947de053",
-            contents = new { en = "English Message" },
+            contents = new { en = mensaje },
             include_player_ids = new string[] {
                 "2f322f2c-1acb-4a20-a48e-626b9abed80c",
                 "be58970c-8056-4691-a444-426e1401adf4"
@@ -63,7 +62,7 @@ public class CsSignal
         }
         catch (WebException ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.Message);
+            System.Diagnostics.Debug.WriteLine(ex.Message.ToString());
             System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
         }
 
@@ -73,7 +72,7 @@ public class CsSignal
     public void EnviarNotificacionTodos()
     {
         //ENVIA NOTIFICACION A TODOS LAS PERSONAS QUE TENGAN INSTALADA LA APLICACION
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+        ServicePointManager.SecurityProtocol = (SecurityProtocolType)768 | (SecurityProtocolType)3072;
         var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
 
 

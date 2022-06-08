@@ -63,7 +63,7 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
                                                             };
 
                         Response.Clear();
-                        Response.Redirect("~/Clientes/solicitudservicio.aspx");
+                        Response.Redirect("~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO");
                         Response.Flush();
                     }
                 }

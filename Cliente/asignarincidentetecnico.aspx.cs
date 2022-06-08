@@ -20,11 +20,11 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
     {
 
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
-        for (int i = 1; i < this.Table_.Rows.Count; i++)
+        __mensaje.Value = "";
+        __pagina.Value = "";
+        for (int i = 1; i < Table_.Rows.Count; i++)
         {
-            this.Table_.Rows[i].Cells.Clear();
+            Table_.Rows[i].Cells.Clear();
         }
 
         try
@@ -37,8 +37,8 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay datos de Tickets / Incidentes para mostrar";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay datos de Tickets / Incidentes para mostrar";
+                    __pagina.Value = "";
                     //this.Nombre.Text = "";
                 }
                 else
@@ -138,7 +138,7 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
                             }
                         }
 
-                        this.Table_.Rows.Add(tRow);
+                        Table_.Rows.Add(tRow);
                     }
                     servidor.cerrarconexion();
                 }
@@ -146,15 +146,15 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.__mensaje.Value = servidor.getMensageError();
-                this.__pagina.Value = "CerrarSession.aspx";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "CerrarSession.aspx";
             }
 
         }
         catch (Exception)
         {
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "CerrarSession.aspx";
         }
     }
 
@@ -173,10 +173,10 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
                 }
                 else
                 {
-                    this.AREA.DataSource = dt;
-                    this.AREA.DataTextField = "NOMBRE";
-                    this.AREA.DataValueField = "CODIGO";
-                    this.AREA.DataBind();
+                    AREA.DataSource = dt;
+                    AREA.DataTextField = "NOMBRE";
+                    AREA.DataValueField = "CODIGO";
+                    AREA.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -197,13 +197,13 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
     {
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "../CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "../CerrarSession.aspx";
             return;
         }
         //=============================================================================================================
@@ -211,13 +211,13 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
         //CAPTURAMOS EL CODIGO DEL USUARIO QUE INICIO SESION.
         CODIGO_USUARIO = Convert.ToInt32(Datos[0]);
 
-        this.ObtenerArea();
-        this.listarasignarincidentetecnico("", CODIGO_USUARIO);
+        ObtenerArea();
+        listarasignarincidentetecnico("", CODIGO_USUARIO);
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.TableRow1.TableSection = TableRowSection.TableHeader;
+        TableRow1.TableSection = TableRowSection.TableHeader;
     }
 
    
@@ -226,9 +226,9 @@ public partial class Cliente_asignarincidentecolaborador : System.Web.UI.Page
         _Lista.ShowMessage(__mensaje, __pagina, "", "");
        
         String area_ = "";
-        if (this.AREA.SelectedIndex > 0)
+        if (AREA.SelectedIndex > 0)
         {
-            area_ = this.AREA.Items[this.AREA.SelectedIndex].Text.Trim();
+            area_ = AREA.Items[AREA.SelectedIndex].Text.Trim();
         }
 
         listarasignarincidentetecnico(area_, CODIGO_USUARIO);

@@ -190,7 +190,7 @@ public partial class Clientes_recuperarClientes : System.Web.UI.Page
         NuevaContraseña = CrearPassword(4);
         encriptar en = new encriptar();
 
-        String strTextoEncriptado = en.EncriptarCadena(this.NuevaContraseña.Trim());
+        String strTextoEncriptado = en.EncriptarCadena(NuevaContraseña.Trim());
 
         if (TablaDatos.Rows.Count > 0)
         {

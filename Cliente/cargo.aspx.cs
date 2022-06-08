@@ -14,20 +14,20 @@ public partial class Cliente_cargo : System.Web.UI.Page
 
     private void oculta(bool ok)
     {
-        this.btnModificar.Visible = ok;
-        this.btnEliminar.Visible = ok;
+        btnModificar.Visible = ok;
+        btnEliminar.Visible = ok;
         //this.btnCancelar.Visible = ok;
     }
 
     private void listarcargos()
     {
-        this.__mensaje.Value = "";
+        __mensaje.Value = "";
 
-        this.__pagina.Value = "";
+        __pagina.Value = "";
 
-        for (int i = 1; i < this.Tablecargos.Rows.Count; i++)
+        for (int i = 1; i < Tablecargos.Rows.Count; i++)
         {
-            this.Tablecargos.Rows[i].Cells.Clear();
+            Tablecargos.Rows[i].Cells.Clear();
         }
 
         try
@@ -107,7 +107,7 @@ public partial class Cliente_cargo : System.Web.UI.Page
                             }
                         }
 
-                        this.Tablecargos.Rows.Add(tRow);
+                        Tablecargos.Rows.Add(tRow);
                     }
 
                     servidor.cerrarconexion();
@@ -177,23 +177,23 @@ public partial class Cliente_cargo : System.Web.UI.Page
 
     private void ShowMessage(string msg, string paginaweb)
     {
-        this.__mensaje.Value = msg;
+        __mensaje.Value = msg;
 
-        this.__pagina.Value = paginaweb;
+        __pagina.Value = paginaweb;
     }
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Convert.ToInt32(this.ID_CARGO.Value.Trim()) == 0)
+        if (Convert.ToInt32(ID_CARGO.Value.Trim()) == 0)
         {
-            this.btnRegistrar.Visible = true;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = true;
+            btnCancelar.Visible = true;
             oculta(false);
         }
         else
         {
-            this.btnRegistrar.Visible = false;
-            this.btnCancelar.Visible = true;
+            btnRegistrar.Visible = false;
+            btnCancelar.Visible = true;
             oculta(true);
 
         }
@@ -203,18 +203,18 @@ public partial class Cliente_cargo : System.Web.UI.Page
     {
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "../CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "../CerrarSession.aspx";
             return;
         }
         //=============================================================================================================
 
-        this.lblusurio.Text = "TIPO USUARIO : " + Datos[1] + "    " + "   USUARIO : " + Datos[2];
+        lblusurio.Text = "TIPO USUARIO : " + Datos[1] + "    " + "   USUARIO : " + Datos[2];
 
         listarcargos();
 
@@ -233,7 +233,7 @@ public partial class Cliente_cargo : System.Web.UI.Page
             Convert.ToString(CARGO.Text.Trim()),
             "N");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
     }
     protected void btnModificar_Click(object sender, EventArgs e)
     {
@@ -248,7 +248,7 @@ public partial class Cliente_cargo : System.Web.UI.Page
             Convert.ToString(CARGO.Text.Trim()),
             "M");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
     }
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
@@ -263,7 +263,7 @@ public partial class Cliente_cargo : System.Web.UI.Page
             Convert.ToString(CARGO.Text.Trim()),
             "E");
 
-        this.Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
+        Page.RegisterStartupScript("", "<script> Limpiar_Datos_Cargo(); </script>}");
     }
     protected void btnCancelar_Click(object sender, EventArgs e)
     {

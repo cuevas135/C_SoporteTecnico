@@ -217,7 +217,7 @@ public class Lista
     // =============================== PARA CONTROL DE ACCESOS =========================================
     public bool verifica_seleccion_autorizacion_formulario_derecho_2(System.Web.UI.WebControls.Table tabla, int NroColumna)
     {
-        bool ok = ((System.Web.UI.WebControls.CheckBox)tabla.Rows[1].Cells[NroColumna].Controls[0]).Checked;
+        bool ok = ((CheckBox)tabla.Rows[1].Cells[NroColumna].Controls[0]).Checked;
         return ok;
     }
 
@@ -225,12 +225,12 @@ public class Lista
     {
         bool ok = true;
         for (int i = 2; i < tabla.Rows.Count; i++){
-            if (((System.Web.UI.WebControls.CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0]).Checked == false)
+            if (((CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0]).Checked == false)
             {
                 ok = true;
                 for (int j = 4; j < tabla.Rows[i].Cells.Count; j++)
                 {
-                    if (((System.Web.UI.WebControls.CheckBox)tabla.Rows[i].Cells[j].Controls[0]).Checked == true)
+                    if (((CheckBox)tabla.Rows[i].Cells[j].Controls[0]).Checked == true)
                     {
                         ok = false;
                     }
@@ -248,11 +248,11 @@ public class Lista
         bool ok = true;
         for (int i = 2; i < tabla.Rows.Count; i++)
         {
-            if (((System.Web.UI.WebControls.CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0]).Checked == true)
+            if (((CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0]).Checked == true)
             {
                 ok = false;
                 for (int j = 4; j < tabla.Rows[i].Cells.Count; j++){
-                    if (((System.Web.UI.WebControls.CheckBox)tabla.Rows[i].Cells[j].Controls[0]).Checked == true)
+                    if (((CheckBox)tabla.Rows[i].Cells[j].Controls[0]).Checked == true)
                     {
                         ok = true;
                     }
@@ -270,7 +270,7 @@ public class Lista
     {
         bool ok = false;
         for (int i = 1; i < tabla.Rows.Count; i++){
-            System.Web.UI.WebControls.CheckBox check = (System.Web.UI.WebControls.CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0];
+            CheckBox check = (CheckBox)tabla.Rows[i].Cells[NroColumna].Controls[0];
             if (check.Checked == true)
             {
                 ok = true;
