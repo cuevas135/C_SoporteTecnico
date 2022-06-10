@@ -29,15 +29,15 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay tecnicos.";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay tecnicos.";
+                    __pagina.Value = "";
                 }
                 else
                 {
-                    this.Tecnico.DataSource = dt;
-                    this.Tecnico.DataTextField = "Nombre";
-                    this.Tecnico.DataValueField = "Codigo";
-                    this.Tecnico.DataBind();
+                    Tecnico.DataSource = dt;
+                    Tecnico.DataTextField = "Nombre";
+                    Tecnico.DataValueField = "Codigo";
+                    Tecnico.DataBind();
                     servidor.cerrarconexion();
                 }
             }
@@ -66,27 +66,27 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
         int posicion = codigo.IndexOf('-');
 
-        this.lblCliente.Text = "<b>Cliente: " + codigo.Substring(posicion+1) + "</b>";
+        lblCliente.Text = "<b>Cliente: " + codigo.Substring(posicion+1) + "</b>";
 
         Ver_Detalle_Solicitud(Convert.ToInt32(codigo.Substring(0,posicion)));
 
         Tecnico_SelectedIndexChanged(sender, e);
 
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true);
+        ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "openModal();", true);
     }
 
    private void Ver_Detalle_Solicitud(int Codigo)
    {
-       this.__mensaje.Value = "";
-       this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
 
        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
        int k = 0;
 
-       for (int i = 1; i < this.Table_Detalle.Rows.Count; i++)
+       for (int i = 1; i < Table_Detalle.Rows.Count; i++)
        {
-           this.Table_Detalle.Rows[i].Cells.Clear();           
+            Table_Detalle.Rows[i].Cells.Clear();           
        }
 
        try
@@ -99,8 +99,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                if (dt.Rows.Count == 0)
                {
                    servidor.cerrarconexion();
-                   this.__mensaje.Value = "No hay detalles para mostrar";
-                   this.__pagina.Value = "";
+                    __mensaje.Value = "No hay detalles para mostrar";
+                    __pagina.Value = "";
 
                }
                else
@@ -147,7 +147,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                            }
                        }
 
-                       this.Table_Detalle.Rows.Add(tRow);
+                        Table_Detalle.Rows.Add(tRow);
                        k++;
                    }
                    servidor.cerrarconexion();
@@ -156,15 +156,15 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
            else
            {
                servidor.cerrarconexion();
-               this.__mensaje.Value = servidor.getMensageError();
-               this.__pagina.Value = "CerrarSession.aspx";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "CerrarSession.aspx";
            }
 
        }
        catch (Exception)
        {
-           this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-           this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "CerrarSession.aspx";
        }
    }
 
@@ -172,18 +172,18 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
     {
 
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
 
         String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
-        for (int i = 1; i < this.Table_.Rows.Count; i++)
+        for (int i = 1; i < Table_.Rows.Count; i++)
         {
             for (int j = Table_.Rows[i].Cells.Count - 1; j >= 0; j--)
             {
-                this.Table_.Rows[i].Cells.RemoveAt(j);
+                Table_.Rows[i].Cells.RemoveAt(j);
             }
         }
 
@@ -198,8 +198,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay solicitudes para mostrar";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay solicitudes para mostrar";
+                    __pagina.Value = "";
 
                 }
                 else
@@ -223,7 +223,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             switch (j)
                             {
                                case 0:
-                                    System.Web.UI.WebControls.CheckBox cb = new System.Web.UI.WebControls.CheckBox();
+                                    CheckBox cb = new CheckBox();
                                     cb.AutoPostBack = false;
                                     //cb.CheckedChanged += new System.EventHandler(VerificaSeleccion);
                                     //cb.Init += new System.EventHandler(VerificaSeleccion);
@@ -328,7 +328,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             }
                         }
 
-                        this.Table_.Rows.Add(tRow);
+                        Table_.Rows.Add(tRow);
                         k++;
                     }
                     servidor.cerrarconexion();
@@ -337,15 +337,15 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.__mensaje.Value = servidor.getMensageError();
-                this.__pagina.Value = "CerrarSession.aspx";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "CerrarSession.aspx";
             }
 
         }
         catch (Exception)
         {
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "CerrarSession.aspx";
         }
     }
 
@@ -353,20 +353,20 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
     {
 
 
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
-        this.btnEliminar.Visible = false;
+        btnEliminar.Visible = false;
 
 
         String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
-        for (int i = 1; i < this.Table_.Rows.Count; i++)
+        for (int i = 1; i < Table_.Rows.Count; i++)
         {
             for (int j = TableVisita.Rows[i].Cells.Count - 1; j >= 0; j--)
             {
-                this.TableVisita.Rows[i].Cells.RemoveAt(j);
+                TableVisita.Rows[i].Cells.RemoveAt(j);
             }
         }
 
@@ -381,13 +381,13 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                    this.__mensaje.Value = "No hay visitas asignadas para mostrar";
-                    this.__pagina.Value = "";
+                    __mensaje.Value = "No hay visitas asignadas para mostrar";
+                    __pagina.Value = "";
 
                 }
                 else
                 {
-                    this.btnEliminar.Visible = true;
+                    btnEliminar.Visible = true;
                     
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
@@ -408,7 +408,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             switch (j)
                             {
                                 case 0:
-                                    System.Web.UI.WebControls.CheckBox cb = new System.Web.UI.WebControls.CheckBox();
+                                    CheckBox cb = new CheckBox();
                                     cb.AutoPostBack = false;
                                     //cb.CheckedChanged += new System.EventHandler(VerificaSeleccion);
                                     //cb.Init += new System.EventHandler(VerificaSeleccion);
@@ -541,7 +541,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             }
                         }
 
-                        this.TableVisita.Rows.Add(tRow);
+                        TableVisita.Rows.Add(tRow);
                         k++;
                     }
                     servidor.cerrarconexion();
@@ -550,15 +550,15 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
             else
             {
                 servidor.cerrarconexion();
-                this.__mensaje.Value = servidor.getMensageError();
-                this.__pagina.Value = "CerrarSession.aspx";
+                __mensaje.Value = servidor.getMensageError();
+                __pagina.Value = "CerrarSession.aspx";
             }
 
         }
         catch (Exception)
         {
-            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __pagina.Value = "CerrarSession.aspx";
         }
     }
 
@@ -567,18 +567,18 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
         //=============================================================================================================
         //Verificamos si el usuario ha iniciado sesion.
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         string[] Datos = (string[])Session["__JSAR__"];
         if (Datos == null)
         {
-            this.__mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
-            this.__pagina.Value = "CerrarSession.aspx";
+            __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
+            __pagina.Value = "CerrarSession.aspx";
             return;
         }
         //============================================================================================================
 
-        this.lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
+        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
 
         Tecnico_SelectedIndexChanged(sender, e);
         
@@ -641,8 +641,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
     
     protected void btnRegistrarVisita_Click(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
         Boolean ok;
         ok = rvTecnico.IsValid;
@@ -660,10 +660,10 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                     if (servidor.abrirconexiontrans() == true)
                     {
                         
-                        for (int i = 1; i < this.Table_.Rows.Count; i++)
+                        for (int i = 1; i < Table_.Rows.Count; i++)
                         {
-                            System.Web.UI.WebControls.CheckBox cb;
-                            cb = (System.Web.UI.WebControls.CheckBox)this.Table_.Rows[i].Cells[0].Controls[0];
+                    CheckBox cb;
+                            cb = (CheckBox)Table_.Rows[i].Cells[0].Controls[0];
 
                             if (cb.Checked == true)
                             {
@@ -672,8 +672,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                 servidor.ejecutar("[dbo].[_pa_mantenimiento_Visita]",
                                 false,
                                 0,/*Codigo visita.*/
-                                Convert.ToInt32(this.Table_.Rows[i].Cells[1].Text),/*Codigo solicitud.*/
-                                Convert.ToInt32(this.Tecnico.SelectedValue),/*Codigo tecnico*/
+                                Convert.ToInt32(Table_.Rows[i].Cells[1].Text),/*Codigo solicitud.*/
+                                Convert.ToInt32(Tecnico.SelectedValue),/*Codigo tecnico*/
                                 "N",
                                 0, "");
                             }
@@ -696,19 +696,20 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                         _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "");
+                    _Lista.ShowMessage(__mensaje, __pagina
+                        , ex.Message.ToString() +  " Error inesperado al intentar conectarnos con el servidor.", "");
                 }
                
          
         if (ok == false)
         {
-            
 
-            
-            this.__mensaje.Value = "Seleccione solicitud(es) de servicios por favor.";
-            this.__pagina.Value = "";
+
+
+            __mensaje.Value = "Seleccione solicitud(es) de servicios por favor.";
+            __pagina.Value = "";
         }
 
     }
@@ -719,25 +720,25 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         {
             listarticketsincidentes();
 
-            this.btnRegistrarVisita.Visible = true;
+            btnRegistrarVisita.Visible = true;
         }
         else
         {
-            this.btnRegistrarVisita.Visible = false;
+            btnRegistrarVisita.Visible = false;
 
-            for (int i = 1; i < this.Table_.Rows.Count; i++)
+            for (int i = 1; i < Table_.Rows.Count; i++)
             {
                 for (int j = Table_.Rows[i].Cells.Count - 1; j >= 0; j--)
                 {
-                    this.Table_.Rows[i].Cells.RemoveAt(j);
+                    Table_.Rows[i].Cells.RemoveAt(j);
                 }
             }
         }
     }
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
-        this.__mensaje.Value = "";
-        this.__pagina.Value = "";
+        __mensaje.Value = "";
+        __pagina.Value = "";
         
         Boolean ok;
         ok = rvTecnico.IsValid;
@@ -755,10 +756,10 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
             if (servidor.abrirconexiontrans() == true)
             {
 
-                for (int i = 1; i < this.TableVisita.Rows.Count; i++)
+                for (int i = 1; i < TableVisita.Rows.Count; i++)
                 {
-                    System.Web.UI.WebControls.CheckBox cb;
-                    cb = (System.Web.UI.WebControls.CheckBox)this.TableVisita.Rows[i].Cells[0].Controls[0];
+                    CheckBox cb;
+                    cb = (CheckBox)TableVisita.Rows[i].Cells[0].Controls[0];
 
                     if (cb.Checked == true)
                     {
@@ -766,8 +767,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
                         servidor.ejecutar("[dbo].[_pa_mantenimiento_Visita]",
                         false,
-                        Convert.ToInt32(this.TableVisita.Rows[i].Cells[1].Text),/*Codigo visita.*/
-                        Convert.ToInt32(this.TableVisita.Rows[i].Cells[4].Text),/*Codigo solicitud.*/
+                        Convert.ToInt32(TableVisita.Rows[i].Cells[1].Text),/*Codigo visita.*/
+                        Convert.ToInt32(TableVisita.Rows[i].Cells[4].Text),/*Codigo solicitud.*/
                         null,/*Codigo tecnico*/
                         "E",
                         0, "");
@@ -791,9 +792,10 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "");
+            _Lista.ShowMessage(__mensaje, __pagina
+                , ex.Message.ToString() + " Error inesperado al intentar conectarnos con el servidor.", "");
         }
 
 
@@ -802,8 +804,8 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
 
 
-            this.__mensaje.Value = "Seleccione visita(s) por favor.";
-            this.__pagina.Value = "";
+            __mensaje.Value = "Seleccione visita(s) por favor.";
+            __pagina.Value = "";
         }
     }
 }
