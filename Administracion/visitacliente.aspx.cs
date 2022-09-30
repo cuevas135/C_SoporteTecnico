@@ -14,8 +14,9 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 {
     private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-    System.Web.UI.WebControls.TableRow tRow;
+    TableRow tRow;
     Lista _Lista = new Lista();
+    CsSignal _CsSignal = new CsSignal();
 
     private void Obtener_Tecnicos()
     {
@@ -25,7 +26,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
             servidor.cadenaconexion = Ruta;
             if (servidor.abrirconexion() == true)
             {
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_tecnico]").Tables[0];
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_tecnico]").Tables[0];
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
@@ -54,7 +55,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         }
     }
 
-   private void Visualiza_Detalle_Solicitud(object sender, EventArgs e)
+    private void Visualiza_Detalle_Solicitud(object sender, EventArgs e)
     {
         //this.Page.RegisterStartupScript("", "<script> alert('aa'); </script>}");
         Button b = (Button)sender;
@@ -66,107 +67,107 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
         int posicion = codigo.IndexOf('-');
 
-        lblCliente.Text = "<b>Cliente: " + codigo.Substring(posicion+1) + "</b>";
+        lblCliente.Text = "<b>Cliente: " + codigo.Substring(posicion + 1) + "</b>";
 
-        Ver_Detalle_Solicitud(Convert.ToInt32(codigo.Substring(0,posicion)));
+        Ver_Detalle_Solicitud(Convert.ToInt32(codigo.Substring(0, posicion)));
 
         Tecnico_SelectedIndexChanged(sender, e);
 
         ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "openModal();", true);
     }
 
-   private void Ver_Detalle_Solicitud(int Codigo)
-   {
+    private void Ver_Detalle_Solicitud(int Codigo)
+    {
         __mensaje.Value = "";
         __pagina.Value = "";
 
 
-       String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
-       int k = 0;
+        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        int k = 0;
 
-       for (int i = 1; i < Table_Detalle.Rows.Count; i++)
-       {
-            Table_Detalle.Rows[i].Cells.Clear();           
-       }
+        for (int i = 1; i < Table_Detalle.Rows.Count; i++)
+        {
+            Table_Detalle.Rows[i].Cells.Clear();
+        }
 
-       try
-       {
-           policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-           servidor.cadenaconexion = Ruta;
-           if (servidor.abrirconexion() == true)
-           {
-               DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados_2]", Codigo).Tables[0];
-               if (dt.Rows.Count == 0)
-               {
-                   servidor.cerrarconexion();
+        try
+        {
+            policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+            servidor.cadenaconexion = Ruta;
+            if (servidor.abrirconexion() == true)
+            {
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados_2]", Codigo).Tables[0];
+                if (dt.Rows.Count == 0)
+                {
+                    servidor.cerrarconexion();
                     __mensaje.Value = "No hay detalles para mostrar";
                     __pagina.Value = "";
 
-               }
-               else
-               {
-                   for (int i = 0; i < dt.Rows.Count; i++)
-                   {
-                       tRow = new TableRow();
-                       if (k < 4)
-                       {
-                           tRow.CssClass = ResaltarFilaColor[k];
-                       }
-                       else
-                       {
-                           k = 0;
-                           tRow.CssClass = ResaltarFilaColor[k];
-                       }
+                }
+                else
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        tRow = new TableRow();
+                        if (k < 4)
+                        {
+                            tRow.CssClass = ResaltarFilaColor[k];
+                        }
+                        else
+                        {
+                            k = 0;
+                            tRow.CssClass = ResaltarFilaColor[k];
+                        }
 
-                       for (int j = 0; j < 3; j++)//Cabecera de la tabla
-                       {
-                           TableCell tCell = new TableCell();
-                           switch (j)
-                           {
-                               case 0:
-                                   tCell.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
-                                   tCell.ForeColor = System.Drawing.Color.Black;
-                                   tCell.Visible = true;
-                                   tRow.Cells.Add(tCell);
-                                   break;
+                        for (int j = 0; j < 3; j++)//Cabecera de la tabla
+                        {
+                            TableCell tCell = new TableCell();
+                            switch (j)
+                            {
+                                case 0:
+                                    tCell.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
+                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.Visible = true;
+                                    tRow.Cells.Add(tCell);
+                                    break;
 
-                               case 1:
-                                   tCell.Text = dt.Rows[i]["SERVIVIO"].ToString();
-                                   tCell.ForeColor = System.Drawing.Color.Black;
-                                   tCell.Visible = true;
-                                   tRow.Cells.Add(tCell);
-                                   break;
+                                case 1:
+                                    tCell.Text = dt.Rows[i]["SERVIVIO"].ToString();
+                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.Visible = true;
+                                    tRow.Cells.Add(tCell);
+                                    break;
 
-                               case 2:
-                                   tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
-                                   tCell.ForeColor = System.Drawing.Color.Black;
-                                   tCell.Visible = true;
-                                   tRow.Cells.Add(tCell);
-                                   break;                               
+                                case 2:
+                                    tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
+                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.Visible = true;
+                                    tRow.Cells.Add(tCell);
+                                    break;
 
-                           }
-                       }
+                            }
+                        }
 
                         Table_Detalle.Rows.Add(tRow);
-                       k++;
-                   }
-                   servidor.cerrarconexion();
-               }
-           }
-           else
-           {
-               servidor.cerrarconexion();
+                        k++;
+                    }
+                    servidor.cerrarconexion();
+                }
+            }
+            else
+            {
+                servidor.cerrarconexion();
                 __mensaje.Value = servidor.getMensageError();
                 __pagina.Value = "CerrarSession.aspx";
-           }
+            }
 
-       }
-       catch (Exception)
-       {
+        }
+        catch (Exception)
+        {
             __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
             __pagina.Value = "CerrarSession.aspx";
-       }
-   }
+        }
+    }
 
     private void listarticketsincidentes()
     {
@@ -194,7 +195,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
             if (servidor.abrirconexion() == true)
             {
                 DataTable dt = servidor.consultar("[dbo].[_pa_Asignar_Solicitudes_Pendientes_Personal_Tecnico]").Tables[0];
-              
+
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
@@ -222,7 +223,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             TableCell tCell = new TableCell();
                             switch (j)
                             {
-                               case 0:
+                                case 0:
                                     CheckBox cb = new CheckBox();
                                     cb.AutoPostBack = false;
                                     //cb.CheckedChanged += new System.EventHandler(VerificaSeleccion);
@@ -231,14 +232,14 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     //cb.ID = i.ToString() + j.ToString();
                                     tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(cb);
-                                    tRow.Cells.Add(tCell);                                
+                                    tRow.Cells.Add(tCell);
                                     break;
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["NRO. SOLICITUD"].ToString();
                                     tCell.ForeColor = System.Drawing.Color.Black;
                                     tCell.Visible = true;
-                                    tRow.Cells.Add(tCell);                                  
+                                    tRow.Cells.Add(tCell);
                                     break;
 
                                 case 2:
@@ -388,7 +389,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                 else
                 {
                     btnEliminar.Visible = true;
-                    
+
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         tRow = new TableRow();
@@ -419,11 +420,11 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     tRow.Cells.Add(tCell);
                                     break;
 
-                                    //tCell.Text = "";
-                                    //tCell.ForeColor = System.Drawing.Color.Black;
-                                    //tCell.Visible = true;
-                                    //tRow.Cells.Add(tCell);
-                                    //break;
+                                //tCell.Text = "";
+                                //tCell.ForeColor = System.Drawing.Color.Black;
+                                //tCell.Visible = true;
+                                //tRow.Cells.Add(tCell);
+                                //break;
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["CODIGO VISITA"].ToString();
@@ -460,7 +461,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     tRow.Cells.Add(tCell);
                                     break;
 
-                               case 6:
+                                case 6:
                                     tCell.Text = dt.Rows[i]["CLIENTE"].ToString();
                                     tCell.ForeColor = System.Drawing.Color.Black;
                                     tCell.Visible = true;
@@ -536,7 +537,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     //tCell.Visible = true;
                                     //tRow.Cells.Add(tCell);
                                     break;
-                                    
+
 
                             }
                         }
@@ -578,23 +579,23 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         }
         //============================================================================================================
 
-        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
+        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>";
 
         Tecnico_SelectedIndexChanged(sender, e);
-        
+
     }
 
     protected void Page_init(object sender, EventArgs e)
     {
-       
+
 
         Obtener_Tecnicos();
         Visitas_Asignadas_Tecnico();
 
-        
+
     }
 
-   
+
 
     //private bool VerificaSeleccion()
     //{
@@ -617,7 +618,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
     //    this.__mensaje.Value = "";
     //    this.__pagina.Value = "";
-        
+
     //    CheckBox c = (CheckBox)sender;
     //    if (c.Checked == true)
     //    {
@@ -638,7 +639,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
 
 
-    
+
     protected void btnRegistrarVisita_Click(object sender, EventArgs e)
     {
         __mensaje.Value = "";
@@ -650,59 +651,65 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         if (ok == false)
         {
             return;
-        }      
+        }
 
         ok = false;
-             try
+        try
+        {
+            policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+            servidor.cadenaconexion = Ruta;
+            if (servidor.abrirconexiontrans() == true)
+            {
+
+                for (int i = 1; i < Table_.Rows.Count; i++)
                 {
-                    policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-                    servidor.cadenaconexion = Ruta;
-                    if (servidor.abrirconexiontrans() == true)
-                    {
-                        
-                        for (int i = 1; i < Table_.Rows.Count; i++)
-                        {
                     CheckBox cb;
-                            cb = (CheckBox)Table_.Rows[i].Cells[0].Controls[0];
+                    cb = (CheckBox)Table_.Rows[i].Cells[0].Controls[0];
 
-                            if (cb.Checked == true)
-                            {
-                                ok = true;
-
-                                servidor.ejecutar("[dbo].[_pa_mantenimiento_Visita]",
-                                false,
-                                0,/*Codigo visita.*/
-                                Convert.ToInt32(Table_.Rows[i].Cells[1].Text),/*Codigo solicitud.*/
-                                Convert.ToInt32(Tecnico.SelectedValue),/*Codigo tecnico*/
-                                "N",
-                                0, "");
-                            }
-                        }
-
-                        if (servidor.getRespuesta() == 1)
-                        {
-                                servidor.cerrarconexiontrans();
-                                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "visitacliente.aspx");
-                        }
-                        else
-                        {
-                                servidor.cancelarconexiontrans();
-                                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
-                        }     
-                    }
-                    else
+                    if (cb.Checked == true)
                     {
-                        servidor.cancelarconexiontrans();
-                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
+                        ok = true;
+
+                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Visita]",
+                        false,
+                        0,/*Codigo visita.*/
+                        Convert.ToInt32(Table_.Rows[i].Cells[1].Text),/*Codigo solicitud.*/
+                        Convert.ToInt32(Tecnico.SelectedValue),/*Codigo tecnico*/
+                        "N",
+                        0, "");
                     }
                 }
-                catch (Exception ex)
+
+                if (servidor.getRespuesta() == 1)
                 {
-                    _Lista.ShowMessage(__mensaje, __pagina
-                        , ex.Message.ToString() +  " Error inesperado al intentar conectarnos con el servidor.", "");
+                    //=====================================================
+                    //ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
+                    _CsSignal.EnviarNotificacionAdministrador();
+                    //=====================================================
+
+                    servidor.cerrarconexiontrans();
+                    _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "visitacliente.aspx");
+
                 }
-               
-         
+                else
+                {
+                    servidor.cancelarconexiontrans();
+                    _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
+                }
+            }
+            else
+            {
+                servidor.cancelarconexiontrans();
+                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
+            }
+        }
+        catch (Exception ex)
+        {
+            _Lista.ShowMessage(__mensaje, __pagina
+                , ex.Message.ToString() + " Error inesperado al intentar conectarnos con el servidor.", "");
+        }
+
+
         if (ok == false)
         {
 
@@ -739,14 +746,14 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
     {
         __mensaje.Value = "";
         __pagina.Value = "";
-        
+
         Boolean ok;
         ok = rvTecnico.IsValid;
         ok = ok && rfvTecnico.IsValid;
         if (ok == false)
         {
             return;
-        }      
+        }
 
         ok = false;
         try

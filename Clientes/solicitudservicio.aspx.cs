@@ -15,7 +15,7 @@ public partial class Clientes_solicitudservicio : Page
     private String Ruta = ConfigurationManager.AppSettings.Get("CadenaConeccion");
     TableRow tRow;
     Lista _Lista = new Lista();
-    CsSignal _CsSignal = new CsSignal();
+    //CsSignal _CsSignal = new CsSignal();
     bool OSPSS = true;
     string EnviarNotificacion = "NO";
 
@@ -884,10 +884,10 @@ public partial class Clientes_solicitudservicio : Page
                     }
                     if (servidor.getRespuesta() == 1)
                     {
-                        //=====================================================
-                        //ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
-                        _CsSignal.EnviarNotificacionAdministrador();
-                        //=====================================================
+                        ////=====================================================
+                        ////ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
+                        //_CsSignal.EnviarNotificacionAdministrador();
+                        ////=====================================================
 
                         servidor.cerrarconexiontrans();
                         Session["Tabla"] = null;

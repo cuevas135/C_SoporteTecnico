@@ -28,7 +28,7 @@ public class CsSignal
         request.KeepAlive = true;
         request.Method = "POST";
         request.ContentType = "application/json; charset=utf-8";
-        string mensaje = "Tiene una nueva solicitud de servicio. Verifique.";
+        string mensaje = "Su solicitud ha sido visualizada y asignada a un tecnico en breve se comunicara con usted.";
         var serializer = new JavaScriptSerializer();
         var obj = new
         {
@@ -36,7 +36,8 @@ public class CsSignal
             contents = new { en = mensaje },
             include_player_ids = new string[] {
                 "2f322f2c-1acb-4a20-a48e-626b9abed80c",
-                "be58970c-8056-4691-a444-426e1401adf4"
+                "be58970c-8056-4691-a444-426e1401adf4",
+                "fb8ace16-923e-492c-9ef2-b07cac34789e" //RICARDO GUZMAN
                 }
         };
 
