@@ -3,31 +3,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>Colaborador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/png" href="Imagenes/icono.png" />
+    <title>Registrar Colaborador</title>
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Bootstrap -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="../Imagenes/icono.ico" />
 
-    <!-- Calendario -->
-    <%--<link href="css/dcalendar.picker.css" rel="stylesheet">--%>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../bootstrap/js/jquery-1.12.4.min.js" type="text/javascript"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <%--<link href="css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />--%><%--<script src="js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>--%><%--<link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>--%>
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- Custom styles for this template-->
+    <link href="../vendor/css/sb-admin.css" rel="stylesheet" />
 
-
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap core JavaScript-->
+    <!--jquery-3.4.1.min.js-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <style type="text/css">
         body {
-            background-color: #fafafa;
-            font-family: 'Roboto';
+            /*background-color: #fafafa;
+            font-family: 'Roboto';*/
+            padding-top: 4rem;
         }
 
         .container {
@@ -66,7 +68,6 @@
             }
         }
     </style>
-
 
     <script type='text/javascript'>
 
@@ -214,227 +215,368 @@
     </script>
 
 </head>
-<body onload="MostrarMensaje()">
-    <!-- #include virtual="menu.inc" -->
+<body onload="MostrarMensaje();" id="page-top">
     <form id="frmColaborador" role="form" runat="server">
-        <div class="panel panel-primary" style="border-style: hidden; margin: 20px;">
-            <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
-            <div class="panel-heading" style="text-align: center">
-                <h3 class="panel-title">Ingrese datos colaborador
-                </h3>
+        <nav class="navbar navbar-expand fixed-top" style="background-color: #66bf0e;">
+            <a class="navbar-brand mr-1">
+                <label class="text-White font-weight-bold" style="color: ghostwhite">
+                    Bienvenido
+                    <asp:LoginName ID="LoginName1" runat="server" Font-Bold="true" Visible="False" />
+                </label>
+            </a>
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle">
+                <i class="fa fa-align-justify" style="font-size: 20px; color: ghostwhite"></i>
+            </button>
+            <!-- Navbar Search -->
+            <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <%--<input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">--%>
+                    <div class="input-group-append">
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group col-md-3 col-sm-3">
-                            Codigo:
-                                <asp:TextBox ID="CodigoP" class="form-control input-sm" runat="server"></asp:TextBox>
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown no-arrow mx-1"></li>
+                <li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#"
+                    id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"></a></li>
+                <li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#"
+                    id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw" style="font-size: 24px; color: ghostwhite"></i>
+                </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <%-- <a class="dropdown-item" href="Usuario">Perfil de Usuario</a>
+                        <div class="dropdown-divider">
+                        </div>--%>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar Sesion</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="wrapper">
+            <%--<div id="wrapper" >--%>
+            <!-- Sidebar -->
+            <ul class="sidebar navbar-nav" style="background-color: #0e66bf;">
+                <li class="nav-item"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span>Inicio</span> </a></li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span>Colaborador</span></a> </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="visitacliente.aspx"><i class="fas fa-calendar-check"></i><span>Asignar Visita Tecnico</span></a> </li>
+            </ul>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fas fa-user-circle fa-fw"></i>Registrar Colaborador
+                            <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
                         </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Area:
+
+                        <div class="card-body">
+                            <%--PRIMERA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        Codigo:
+                                <asp:TextBox ID="CodigoP" CssClass="form-control input-sm" runat="server"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Area:
                                 <asp:RangeValidator ID="rvArea" runat="server" BackColor="" ControlToValidate="Area" ErrorMessage="*" ForeColor="Red" MaximumValue="99999" MinimumValue="1" SetFocusOnError="True" Type="Integer" Font-Size="Medium"></asp:RangeValidator>
-                            <asp:RequiredFieldValidator ID="rfvArea" runat="server" ErrorMessage="*" ControlToValidate="Area" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:DropDownList ID="Area" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"></asp:DropDownList>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Tipo Colaborador:  
+                                        <asp:RequiredFieldValidator ID="rfvArea" runat="server" ErrorMessage="*" ControlToValidate="Area" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="Area" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"></asp:DropDownList>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Tipo Colaborador:  
                                 <asp:RangeValidator ID="rvTipoColaborador" runat="server" BackColor="" ControlToValidate="TipoColaborador" ErrorMessage="*" ForeColor="Red" MaximumValue="99999" MinimumValue="1" SetFocusOnError="True" Type="Integer" Font-Size="Medium"></asp:RangeValidator>
-                            <asp:RequiredFieldValidator ID="rfvTipoColaborador" runat="server" ErrorMessage="*" ControlToValidate="TipoColaborador" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:DropDownList ID="TipoColaborador" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"></asp:DropDownList>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Nro. DNI:
+                                        <asp:RequiredFieldValidator ID="rfvTipoColaborador" runat="server" ErrorMessage="*" ControlToValidate="TipoColaborador" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="TipoColaborador" runat="server" CssClass="form-control input-sm" Font-Size="Small" Style="margin-left: 0px"></asp:DropDownList>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Nro. DNI:
                                 <asp:RequiredFieldValidator ID="rfvNroDNI" runat="server" ErrorMessage="*" ControlToValidate="NroDNI" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="revNroDNI" runat="server" ControlToValidate="NroDNI" ErrorMessage="Nro DNI tiene 8 numeros" ForeColor="Red" ValidationExpression="\d{8}" SetFocusOnError="True"></asp:RegularExpressionValidator>
-                            <asp:TextBox ID="NroDNI" class="form-control" runat="server" placeholder="Ingrese Nro. DNI" onkeypress="return SoloNumeros()" onchange="" MaxLength="8"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                                        <asp:RegularExpressionValidator ID="revNroDNI" runat="server" ControlToValidate="NroDNI" ErrorMessage="**" ForeColor="Red" ValidationExpression="\d{8}" SetFocusOnError="True"></asp:RegularExpressionValidator>
+                                        <asp:TextBox ID="NroDNI" CssClass="form-control input-sm" runat="server" placeholder="DNI" onkeypress="return SoloNumeros()" onchange="" MaxLength="8"></asp:TextBox>
+                                    </div>
 
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group col-md-3 col-sm-3">
-                            Apellido paterno:
+                                </div>
+                            </div>
+                            <%--FIN PRIMERA FILA--%>
+
+                            <%--SEGUNDA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        Apellido paterno:
                                 <asp:RequiredFieldValidator ID="rfvApellidoPaterno" runat="server" ErrorMessage="*" ControlToValidate="ApellidoPaterno" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="ApellidoPaterno" class="form-control" runat="server" placeholder="Ingrese apellido paterno" onkeypress="return SoloLetrasMinusculas()" onchange="CambiaLetraMayuscula('ApellidoPaterno')" MaxLength="15"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Apellido materno:
+                                        <asp:TextBox ID="ApellidoPaterno" CssClass="form-control input-sm" runat="server"
+                                            placeholder="Ingrese apellido paterno" onkeypress="return SoloLetrasMinusculas()"
+                                            onchange="CambiaLetraMayuscula('ApellidoPaterno')" MaxLength="15"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Apellido materno:
                                 <asp:RequiredFieldValidator ID="rfvApellidoMaterno" runat="server" ErrorMessage="*" ControlToValidate="ApellidoMaterno" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="ApellidoMaterno" class="form-control" runat="server" placeholder="Ingrese apellido materno" onkeypress="return SoloLetrasMinusculas()" onchange="CambiaLetraMayuscula('ApellidoMaterno')" MaxLength="15"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Nombre: 
+                                        <asp:TextBox ID="ApellidoMaterno" CssClass="form-control input-sm" runat="server"
+                                            placeholder="Ingrese apellido materno" onkeypress="return SoloLetrasMinusculas()"
+                                            onchange="CambiaLetraMayuscula('ApellidoMaterno')" MaxLength="15"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Nombre: 
                                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ErrorMessage="*" ControlToValidate="Nombre" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="Nombre" class="form-control" runat="server" placeholder="Ingrese nombre" onkeypress="return SoloLetrasMinusculas()" onchange="CambiaLetraMayuscula('Nombre')" MaxLength="15"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Direccion:
+                                        <asp:TextBox ID="Nombre" CssClass="form-control input-sm" runat="server"
+                                            placeholder="Ingrese nombre" onkeypress="return SoloLetrasMinusculas()" onchange="CambiaLetraMayuscula('Nombre')" MaxLength="15"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Direccion:
                                 <asp:RequiredFieldValidator ID="rfvDireccion" runat="server" ControlToValidate="Direccion" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="Direccion" runat="server" class="form-control input-sm" onchange="CambiaLetraMayuscula('Direccion')" placeholder="Ingrese direccion"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                                        <asp:TextBox ID="Direccion" runat="server" CssClass="form-control input-sm"
+                                            onchange="CambiaLetraMayuscula('Direccion')" placeholder="Ingrese direccion"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN SEGUNDA FILA--%>
 
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group col-md-3 col-sm-3">
-                            Nro. telefono: 
-                                <asp:RegularExpressionValidator ID="revTelefonoFijo" runat="server" ControlToValidate="TelefonoFijo" ErrorMessage="Nro telefono 6 numeros" ForeColor="Red" ValidationExpression="\d{6}"></asp:RegularExpressionValidator>
-                            <asp:TextBox ID="TelefonoFijo" runat="server" class="form-control input-sm" onkeypress="return SoloNumeros()" onchange="" MaxLength="6" placeholder="Ingrese Nro. telefono"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Nro. celular:
+
+                            <%--TERCERA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        Nro. telefono: 
+                                <asp:RegularExpressionValidator ID="revTelefonoFijo" runat="server" ControlToValidate="TelefonoFijo" ErrorMessage="*" ForeColor="Red" ValidationExpression="\d{6}"></asp:RegularExpressionValidator>
+                                        <asp:TextBox ID="TelefonoFijo" runat="server" CssClass="form-control input-sm" onkeypress="return SoloNumeros()" onchange="" MaxLength="6" placeholder="Ingrese Nro. telefono"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Nro. celular:
                                 <asp:RequiredFieldValidator ID="rfvTelefonoMovil" runat="server" ControlToValidate="TelefonoMovil" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="revTelefonoMovil" runat="server" ControlToValidate="TelefonoMovil" ErrorMessage="Nro celular 9 numeros" ForeColor="Red" ValidationExpression="\d{9}"></asp:RegularExpressionValidator>
-                            <asp:TextBox ID="TelefonoMovil" runat="server" class="form-control input-sm" onkeypress="return SoloNumeros()" onchange="" MaxLength="9" placeholder="Ingrese Nro. celular"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Usuario:
+                                        <asp:RegularExpressionValidator ID="revTelefonoMovil" runat="server" ControlToValidate="TelefonoMovil" ErrorMessage="**" ForeColor="Red" ValidationExpression="\d{9}"></asp:RegularExpressionValidator>
+                                        <asp:TextBox ID="TelefonoMovil" runat="server" CssClass="form-control input-sm" onkeypress="return SoloNumeros()" onchange="" MaxLength="9" placeholder="Ingrese Nro. celular"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Usuario:
                                 <asp:RequiredFieldValidator ID="rfvLogin" runat="server" ControlToValidate="Login" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="Login" runat="server" class="form-control input-sm" onkeypress="" onchange="" MaxLength="0" placeholder="Ingrese usuario"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Contraseña:
+                                        <asp:TextBox ID="Login" runat="server" CssClass="form-control input-sm" onkeypress="" onchange="" MaxLength="0" placeholder="Ingrese usuario"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Contraseña:
                                 <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="Password" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="Password" runat="server" class="form-control input-sm" onkeypress="" onchange="" MaxLength="0" placeholder="Ingrese contraseña"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                                        <asp:TextBox ID="Password" runat="server" CssClass="form-control input-sm" onkeypress="" onchange="" MaxLength="0" placeholder="Ingrese contraseña"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN TERCERA FILA--%>
 
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group col-md-3 col-sm-3">
-                            Email:
+
+                            <%--CUARTA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        Email:
                                 <asp:RegularExpressionValidator ID="revEmail" runat="server" SetFocusOnError="True" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" ControlToValidate="Email" ErrorMessage="Correo Invalido" ForeColor="Red"></asp:RegularExpressionValidator>
-                            <asp:TextBox ID="Email" runat="server" class="form-control input-sm" placeholder="email@example.com"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Facebook:
-                                <asp:TextBox ID="Faceboock" runat="server" class="form-control input-sm" placeholder="Ingrese Facebook"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Twiter:
-                                <asp:TextBox ID="Twiter" runat="server" class="form-control input-sm" placeholder="Ingrese Twiter"></asp:TextBox>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-3">
-                            Estado:
+                                        <asp:TextBox ID="Email" runat="server" CssClass="form-control input-sm" placeholder="email@example.com"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Facebook:
+                                <asp:TextBox ID="Faceboock" runat="server" CssClass="form-control input-sm" placeholder="Ingrese Facebook"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Twiter:
+                                <asp:TextBox ID="Twiter" runat="server" CssClass="form-control input-sm" placeholder="Ingrese Twiter"></asp:TextBox>
+                                    </div>
+                                    <div class="col-md-3">
+                                        Estado:
                                 <asp:CheckBox ID="Estado" runat="server" CssClass="checkbox-inline" Text="" />
-                        </div>
-                    </div>
-                </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN CUARTA FILA--%>
 
-                <div class="row">
-                    <div class="col-md-12 col-sm-12" style="text-align: center">
-                        <div class="col-sm-offset-2 col-sm-8" style="text-align: center; top: 0px; left: 0px; height: 25px;">
-                            <%--<asp:LinkButton ID="lbRegistrar" runat="server" 
-                                     onclientclick="return Confirmar('¿Desea guardar sus datos?');" 
-                                     style="font-family: Calibri;  font-size: medium" Text="Registrar" 
-                                     CssClass="btn btn-primary" Width="85px" onclick="lbEnviar_Click" 
-                                     Visible="False" />                           
-                                <asp:LinkButton ID="lbModificar" runat="server" 
-                                     style="font-family: Calibri;  font-size: medium" Text="Modificar" 
-                                     CssClass="btn btn-success" CausesValidation="False" Width="85px" 
-                                     onclick="lbModificar_Click" Visible="False" />                           
-                                <asp:LinkButton ID="lbEliminar" runat="server" CausesValidation="False" 
-                                     Text="Eliminar" style="font-family: Calibri; font-size: medium"  
-                                     UseSubmitBehavior="False" class="btn btn-danger" Width="85px" 
-                                     Visible="False"/>
-                                <asp:LinkButton ID="lbCancelar" runat="server" CausesValidation="False" 
-                                     Text="Cancelar" style="font-family: Calibri; font-size: medium"  
-                                     UseSubmitBehavior="False" class="btn btn-danger" Width="85px" 
-                                     CssClass="btn btn-warning" Visible="False"/>--%>
-                            <asp:Button ID="btnRegistrar" runat="server"
-                                Style="font-family: Calibri; color: #000000; font-size: medium"
-                                Text="Registrar"
-                                OnClientClick="return Confirmar('¿Desea registrar colaborador?');"
-                                CssClass="btn btn-primary" Visible="False" OnClick="btnRegistrar_Click"
-                                Width="100px" />
-                            <asp:Button ID="btnModificar" runat="server"
-                                Style="font-family: Calibri; color: #000000; font-size: medium"
-                                Text="Modificar"
-                                OnClientClick="return Confirmar('¿Desea modificar colaborador?');"
-                                CssClass="btn btn-success" OnClick="btnModificar_Click"
-                                Width="100px" Visible="False" />
-                            <asp:Button ID="btnEliminar" runat="server"
-                                Style="font-family: Calibri; color: #000000; font-size: medium"
-                                Text="Eliminar" OnClientClick="return Confirmar('¿Desea eliminar colaborador?');"
-                                Visible="False" class="btn btn-danger" OnClick="btnEliminar_Click"
-                                Width="100px" />
-                            <asp:Button ID="btnCancelar" runat="server" class="btn btn-warning"
-                                Style="font-family: Calibri; font-size: medium" Text="Cancelar"
-                                Visible="False" CausesValidation="False"
-                                OnClientClick="Limpiar_Datos_Colaborador();" OnClick="btnCancelar_Click"
-                                Width="100px" />
-                        </div>
-                    </div>
-                </div>
+                            <%--BOTONES--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12 text-center">
+                                        <asp:Button ID="btnRegistrar" runat="server"
+                                            Style="font-family: Calibri; color: #000000; font-size: medium"
+                                            Text="Registrar"
+                                            OnClientClick="return Confirmar('¿Desea registrar colaborador?');"
+                                            CssClass="btn btn-primary" Visible="False" OnClick="btnRegistrar_Click" />
+                                        <asp:Button ID="btnModificar" runat="server"
+                                            Style="font-family: Calibri; color: #000000; font-size: medium"
+                                            Text="Modificar"
+                                            OnClientClick="return Confirmar('¿Desea modificar colaborador?');"
+                                            CssClass="btn btn-success" OnClick="btnModificar_Click"
+                                            Width="100px" Visible="False" />
+                                        <asp:Button ID="btnEliminar" runat="server"
+                                            Style="font-family: Calibri; color: #000000; font-size: medium"
+                                            Text="Eliminar" OnClientClick="return Confirmar('¿Desea eliminar colaborador?');"
+                                            Visible="False" class="btn btn-danger" OnClick="btnEliminar_Click"
+                                            Width="100px" />
+                                        <asp:Button ID="btnCancelar" runat="server" class="btn btn-warning"
+                                            Style="font-family: Calibri; font-size: medium" Text="Cancelar"
+                                            Visible="False" CausesValidation="False"
+                                            OnClientClick="Limpiar_Datos_Colaborador();" OnClick="btnCancelar_Click"
+                                            Width="100px" />
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN BOTONES--%>
 
+                            <%--TABLE--%>
+                            <div class="container">
+                                <div class="table-responsive">
+                                    <asp:Table ID="Table_" runat="server"
+                                        class="table table-bordered table-hover text-center"
+                                        BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="X-Small"
+                                        GridLines="Both" Style="text-align: left" Font-Names="Arial">
+                                        <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
+                                            <asp:TableHeaderCell ID="EDITAR" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="Blue">EDITAR </asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Area_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Area</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="TipoColaborador_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">T. Colab.</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="NroDNI_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Nro DNI</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Colaborador_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Colaborador</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Direccion_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Direccion</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="TelefonoFijo_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Telefono Fijo</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="TelefonoMovil_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Telefono Movil</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Login_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Login</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Password_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Password</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Email_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Email</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="_Faceboock" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White" Visible="false">Facebook</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Twiter_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White" Visible="false">Twiter</asp:TableHeaderCell>
+                                            <asp:TableHeaderCell ID="Estado_" runat="server" BackColor="Black" BorderColor="Black"
+                                                ForeColor="White">Estado</asp:TableHeaderCell>
+                                        </asp:TableHeaderRow>
+                                    </asp:Table>
+                                </div>
+                            </div>
+                            <%--FIN TABLE--%>
+                        </div>
             </div>
+
+        </div>
+        <!-- /.container-fluid -->
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © Soporte tecnico 2022</span>
+                </div>
+            </div>
+        </footer>
+        </div>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /container -->
+        <!-- /#wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i>
+        </a>
+        <!-- Cerrar Sesion Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Abandonar Sesion</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Seleccione Cerrar para abandonar la sesion
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancelar</button>
+                        <a class="btn btn-primary" href="CerrarSession.aspx">Cerrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Cerrar Sesion-->
+
+
+
+        <!-- Mensaje al Postergar Modal-->
+        <div class="modal fade" id="MensajeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="H1">
+                            <asp:Label ID="LblTituloModalMensaje" runat="server" Text="Label"></asp:Label>
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="LblModalMensaje" runat="server" Text="Label"></asp:Label>
+                    </div>
+                    <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+                    <div class="modal-footer">
+                        <asp:Button ID="BtnAceptarPostergacion" runat="server" Text="Aceptar"
+                            class="btn btn-primary" />
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancelar</button>
+                        <%--<a class="btn btn-primary" href="login.html">Logout</a>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Cerrar Sesion-->
+
+        <%-- VENTANA MODAL PARA MENSAJE --%>
+        <div id="Modal_MostarMensaje" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            <label id="lblMasterMessage" style="font-family: 'Tahoma'; font-size: medium; color: #0000FF; font-weight: bold;">
+                                Mensaje</label>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <label id="lblMasterbodyMensaje" style="font-family: 'Tahoma'; font-size: 15px; color: #FF0000; font-weight: normal;">
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="BtnMensajeModal" type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%-- FIN VENTANA MODAL DE MENSAJE --%>
+
+
+        <div>
             <asp:HiddenField ID="__mensaje" runat="server" />
             <asp:HiddenField ID="__pagina" runat="server" />
-            <asp:HiddenField ID="ID_PERSONAL" runat="server" Value="0"
-                EnableViewState="False" />
+            <asp:HiddenField ID="ID_PERSONAL" runat="server" Value="0" EnableViewState="False" />
         </div>
 
+        <!-- Bootstrap core JavaScript-->
+        <%-- <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>--%>
 
-        <br />
+        <!-- Core plugin JavaScript-->
+        <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-
-        <div class="panel panel-primary" style="border-style: hidden; margin: 20px;">
-            <div class="panel-heading" style="text-align: center">
-                <h3 class="panel-title">Lista colaboradores</h3>
-            </div>
-            <%-- <div class="panel-body">
-                  This is a Basic panel
-               </div>--%>
-            <div class="container">
-                <div class="table-responsive">
-                    <asp:Table ID="Table_" runat="server"
-                        class="table table-bordered table-hover text-center"
-                        BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="X-Small"
-                        GridLines="Both" Style="text-align: left" Font-Names="Arial">
-
-                        <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
-                            <asp:TableHeaderCell ID="EDITAR" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="Blue">EDITAR </asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Area_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Area</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TipoColaborador_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Tipo Colaborador</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="NroDNI_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Nro DNI</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Colaborador_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Colaborador</asp:TableHeaderCell>
-                            <%--<asp:TableHeaderCell  ID="ApellidoPaterno_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White">Apellido Paterno</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell  ID="ApellidoMaterno_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White">Apellido Materno</asp:TableHeaderCell>
-                                    <asp:TableHeaderCell  ID="Nombre_" runat="server" BackColor="Black" BorderColor="Black"
-                                        ForeColor="White">Nombre</asp:TableHeaderCell>--%>
-                            <asp:TableHeaderCell ID="Direccion_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Direccion</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TelefonoFijo_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Telefono Fijo</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TelefonoMovil_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Telefono Movil</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Login_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Login</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Password_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Password</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Email_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Email</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="_Faceboock" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Faceboock</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Twiter_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Twiter</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="Estado_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">Estado</asp:TableHeaderCell>
-                        </asp:TableHeaderRow>
-                    </asp:Table>
-                </div>
-            </div>
-        </div>
+        <!-- Custom scripts for all pages-->
+        <script src="../vendor/js/sb-admin.min.js"></script>
 
     </form>
 
@@ -446,7 +588,5 @@
             $('table').resTables();
         });
     </script>
-
-
 </body>
 </html>

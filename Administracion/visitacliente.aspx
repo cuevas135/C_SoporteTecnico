@@ -3,38 +3,28 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <%--<link rel="icon" type="image/png" href="Imagenes/icono.png" />--%>
-    <title>Colaborador</title>
-    <meta name="MobileOptimized" content="width" />
-    <meta name="HandheldFriendly" content="true" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" href="../Imagenes/icono.ico" />
+    <title>Registrar visita</title>
 
-    <!-- Calendario -->
-    <%--<link href="css/dcalendar.picker.css" rel="stylesheet">--%>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../bootstrap/js/jquery-1.12.4.min.js" type="text/javascript"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <%--<link href="css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />--%><%--<script src="js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>--%><%--<link href="css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <script src="js/bootstrap-datepicker.min.js" type="text/javascript"></script>--%>
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- Custom styles for this template-->
+    <link href="../vendor/css/sb-admin.css" rel="stylesheet" />
 
-
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap core JavaScript-->
+    <!--jquery-3.4.1.min.js-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <style type="text/css">
         body {
-            background-color: #fafafa;
-            font-family: 'Roboto';
+            padding-top: 4rem;
         }
 
         .container {
@@ -75,30 +65,7 @@
     </style>
 
 
-    <!-- ESTILOS PARA HEADER DE MODAL -->
-    <style type="text/css">
-        .modal-header, h4, .close {
-            /*background-color: #5cb85c;*/
-            background-color: #0f5368;
-            color: white !important;
-            text-align: center;
-            font-size: 25px;
-        }
-
-        .modal-footer {
-            background-color: #f9f9f9;
-        }
-
-        .style1 {
-            font-size: 14px;
-            font-weight: bold;
-        }
-    </style>
-
-
     <script type='text/javascript'>
-
-
         function openModal() {
             $('#myModal').modal('show');
         };
@@ -193,165 +160,306 @@
     </script>
 
 </head>
-<body onload="MostrarMensaje()">
-    <!-- #include virtual="menu.inc" -->
+<body onload="MostrarMensaje();" id="page-top">
     <form id="frmColaborador" role="form" runat="server">
-        <div class="panel panel-primary" style="border-style: hidden; margin: 20px;">
-            <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
-            <div class="panel-heading" style="text-align: center">
-                <h3 class="panel-title">Ingrese datos visita</h3>
+        <nav class="navbar navbar-expand fixed-top" style="background-color: #66bf0e;">
+            <a class="navbar-brand mr-1">
+                <label class="text-White font-weight-bold" style="color: ghostwhite">
+                    Bienvenido
+                    <asp:LoginName ID="LoginName1" runat="server" Font-Bold="true" Visible="False" />
+                </label>
+            </a>
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle">
+                <i class="fa fa-align-justify" style="font-size: 20px; color: ghostwhite"></i>
+            </button>
+            <!-- Navbar Search -->
+            <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <%--<input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">--%>
+                    <div class="input-group-append">
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group col-md-4 col-sm-4">
-                            <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown no-arrow mx-1"></li>
+                <li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#"
+                    id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"></a></li>
+                <li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#"
+                    id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw" style="font-size: 24px; color: ghostwhite"></i>
+                </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                       <%-- <a class="dropdown-item" href="Usuario">Perfil de Usuario</a>
+                        <div class="dropdown-divider">
+                        </div>--%>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar
+                        Sesion</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="wrapper">
+            <%--<div id="wrapper" >--%>
+            <!-- Sidebar -->
+            <ul class="sidebar navbar-nav" style="background-color: #0e66bf;">
+                <li class="nav-item"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span>Inicio</span> </a></li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span>Colaborador</span></a> </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="visitacliente.aspx"><i class="fas fa-calendar-check"></i><span>Asignar Visita Tecnico</span></a> </li>
+            </ul>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-check"></i> Registrar visita
+                            <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
                         </div>
-                        <div class="form-group col-md-4 col-sm-4">
-                            <b>Tecnico:</b>
-                            <asp:RangeValidator ID="rvTecnico" runat="server" BackColor=""
-                                ControlToValidate="Tecnico" ErrorMessage="*" ForeColor="Red"
-                                MaximumValue="99999" MinimumValue="1" SetFocusOnError="True" Type="Integer"
-                                Font-Size="Medium"></asp:RangeValidator>
-                            <asp:RequiredFieldValidator ID="rfvTecnico" runat="server" ErrorMessage="*"
-                                ControlToValidate="Tecnico" ForeColor="Red" SetFocusOnError="True"
-                                Font-Size="Medium"></asp:RequiredFieldValidator>
-                            <asp:DropDownList ID="Tecnico" runat="server" CssClass="form-control input-sm"
-                                Font-Size="Small" Style="margin-left: 0px" AutoPostBack="True"
-                                OnSelectedIndexChanged="Tecnico_SelectedIndexChanged">
-                            </asp:DropDownList>
+
+                        <div class="card-body">
+                            <%--PRIMERA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <b>Tecnico:</b>
+                                        <asp:RangeValidator ID="rvTecnico" runat="server" BackColor=""
+                                            ControlToValidate="Tecnico" ErrorMessage="*" ForeColor="Red"
+                                            MaximumValue="99999" MinimumValue="1" SetFocusOnError="True" Type="Integer"
+                                            Font-Size="Medium"></asp:RangeValidator>
+                                        <asp:RequiredFieldValidator ID="rfvTecnico" runat="server" ErrorMessage="*"
+                                            ControlToValidate="Tecnico" ForeColor="Red" SetFocusOnError="True"
+                                            Font-Size="Medium"></asp:RequiredFieldValidator>
+                                        <asp:DropDownList ID="Tecnico" runat="server" CssClass="form-control input-sm"
+                                            Font-Size="Small" Style="margin-left: 0px"
+                                            OnSelectedIndexChanged="Tecnico_SelectedIndexChanged">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN PRIMERA FILA--%>
+
+                            <%--TABLE--%>
+                            <div class="form-group">
+                                <b>Solicitudes de Servicios Pendientes</b>
+                                <div class="container">
+                                    <div class="table-responsive">
+                                        <asp:Table ID="Table_" runat="server"
+                                            class="table table-bordered table-hover text-center"
+                                            BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
+                                            GridLines="Both" Style="text-align: left" Font-Names="Arial">
+                                            <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
+                                                <asp:TableHeaderCell ID="SELECCIONA_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="Blue"></asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="NROSOLICITUD_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">SOLICITUD</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="FECHA" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">F. SOLICITUD</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="CLIENTE_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">CLIENTE</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="DIRECCION_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">DIRECCION</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="TELFIJO_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">T. FIJO</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="TELMOVIL_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">T. MOVIL</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="VER" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="Blue">DETALLE </asp:TableHeaderCell>
+                                            </asp:TableHeaderRow>
+                                        </asp:Table>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN TABLE--%>
+
+                            <%--SEGUNDA FILA--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12 text-center">
+                                        <asp:Button ID="btnRegistrarVisita" runat="server"
+                                            Style="font-family: Calibri; color: #000000; font-size: medium"
+                                            Text="Registrar Visita"
+                                            OnClientClick="return Confirmar('¿Desea registrar visita?');"
+                                            CssClass="btn btn-primary"
+                                            OnClick="btnRegistrarVisita_Click" Visible="False" />
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN SEGUNDA FILA--%>
+
+                            <%--SEGUNDO TABLE--%>
+                            <div class="form-group">
+                                <b>Visitas Asignadas Tecnico</b>
+                                <div class="container">
+                                    <div class="table-responsive">
+                                        <asp:Table ID="TableVisita" runat="server"
+                                            class="table table-bordered table-hover text-center"
+                                            BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
+                                            GridLines="Both" Style="text-align: left" Font-Names="Arial">
+                                            <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
+                                                <asp:TableHeaderCell ID="TableHeaderCell1" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="Blue"></asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="CODIGO_VISITA" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White" Visible="false">CODIGO VISITA</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="FEC_ASIGNACION" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">F. ASIG.</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="__TECNICO" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">TECNICO</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="NRO_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">SOLICITUD</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="FEC_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">F. SOL.</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="__CLIENTE" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">CLIENTE</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="__DIRECCION" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">DIRECCION </asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="TEL_FIJO" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">FIJO</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="TEL_MOVIL" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="White">T. MOVIL</asp:TableHeaderCell>
+                                                <asp:TableHeaderCell ID="VER_" runat="server" BackColor="Black" BorderColor="Black"
+                                                    ForeColor="Blue">DETALLE </asp:TableHeaderCell>
+                                            </asp:TableHeaderRow>
+                                        </asp:Table>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN SEGUNDO TABLE--%>
+
+                            <%--BOTONES--%>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-12 text-center">
+                                        <asp:Button ID="btnEliminar" runat="server"
+                                            Style="font-family: Calibri; font-size: medium"
+                                            Text="Eliminar Visita"
+                                            OnClientClick="return Confirmar('¿Desea eliminar visita?');" class="btn btn-danger"
+                                            CausesValidation="False" OnClick="btnEliminar_Click"
+                                            Visible="False" />
+                                    </div>
+                                </div>
+                            </div>
+                            <%--FIN BOTONES--%>
                         </div>
-                        <div class="form-group col-md-4 col-sm-4">
-                            <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+                <!-- Sticky Footer -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright © Soporte tecnico 2022</span>
                         </div>
                     </div>
-                </div>
-                <center><b>Solicitudes de Servicios Pendientes</b></center>
+                </footer>
             </div>
-            <div class="container">
-                <div class="table-responsive">
-                    <%--<h3 style="text-align: center" class="style1">Ingrese datos visita</h3><br /> --%>
-                    <asp:Table ID="Table_" runat="server"
-                        class="table table-bordered table-hover text-center"
-                        BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
-                        GridLines="Both" Style="text-align: left" Font-Names="Arial">
-                        <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
-                            <asp:TableHeaderCell ID="SELECCIONA_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="Blue">SELECCIONA </asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="NROSOLICITUD_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">NRO SOLICITUD</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="FECHA" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">FEC SOLICITUD</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="CLIENTE_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">CLIENTE</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="DIRECCION_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">DIRECCION</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TELFIJO_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">TEL FIJO</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TELMOVIL_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">TEL MOVIL</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="VER" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="Blue">DETALLE </asp:TableHeaderCell>
-                        </asp:TableHeaderRow>
-                    </asp:Table>
-                </div>
-            </div>
-
-            <asp:HiddenField ID="__mensaje" runat="server" />
-            <asp:HiddenField ID="__pagina" runat="server" />
-
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group col-md-4 col-sm-4">
-                        <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /container -->
+        <!-- /#wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i>
+        </a>
+        <!-- Cerrar Sesion Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Abandonar Sesion</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
-                    <div class="form-group col-md-4 col-sm-4" style="text-align: center">
-                        <br />
-                        <asp:Button ID="btnRegistrarVisita" runat="server"
-                            Style="font-family: Calibri; color: #000000; font-size: medium"
-                            Text="Registrar Visita"
-                            OnClientClick="return Confirmar('¿Desea registrar visita?');"
-                            CssClass="btn btn-primary"
-                            Width="150px" OnClick="btnRegistrarVisita_Click" Visible="False" />
-
+                    <div class="modal-body">
+                        Seleccione Cerrar para abandonar la sesion
                     </div>
-                    <div class="form-group col-md-4 col-sm-4">
-                        <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="table-responsive">
-                    <h3 style="text-align: center" class="style1">Visitas Asignadas Tecnico</h3>
-                    <br />
-                    <asp:Table ID="TableVisita" runat="server"
-                        class="table table-bordered table-hover text-center"
-                        BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
-                        GridLines="Both" Style="text-align: left" Font-Names="Arial">
-                        <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
-                            <asp:TableHeaderCell ID="TableHeaderCell1" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="Blue">SELECCIONA </asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="CODIGO_VISITA" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White" Visible="false">CODIGO VISITA</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="FEC_ASIGNACION" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">FEC ASIGNACION</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="__TECNICO" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">TECNICO</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="NRO_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">NRO SOLICITUD</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="FEC_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">FEC SOLICITUD</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="__CLIENTE" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">CLIENTE</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="__DIRECCION" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">DIRECCION </asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TEL_FIJO" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">TEL FIJO</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="TEL_MOVIL" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="White">TEL MOVIL</asp:TableHeaderCell>
-                            <asp:TableHeaderCell ID="VER_" runat="server" BackColor="Black" BorderColor="Black"
-                                ForeColor="Blue">DETALLE </asp:TableHeaderCell>
-                        </asp:TableHeaderRow>
-                    </asp:Table>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group col-md-4 col-sm-4">
-                        <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
-                    </div>
-                    <div class="form-group col-md-4 col-sm-4" style="text-align: center">
-                        <br />
-                        <asp:Button ID="btnEliminar" runat="server"
-                            Style="font-family: Calibri; color: #000000; font-size: medium"
-                            Text="Eliminar Visita"
-                            OnClientClick="return Confirmar('¿Desea eliminar visita?');" class="btn btn-danger"
-                            Width="150px" CausesValidation="False" OnClick="btnEliminar_Click"
-                            Visible="False" />
-
-                    </div>
-                    <div class="form-group col-md-4 col-sm-4">
-                        <%--<a href="#" data-toggle ="modal"  data-target ="#myModal" class="popup-link">Ver solicitudes pendientes</a> --%>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancelar</button>
+                        <a class="btn btn-primary" href="CerrarSession.aspx">Cerrar</a>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Fin Modal Cerrar Sesion-->
 
 
-        <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog">
-                <!-- Modal content-->
+
+        <!-- Mensaje al Postergar Modal-->
+        <div class="modal fade" id="MensajeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Detalle solicitud</h4>
+                        <h5 class="modal-title" id="H1">
+                            <asp:Label ID="LblTituloModalMensaje" runat="server" Text="Label"></asp:Label>
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <%--<label class="control-label">Nombre de Area de Trabajo</label>--%>
+                        <asp:Label ID="LblModalMensaje" runat="server" Text="Label"></asp:Label>
+                    </div>
+                    <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+                    <div class="modal-footer">
+                        <asp:Button ID="BtnAceptarPostergacion" runat="server" Text="Aceptar"
+                            class="btn btn-primary" />
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancelar</button>
+                        <%--<a class="btn btn-primary" href="login.html">Logout</a>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Cerrar Sesion-->
 
+        <%-- VENTANA MODAL PARA MENSAJE --%>
+        <div id="Modal_MostarMensaje" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            <label id="lblMasterMessage" style="font-family: 'Tahoma'; font-size: medium; color: #0000FF; font-weight: bold;">
+                                Mensaje</label>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <label id="lblMasterbodyMensaje" style="font-family: 'Tahoma'; font-size: 15px; color: #FF0000; font-weight: normal;">
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="BtnMensajeModal" type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%-- FIN VENTANA MODAL DE MENSAJE --%>
+
+        <div>
+            <asp:HiddenField ID="__mensaje" runat="server" />
+            <asp:HiddenField ID="__pagina" runat="server" />
+        </div>
+
+        <%-- MODAL DE DETALLE DE SERVICIO TECNICO --%>
+         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">    
+            <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title"> Detalle solicitud</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                  
+                    <div class="modal-body">                     
                         <div class="panel-body">
                             <asp:Label ID="lblCliente" runat="server" Text=""></asp:Label>
                         </div>
@@ -360,12 +468,10 @@
                                 <asp:Table ID="Table_Detalle" runat="server"
                                     class="table table-bordered table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
-                                    GridLines="Both" Style="text-align: left" Font-Names="Arial"
-                                    Width="550px">
-
+                                    GridLines="Both" Style="text-align: left" Font-Names="Arial">
                                     <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" TableSection="TableHeader">
                                         <asp:TableHeaderCell ID="NROSOLICITUD__" runat="server" BackColor="Black" BorderColor="Black"
-                                            ForeColor="White">NRO. SOLICITUD </asp:TableHeaderCell>
+                                            ForeColor="White">SOLICITUD </asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="SERVICIO__" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="White">SERVICIO</asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="MODALIDAD__" runat="server" BackColor="Black" BorderColor="Black"
@@ -375,17 +481,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <div class="col-md-6 col-md-offset-3">
-                            <%-- <asp:LinkButton ID="btnRegistrar" runat="server"  class="btn btn-primary"
-                               Text="Aceptar <span class='glyphicon glyphicon-ok'></span>" 
-                                style="font-family: Calibri; font-size: medium" onclick="btnRegistrar_Click" 
-                                 /> --%>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>
+         <%-- FIN DE MODAL DE DETALLE DE SERVICIO TECNICO --%>
+
+        
+        <!-- Core plugin JavaScript-->
+        <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="../vendor/js/sb-admin.min.js"></script>
 
     </form>
 
@@ -397,12 +504,6 @@
             $('table').resTables();
         });
     </script>
-
-
-    <p>
-        &nbsp;
-    </p>
-
 
 </body>
 </html>

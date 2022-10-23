@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using SEGURIDAD;
 using System.Data;
 using System.Drawing;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 //987242489 Traumatologo Dr. Torres.
 
-public partial class Administracion_visitacliente : System.Web.UI.Page
+public partial class Administracion_visitacliente : Page
 {
-    private String Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     policia.clsaccesodatos servidor = new policia.clsaccesodatos();
     TableRow tRow;
     Lista _Lista = new Lista();
@@ -61,7 +57,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         Button b = (Button)sender;
         b.Focus();
 
-        String codigo = Convert.ToString(b.CommandArgument);
+        string codigo = Convert.ToString(b.CommandArgument);
 
         //this.Page.RegisterStartupScript("", "<script> alert('" + codigo + "'); </script>}");
 
@@ -82,7 +78,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         __pagina.Value = "";
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
         for (int i = 1; i < Table_Detalle.Rows.Count; i++)
@@ -126,21 +122,21 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                             {
                                 case 0:
                                     tCell.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["SERVIVIO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 2:
                                     tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -171,13 +167,11 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
     private void listarticketsincidentes()
     {
-
-
         __mensaje.Value = "";
         __pagina.Value = "";
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)
@@ -201,10 +195,11 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                     servidor.cerrarconexion();
                     __mensaje.Value = "No hay solicitudes para mostrar";
                     __pagina.Value = "";
-
+                    btnRegistrarVisita.Visible = false;
                 }
                 else
                 {
+                    btnRegistrarVisita.Visible = true;
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         tRow = new TableRow();
@@ -230,102 +225,81 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     //cb.Init += new System.EventHandler(VerificaSeleccion);
                                     cb.Checked = false;
                                     //cb.ID = i.ToString() + j.ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(cb);
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["NRO. SOLICITUD"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 2:
                                     tCell.Text = dt.Rows[i]["FECHA"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 3:
                                     tCell.Text = dt.Rows[i]["CLIENTE"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 4:
                                     tCell.Text = dt.Rows[i]["DIRECCION"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 5:
                                     tCell.Text = dt.Rows[i]["TEL FIJO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 6:
                                     tCell.Text = dt.Rows[i]["TEL MOVIL"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 7:
                                     //System.Web.UI.WebControls.LinkButton b = new System.Web.UI.WebControls.LinkButton();
-                                    System.Web.UI.WebControls.Button b = new System.Web.UI.WebControls.Button();
-
+                                    Button b = new Button();
                                     b.Text = "Ver";
-
                                     b.CssClass = "btn btn-success";
-
                                     b.ToolTip = "Seleccione solicitud para ver sus detalles";
-
                                     //b.Height = 25;
-
                                     b.Width = System.Web.UI.WebControls.Unit.Parse("50px");
-
                                     ////b.BorderStyle = BorderStyle.None;
-
                                     ////b.BackColor = System.Drawing.Color.Lavender;
-
                                     ////b.ForeColor = System.Drawing.Color.Black;
-
                                     b.CausesValidation = false;
-
                                     b.UseSubmitBehavior = false;
-
                                     //b.Attributes.Add("data-toggle", "modal");
-
                                     //b.Attributes.Add("data-target", "#myModal");
-
                                     ////b.PostBackUrl = "lote.aspx?Codigo=" + dt.Rows[i]["NRO. SOLICITUD"].ToString();
-
                                     b.CommandArgument = dt.Rows[i]["NRO. SOLICITUD"].ToString() + "-" + dt.Rows[i]["CLIENTE"].ToString();
-
                                     b.Click += new System.EventHandler(Visualiza_Detalle_Solicitud);
-
                                     ////b.OnClientClick = "prueba()";
-
                                     //tCell.HorizontalAlign = HorizontalAlign.Center;                                   
-
                                     //tCell.Text = "<a href='#' data-toggle ='modal'  data-target ='#myModal' class='popup-link' onClick='prueba(" + dt.Rows[i]["NRO. SOLICITUD"].ToString() + ")'>" + "Ver";
-
                                     tCell.Controls.Add(b);
-
                                     tRow.Cells.Add(tCell);
                                     //tCell.Text = "";
                                     //tCell.ForeColor = System.Drawing.Color.Black;
                                     //tCell.Visible = true;
                                     //tRow.Cells.Add(tCell);
                                     break;
-
                             }
                         }
 
@@ -360,7 +334,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         btnEliminar.Visible = false;
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)
@@ -415,7 +389,7 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
                                     //cb.Init += new System.EventHandler(VerificaSeleccion);
                                     cb.Checked = false;
                                     cb.ID = i.ToString() + j.ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                                    tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
                                     tCell.Controls.Add(cb);
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -428,70 +402,70 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["CODIGO VISITA"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = false;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 2:
                                     tCell.Text = dt.Rows[i]["FEC ASIGNACION"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 3:
                                     tCell.Text = dt.Rows[i]["TECNICO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 4:
                                     tCell.Text = dt.Rows[i]["NRO SOLICITUD"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 5:
                                     tCell.Text = dt.Rows[i]["FEC SOLICITUD"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 6:
                                     tCell.Text = dt.Rows[i]["CLIENTE"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 7:
                                     tCell.Text = dt.Rows[i]["DIRECCION"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 8:
                                     tCell.Text = dt.Rows[i]["TEL FIJO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 9:
                                     tCell.Text = dt.Rows[i]["TEL MOVIL"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 10:
                                     //System.Web.UI.WebControls.LinkButton b = new System.Web.UI.WebControls.LinkButton();
-                                    System.Web.UI.WebControls.Button b = new System.Web.UI.WebControls.Button();
+                                    Button b = new Button();
 
                                     b.Text = "Ver";
 
@@ -579,23 +553,19 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
         }
         //============================================================================================================
 
-        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>";
+        lblUsuario.Text = " [USUARIO: " + Convert.ToString(Datos[1]) + "]";
 
-        Tecnico_SelectedIndexChanged(sender, e);
+        //Tecnico_SelectedIndexChanged(sender, e);
 
     }
 
     protected void Page_init(object sender, EventArgs e)
     {
-
-
         Obtener_Tecnicos();
         Visitas_Asignadas_Tecnico();
 
-
+        listarticketsincidentes();//AGREGADO EL 23-10-2022 (A PEDIDO DE EXPOSITOR DE TESIS)
     }
-
-
 
     //private bool VerificaSeleccion()
     //{
@@ -635,9 +605,6 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
     //      //return;
     //}
-
-
-
 
 
     protected void btnRegistrarVisita_Click(object sender, EventArgs e)
@@ -723,24 +690,24 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
     protected void Tecnico_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (Tecnico.SelectedIndex > 0)
-        {
-            listarticketsincidentes();
+        //if (Tecnico.SelectedIndex > 0)
+        //{
+        //    listarticketsincidentes();
 
-            btnRegistrarVisita.Visible = true;
-        }
-        else
-        {
-            btnRegistrarVisita.Visible = false;
+        //    btnRegistrarVisita.Visible = true;
+        //}
+        //else
+        //{
+        //    btnRegistrarVisita.Visible = false;
 
-            for (int i = 1; i < Table_.Rows.Count; i++)
-            {
-                for (int j = Table_.Rows[i].Cells.Count - 1; j >= 0; j--)
-                {
-                    Table_.Rows[i].Cells.RemoveAt(j);
-                }
-            }
-        }
+        //    for (int i = 1; i < Table_.Rows.Count; i++)
+        //    {
+        //        for (int j = Table_.Rows[i].Cells.Count - 1; j >= 0; j--)
+        //        {
+        //            Table_.Rows[i].Cells.RemoveAt(j);
+        //        }
+        //    }
+        //}
     }
     protected void btnEliminar_Click(object sender, EventArgs e)
     {
@@ -808,11 +775,9 @@ public partial class Administracion_visitacliente : System.Web.UI.Page
 
         if (ok == false)
         {
-
-
-
             __mensaje.Value = "Seleccione visita(s) por favor.";
             __pagina.Value = "";
+            btnEliminar.Focus();
         }
     }
 }

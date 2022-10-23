@@ -8,7 +8,7 @@ using System.Data;
 using System.Drawing;
 using SEGURIDAD;
 
-public partial class Administracion_colaborador : System.Web.UI.Page
+public partial class Administracion_colaborador : Page
 {
 
     private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
@@ -78,7 +78,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
             {
                 servidor.cancelarconexiontrans();
 
-                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSessionDocente.aspx");
+                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
 
         }
@@ -87,7 +87,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
             servidor.cancelarconexiontrans();
 
-            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSessionDocente.aspx");
+            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSession.aspx");
         }
     }
 
@@ -106,7 +106,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
             servidor.cadenaconexion = Ruta;
             if (servidor.abrirconexion() == true)
             {
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_colaboradores]").Tables[0];
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_colaboradores]").Tables[0];
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
@@ -143,7 +143,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
             servidor.cadenaconexion = Ruta;
             if (servidor.abrirconexion() == true)
             {
-                System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_areas]").Tables[0];
+                DataTable dt = servidor.consultar("[dbo].[_pa_obtener_areas]").Tables[0];
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
@@ -228,7 +228,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                     string strTextoEncriptado = en.DesEncriptarCadena(dt.Rows[i]["CONATRASEÑA"].ToString());
 
-                                    System.Web.UI.WebControls.ImageButton hl = new System.Web.UI.WebControls.ImageButton();
+                                    ImageButton hl = new ImageButton();
                                     hl.CssClass = "media-object";
                                     hl.ImageUrl = "~/imagenes/editar.png";
                                     hl.ForeColor = Color.Blue;
@@ -236,7 +236,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
                                     //hl.Text = "EDITAR";
                                     hl.CausesValidation = false;
                                     hl.OnClientClick = "Colaborador('" + dt.Rows[i]["CODIGO"].ToString().Trim() + "','" + dt.Rows[i]["AREA"].ToString().Trim() + "','" + dt.Rows[i]["TIPO COLABORADOR"].ToString().Trim() + "','" + dt.Rows[i]["DNI"].ToString().Trim() + "','" + dt.Rows[i]["APELLIDO PATERNO"].ToString().Trim() + "','" + dt.Rows[i]["APELLIDO MATERNO"].ToString().Trim() + "','" + dt.Rows[i]["NOMBRE"].ToString().Trim() + "','" + dt.Rows[i]["DIRECCION"].ToString() + "','" + dt.Rows[i]["TELEFONO"].ToString() + "','" + dt.Rows[i]["CELULAR"].ToString() + "','" + dt.Rows[i]["USUARIO"].ToString() + "','" + strTextoEncriptado + "','" + dt.Rows[i]["EMAIL"].ToString() + "','" + dt.Rows[i]["FECEBOOCK"].ToString() + "','" + dt.Rows[i]["TWITER"].ToString() + "','" + dt.Rows[i]["ESTADO"].ToString() + "')";
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Controls.Add(hl);
                                     tCell.HorizontalAlign = HorizontalAlign.Center;
                                     tRow.Cells.Add(tCell);
@@ -247,28 +247,28 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                 case 1:
                                     tCell.Text = dt.Rows[i]["AREA"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 2:
                                     tCell.Text = dt.Rows[i]["TIPO COLABORADOR"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 3:
                                     tCell.Text = dt.Rows[i]["DNI"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 4:
                                     tCell.Text = dt.Rows[i]["NOMBRE"].ToString() + " " + dt.Rows[i]["APELLIDO PATERNO"].ToString() + " " + dt.Rows[i]["APELLIDO MATERNO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
@@ -296,35 +296,35 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                 case 5:
                                     tCell.Text = dt.Rows[i]["DIRECCION"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 6:
                                     tCell.Text = dt.Rows[i]["TELEFONO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 7:
                                     tCell.Text = dt.Rows[i]["CELULAR"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 8:
                                     tCell.Text = dt.Rows[i]["USUARIO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 9:
                                     tCell.Text = dt.Rows[i]["CONATRASEÑA"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
@@ -332,7 +332,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                 case 10:
                                     tCell.Text = dt.Rows[i]["EMAIL"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
@@ -340,7 +340,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                 case 11:
                                     tCell.Text = dt.Rows[i]["FECEBOOCK"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
@@ -349,17 +349,17 @@ public partial class Administracion_colaborador : System.Web.UI.Page
 
                                 case 12:
                                     tCell.Text = dt.Rows[i]["TWITER"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
-                                    tCell.Visible = true;
+                                    tCell.Visible = false;
                                     tRow.Cells.Add(tCell);
                                     break;
 
                                 case 13:
                                     tCell.Text = dt.Rows[i]["ESTADO"].ToString();
-                                    tCell.ForeColor = System.Drawing.Color.Black;
+                                    tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
-                                    tCell.Visible = true;
+                                    tCell.Visible = false;
                                     tRow.Cells.Add(tCell);
                                     break;
 
@@ -403,7 +403,7 @@ public partial class Administracion_colaborador : System.Web.UI.Page
         }
         //============================================================================================================
 
-        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>"; 
+        lblUsuario.Text = "  [USUARIO: " + Convert.ToString(Datos[1]) + "]"; 
 
         if (Convert.ToInt32(ID_PERSONAL.Value.Trim()) > 0)
         {
