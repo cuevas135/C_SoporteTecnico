@@ -204,11 +204,11 @@
             <%--<div id="wrapper" >--%>
             <!-- Sidebar -->
             <ul class="sidebar navbar-nav" style="background-color: #0e66bf;">
-                <li class="nav-item"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span>Inicio</span> </a></li>
+                <li class="nav-item"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span> Inicio</span> </a></li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span>Colaborador</span></a> </li>
+                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span> Colaborador</span></a> </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="visitacliente.aspx"><i class="fas fa-calendar-check"></i><span>Asignar Visita Tecnico</span></a> </li>
+                    <a class="nav-link" href="visitacliente.aspx"><i class="fas fa-calendar-check"></i><span> Asignar Visita Tecnico</span></a> </li>
             </ul>
             <div id="content-wrapper">
                 <div class="container-fluid">

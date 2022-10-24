@@ -6,7 +6,6 @@
 <head runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon" type="image/png" href="Imagenes/icono.png" />
     <title>Menu</title>
     <meta name="MobileOptimized" content="width" />
     <meta name="HandheldFriendly" content="true" />
@@ -100,11 +99,11 @@
             <%--<div id="wrapper" >--%>
             <!-- Sidebar -->
             <ul class="sidebar navbar-nav" style="background-color: #0e66bf;">
-                <li class="nav-item active"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span>Inicio</span> </a></li>
+                <li class="nav-item active"><a class="nav-link" href="menu.aspx"><i class="fas fa-fw fa-home"></i><span> Inicio</span> </a></li>
                 <li class="nav-item">
                     <%--<asp:HyperLink ID="HlOlvideContrasena" runat="server" NavigateUrl="<%$RouteUrl:RouteName=Postergar%>"
                                     Font-Size="Small" ><i class="fas fa-fw fa-calendar-day"></i>  <span>Postergaciones</span></asp:HyperLink>--%>
-                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span>Colaborador</span></a> </li>
+                    <a class="nav-link" href="colaborador.aspx"><i class="fas fa-user-circle fa-fw"></i><span> Colaborador</span></a> </li>
                 <li class="nav-item">
                     <a class="nav-link" href="visitacliente.aspx"><i class="fas fa-calendar-check"></i><span> Asignar Visita Tecnico</span></a> </li>
             </ul>
