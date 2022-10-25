@@ -180,7 +180,7 @@ public partial class Clientes_solicitudservicio : Page
         }
         //============================================================================================================
 
-        lblUsuario.Text = "<B>USUARIO: " + Convert.ToString(Datos[1]) + "</B>";
+        lblUsuario.Text = " [USUARIO: " + Convert.ToString(Datos[1]) + "]";
 
         //CAPTURAMOS EL CODIGO DEL USUARIO QUE INICIO SESION.
         CodigoPersona_S.Text = Convert.ToString(Datos[0]);
@@ -1193,5 +1193,5 @@ public partial class Clientes_solicitudservicio : Page
 
     }
 
-   
+
 }

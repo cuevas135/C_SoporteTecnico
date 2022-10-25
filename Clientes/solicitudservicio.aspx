@@ -5,22 +5,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Solicitud servicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="../Imagenes/icono.ico" />
 
-    <!-- Bootstrap -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../bootstrap/js/jquery-1.12.4.min.js" type="text/javascript"></script>
-   
-    <link href="../Otros_css_js/Menu.css" rel="stylesheet" />
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom styles for this template-->
+    <link href="../vendor/css/sb-admin.css" rel="stylesheet" />
+
+    <!-- Bootstrap core JavaScript-->
+    <!--jquery-3.4.1.min.js-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <style type="text/css">
         body {
             background-color: #fafafa;
-            font-family: 'Roboto';
+            padding-top: 1rem;
         }
 
         .container {
@@ -96,86 +104,86 @@
 </head>
 <body onload="MostrarMensaje()">
     <form id="frmSolicitudServidio" runat="server">
-        <div class="container" style="margin-top: 5px;">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group col-md-12 col-sm-12 text-center">
-                    <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
+        <div class="container-fluid">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-12 text-center">
+                        <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud"
+                            Width="140px" class="btn btn-success" CausesValidation="False"
+                            UseSubmitBehavior="False" OnClick="btnGenerarSolicitud_Click"
+                            PostBackUrl="~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO" />
+                        <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes"
+                            Width="140px" class="btn btn-warning" CausesValidation="False"
+                            UseSubmitBehavior="False" OnClick="btnCancelarSolicitud_Click" />
+                        <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion"
+                            Width="140px" class="btn btn-danger"
+                            PostBackUrl="~/Clientes/CerrarSession.aspx" UseSubmitBehavior="False" />
+                    </div>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12 text-center">
-                <div class="form-group col-md-4 col-sm-4">
-                    <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud"
-                        Width="140px" class="btn btn-success" CausesValidation="False"
-                        UseSubmitBehavior="False" OnClick="btnGenerarSolicitud_Click"
-                        PostBackUrl="~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO" />
-                </div>
-                <div class="form-group col-md-4 col-sm-4">
-                    <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes"
-                        Width="140px" class="btn btn-warning" CausesValidation="False"
-                        UseSubmitBehavior="False" OnClick="btnCancelarSolicitud_Click" />
-                </div>
-                <div class="form-group col-md-4 col-sm-4">
-                    <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion"
-                        Width="140px" class="btn btn-danger"
-                        PostBackUrl="~/Clientes/CerrarSession.aspx" UseSubmitBehavior="False" />
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid" style="margin-top: 5px;">
+            <%--PRIMERA PANEL--%>
             <%-- GENERAR SOLICITUD --%>
-            <asp:Panel ID="PANEL_GENERAR_SOLCITUD" class="panel panel-primary" runat="server"
-                Style="margin: 5px;" Visible="False">
-                <div class="panel-heading" style="text-align: center">
-                    <h3 class="panel-title">Seleccione servicio y modalidad</h3>
+            <div class="card mb-3" runat="server" id="PANEL_GENERAR_SOLCITUD" visible="False">
+                <div class="card-header">
+                    <i class="fas fa-user-circle fa-fw"></i>Seleccione servicio y modalidad
+                            <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
                 </div>
-                <div class="panel-body">
-                    <div class="container">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group col-md-4 col-sm-4">
+                <div class="card-body">
+                    <%--PRIMERA FILA--%>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-3">
                                 <label for="name"><b>Fecha emision</b></label>
                                 <asp:TextBox ID="Fecha_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
                             </div>
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="col-md-3">
                                 <label for="name"><b>Codigo cliente</b></label>
                                 <asp:TextBox ID="CodigoPersona_S" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
                             </div>
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="col-md-3">
                                 <label for="name"><b>Nombre</b></label>
                                 <asp:TextBox ID="Nombre_P" runat="server" class="form-control" ReadOnly="True"></asp:TextBox>
                             </div>
-                        </div>
-
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group col-md-4 col-sm-4">
+                            <div class="col-md-3">
                                 <label for="name"><b>Servicio</b></label>
                                 <asp:DropDownList ID="Servicios" runat="server" class="form-control" AutoPostBack="True"
                                     OnSelectedIndexChanged="Servicios_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </div>
-                            <div class="form-group col-md-4 col-sm-4">
+                        </div>
+                    </div>
+                    <%--FIN PRIMERA FILA--%>
+
+                    <%--SEGUNDA FILA--%>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-3">
                                 <label for="name"><b>Modalidad</b></label>
                                 <asp:DropDownList ID="Modalidades" runat="server" class="form-control">
                                     <asp:ListItem Value="-1">-----Seleccione modalidad-----</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
                         </div>
+                    </div>
+                    <%--FIN SEGUNDA FILA--%>
 
-
-                        <div class="col-md-12 col-sm-12 text-center">
-                            <div class="btn-group">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12 text-center">
                                 <asp:Button ID="btnAgregar" runat="server" Text="Agregar" Width="140px" class="btn btn-success"
                                     CausesValidation="False" OnClick="btnAgregar_Click" />
                             </div>
                         </div>
+                    </div>
 
-
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group col-md-12 col-sm-12 text-center">
-                                <br />
-                                <label for="name"><b>Servicios solicitados</b></label>
-                            </div>
-                            <div class="form-group col-md-12 col-sm-12">
-                                <%--<div class="table-responsive">--%>
+                    <%--TABLE--%>
+                    <div class="form-group">
+                        <div class="container">
+                            <div class="table-responsive">
                                 <asp:Table ID="Table_" runat="server" class="table table-bordered table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
                                     Style="text-align: left">
@@ -192,34 +200,34 @@
                                             ForeColor="#FFFF66">&nbsp;</asp:TableHeaderCell>
                                     </asp:TableHeaderRow>
                                 </asp:Table>
-                                <%--</div>--%>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-md-12 col-sm-12 text-center">
-                            <div class="btn-group">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12 text-center">
                                 <asp:Button ID="btnEnviarSolicitudServicio" runat="server" Text="Enviar" Width="140px"
                                     class="btn btn-primary" CausesValidation="False" OnClick="btnEnviarSolicitudServicio_Click"
                                     OnClientClick="return Confirmar('¿Desea enviar su solicitud de servicio.?');" />
-                               
                                 <asp:HiddenField ID="__pagina" runat="server" />
                                 <asp:HiddenField ID="__mensaje" runat="server" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </asp:Panel>
-        </div>
-        <%-- SERVICIOS SOLICITADOS --%>
-        <asp:Panel ID="PANEL_CANCELAR_SOLCITUD" class="panel panel-success" runat="server"
-            Style="margin: 20px;" Visible="False">
-            <div class="panel-heading" style="text-align: center">
-                <h3 class="panel-title">Solicitudes pendientes servicios solicitados</h3>
             </div>
-            <div class="panel-body">
-                <div class="container">                    
+            <%--FIN PRIMERA PANEL--%>
+
+            <%--SEGUNDO PANEL--%>
+            <%-- SERVICIOS SOLICITADOS --%>
+            <div class="card mb-3" runat="server" id="PANEL_CANCELAR_SOLCITUD" visible="False">
+                <div class="card-header">
+                    <i class="fas fa-user-circle fa-fw"></i>Solicitudes pendientes servicios solicitados
+                </div>
+                <div class="card-body">
                     <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-10">
+                        <div class="container">
                             <div class="table-responsive">
                                 <asp:Table ID="TableSPSS" runat="server" class="table table-bordered table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
@@ -238,26 +246,26 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
-                            <asp:Button ID="btnCancelarSolicitudes" runat="server" Text="Cancelar Solicitud"
-                                Width="140px" class="btn btn-primary" CausesValidation="False" OnClientClick="return Confirmar('¿Desea cancelar solicitud(es)?');"
-                                OnClick="btnCancelarSolicitudes_Click" />
-                            <asp:Button ID="btnEliminarSolicitud" runat="server" Text="Eliminar Solicitud" Width="140px"
-                                class="btn btn-danger" CausesValidation="False" OnClick="btnEliminarSolicitud_Click"
-                                OnClientClick="return Confirmar('¿Desea eliminar  solicitud(es)?');" />
+                        <div class="form-row">
+                            <div class="col-md-12 text-center">
+                                <asp:Button ID="btnCancelarSolicitudes" runat="server" Text="Cancelar Solicitud"
+                                    Width="150px" class="btn btn-primary" CausesValidation="False" OnClientClick="return Confirmar('¿Desea cancelar solicitud(es)?');"
+                                    OnClick="btnCancelarSolicitudes_Click" />
+                                <asp:Button ID="btnEliminarSolicitud" runat="server" Text="Eliminar Solicitud" Width="150px"
+                                    class="btn btn-danger" CausesValidation="False" OnClick="btnEliminarSolicitud_Click"
+                                    OnClientClick="return Confirmar('¿Desea eliminar  solicitud(es)?');" />
+                            </div>
+
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="panel-heading" style="text-align: center">
-                <h3 class="panel-title">Detalle solicitud de servicio</h3>
-            </div>
-            <div class="panel-body">
-                <div class="container">
-                    
+
+                    <%--SEGUNDO TABLE--%>
                     <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-10">
+                        <b>Detalle solicitud de servicio</b>
+                        <div class="container">
                             <div class="table-responsive">
                                 <asp:Table ID="TableDSPSS" runat="server" class="table table-bordered table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
@@ -279,17 +287,34 @@
                             </div>
                         </div>
                     </div>
+                    <%--FIN SEGUNDO TABLE--%>
+
                     <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-10" style="text-align: center; top: 0px; left: 0px;">
-                            <asp:Button ID="btnEliminarDetalleSolicitud" runat="server" Text="Eliminar Detalle"
-                                Width="140px" class="btn btn-danger" CausesValidation="False" OnClientClick="return Confirmar('¿Desea eliminar  detalle(s)?');"
-                                OnClick="btnEliminarDetalleSolicitud_Click" />
+                        <div class="form-row">
+                            <div class="col-md-12 text-center">
+                                <asp:Button ID="btnEliminarDetalleSolicitud" runat="server" Text="Eliminar Detalle"
+                                    Width="140px" class="btn btn-danger" CausesValidation="False" OnClientClick="return Confirmar('¿Desea eliminar  detalle(s)?');"
+                                    OnClick="btnEliminarDetalleSolicitud_Click" />
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </asp:Panel>
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <%--FIN SEGUNDO PANEL--%>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
     </form>
     <script type="text/javascript" src="../Otros_css_js/jquery-3.1.1.slim.min.js"></script>
     <script type="text/javascript" src="../Otros_css_js/restables.js"></script>
@@ -298,8 +323,10 @@
             $('table').resTables();
         });
     </script>
-     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../vendor/js/sb-admin.min.js"></script>
 </body>
 </html>
