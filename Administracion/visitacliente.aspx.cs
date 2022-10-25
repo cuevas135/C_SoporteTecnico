@@ -56,19 +56,12 @@ public partial class Administracion_visitacliente : Page
         //this.Page.RegisterStartupScript("", "<script> alert('aa'); </script>}");
         Button b = (Button)sender;
         b.Focus();
-
         string codigo = Convert.ToString(b.CommandArgument);
-
         //this.Page.RegisterStartupScript("", "<script> alert('" + codigo + "'); </script>}");
-
         int posicion = codigo.IndexOf('-');
-
         lblCliente.Text = "<b>Cliente: " + codigo.Substring(posicion + 1) + "</b>";
-
         Ver_Detalle_Solicitud(Convert.ToInt32(codigo.Substring(0, posicion)));
-
         Tecnico_SelectedIndexChanged(sender, e);
-
         ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "openModal();", true);
     }
 
@@ -78,7 +71,7 @@ public partial class Administracion_visitacliente : Page
         __pagina.Value = "";
 
 
-        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "info", "success", "warning", "danger" };
         int k = 0;
 
         for (int i = 1; i < Table_Detalle.Rows.Count; i++)
@@ -158,9 +151,9 @@ public partial class Administracion_visitacliente : Page
             }
 
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor. " + e.Message.ToString();
             __pagina.Value = "CerrarSession.aspx";
         }
     }
@@ -171,7 +164,7 @@ public partial class Administracion_visitacliente : Page
         __pagina.Value = "";
 
 
-        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "table-info", "table-success", "table-warning", "table-danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)
@@ -334,7 +327,7 @@ public partial class Administracion_visitacliente : Page
         btnEliminar.Visible = false;
 
 
-        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "table-info", "table-success", "table-warning", "table-danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)

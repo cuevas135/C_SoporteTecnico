@@ -181,7 +181,7 @@ public partial class Administracion_colaborador : Page
         __pagina.Value = "";
 
 
-        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "table-info", "table-success", "table-warning", "table-danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)
@@ -235,7 +235,22 @@ public partial class Administracion_colaborador : Page
                                     //hl.NavigateUrl = "#";
                                     //hl.Text = "EDITAR";
                                     hl.CausesValidation = false;
-                                    hl.OnClientClick = "Colaborador('" + dt.Rows[i]["CODIGO"].ToString().Trim() + "','" + dt.Rows[i]["AREA"].ToString().Trim() + "','" + dt.Rows[i]["TIPO COLABORADOR"].ToString().Trim() + "','" + dt.Rows[i]["DNI"].ToString().Trim() + "','" + dt.Rows[i]["APELLIDO PATERNO"].ToString().Trim() + "','" + dt.Rows[i]["APELLIDO MATERNO"].ToString().Trim() + "','" + dt.Rows[i]["NOMBRE"].ToString().Trim() + "','" + dt.Rows[i]["DIRECCION"].ToString() + "','" + dt.Rows[i]["TELEFONO"].ToString() + "','" + dt.Rows[i]["CELULAR"].ToString() + "','" + dt.Rows[i]["USUARIO"].ToString() + "','" + strTextoEncriptado + "','" + dt.Rows[i]["EMAIL"].ToString() + "','" + dt.Rows[i]["FECEBOOCK"].ToString() + "','" + dt.Rows[i]["TWITER"].ToString() + "','" + dt.Rows[i]["ESTADO"].ToString() + "')";
+                                    hl.OnClientClick = "Colaborador('" + dt.Rows[i]["CODIGO"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["AREA"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["TIPO COLABORADOR"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["DNI"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["APELLIDO PATERNO"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["APELLIDO MATERNO"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["NOMBRE"].ToString().Trim() 
+                                        + "','" + dt.Rows[i]["DIRECCION"].ToString() 
+                                        + "','" + dt.Rows[i]["TELEFONO"].ToString() 
+                                        + "','" + dt.Rows[i]["CELULAR"].ToString() 
+                                        + "','" + dt.Rows[i]["USUARIO"].ToString() 
+                                        + "','" + strTextoEncriptado 
+                                        + "','" + dt.Rows[i]["EMAIL"].ToString() 
+                                        + "','" + dt.Rows[i]["FECEBOOCK"].ToString() 
+                                        + "','" + dt.Rows[i]["TWITER"].ToString() 
+                                        + "','" + dt.Rows[i]["ESTADO"].ToString() + "')";
                                     tCell.ForeColor = Color.Black;
                                     tCell.Controls.Add(hl);
                                     tCell.HorizontalAlign = HorizontalAlign.Center;
@@ -267,7 +282,9 @@ public partial class Administracion_colaborador : Page
                                     break;
 
                                 case 4:
-                                    tCell.Text = dt.Rows[i]["NOMBRE"].ToString() + " " + dt.Rows[i]["APELLIDO PATERNO"].ToString() + " " + dt.Rows[i]["APELLIDO MATERNO"].ToString();
+                                    tCell.Text = dt.Rows[i]["NOMBRE"].ToString() 
+                                        + " " + dt.Rows[i]["APELLIDO PATERNO"].ToString() 
+                                        + " " + dt.Rows[i]["APELLIDO MATERNO"].ToString();
                                     tCell.ForeColor = Color.Black;
                                     tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
@@ -342,7 +359,7 @@ public partial class Administracion_colaborador : Page
                                     tCell.Text = dt.Rows[i]["FECEBOOCK"].ToString();
                                     tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
-                                    tCell.Visible = true;
+                                    tCell.Visible = false;
                                     tRow.Cells.Add(tCell);
                                     break;
 
@@ -359,7 +376,7 @@ public partial class Administracion_colaborador : Page
                                     tCell.Text = dt.Rows[i]["ESTADO"].ToString();
                                     tCell.ForeColor = Color.Black;
                                     //tCell.Font.Bold = true;
-                                    tCell.Visible = false;
+                                    tCell.Visible = true;
                                     tRow.Cells.Add(tCell);
                                     break;
 

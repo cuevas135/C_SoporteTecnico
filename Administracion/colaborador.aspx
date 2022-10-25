@@ -423,12 +423,12 @@
                             <div class="container">
                                 <div class="table-responsive">
                                     <asp:Table ID="Table_" runat="server"
-                                        class="table table-bordered table-hover text-center"
+                                        class="table table-bordered table-sm table-hover text-center"
                                         BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="X-Small"
                                         GridLines="Both" Style="text-align: left" Font-Names="Arial">
                                         <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
                                             <asp:TableHeaderCell ID="EDITAR" runat="server" BackColor="Black" BorderColor="Black"
-                                                ForeColor="Blue">EDITAR </asp:TableHeaderCell>
+                                                ForeColor="red">EDITAR </asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="Area_" runat="server" BackColor="Black" BorderColor="Black"
                                                 ForeColor="White">Area</asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="TipoColaborador_" runat="server" BackColor="Black" BorderColor="Black"
@@ -440,9 +440,9 @@
                                             <asp:TableHeaderCell ID="Direccion_" runat="server" BackColor="Black" BorderColor="Black"
                                                 ForeColor="White">Direccion</asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="TelefonoFijo_" runat="server" BackColor="Black" BorderColor="Black"
-                                                ForeColor="White">Telefono Fijo</asp:TableHeaderCell>
+                                                ForeColor="White">Fijo</asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="TelefonoMovil_" runat="server" BackColor="Black" BorderColor="Black"
-                                                ForeColor="White">Telefono Movil</asp:TableHeaderCell>
+                                                ForeColor="White">Movil</asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="Login_" runat="server" BackColor="Black" BorderColor="Black"
                                                 ForeColor="White">Login</asp:TableHeaderCell>
                                             <asp:TableHeaderCell ID="Password_" runat="server" BackColor="Black" BorderColor="Black"

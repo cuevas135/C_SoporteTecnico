@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 public partial class Clientes_solicitudservicio : Page
 {
 
-    private String Ruta = ConfigurationManager.AppSettings.Get("CadenaConeccion");
+    private string Ruta = ConfigurationManager.AppSettings.Get("CadenaConeccion");
     TableRow tRow;
     Lista _Lista = new Lista();
     //CsSignal _CsSignal = new CsSignal();
@@ -105,9 +105,9 @@ public partial class Clientes_solicitudservicio : Page
     }
 
 
-    private String ObtenerFechaSistema()
+    private string ObtenerFechaSistema()
     {
-        String Fecha = "";
+        string Fecha = "";
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
         try
         {
@@ -195,7 +195,8 @@ public partial class Clientes_solicitudservicio : Page
         //Inicialmente empezamos por crear la cabecera de la tabla.
         if (Session["Tabla"] == null)//Preguntamos si la sesion tiene informacion.
         {
-            Session["Tabla"] = _Lista.Crear_Cabecera_Grilla("CODIGOSERVICIO", "SERVICIO", "CODIGOMODALIDAD", "MODALIDAD");
+            Session["Tabla"] = _Lista.Crear_Cabecera_Grilla("CODIGOSERVICIO", "SERVICIO", "CODIGOMODALIDAD"
+                , "MODALIDAD", "DESCRIPCION");
         }
         //this.gvDetalleSokicitud.DataSource = (DataTable)Session["Tabla"];
         //this.gvDetalleSokicitud.DataBind();
@@ -210,7 +211,6 @@ public partial class Clientes_solicitudservicio : Page
         //}
 
         ActualizaDetalleSolicitud((DataTable)Session["Tabla"]);
-
         try
         {
             /*Eliminamos la primera fila que es agregada por defecto.*/
@@ -223,69 +223,11 @@ public partial class Clientes_solicitudservicio : Page
 
 
         ObtenerSolicitudesPendientesServiciosSolicitados(Convert.ToString(Datos[0]));
-
         try
         {
             Detalle_Solicitudes_Pendientes_Servicios_Solicitados(sender, e);
         }
         catch (Exception) { }
-
-
-
-
-    }
-    protected void btnAgregar_Click(object sender, EventArgs e)
-    {
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        //Validamos datos
-        if (Convert.ToInt32(Servicios.Items[Servicios.SelectedIndex].Value) == -1)
-        {
-            __mensaje.Value = "Seleccione servicio.";
-            __pagina.Value = "";
-            Servicios.Focus();
-            return;
-        }
-
-        if (Convert.ToInt32(Modalidades.Items[Modalidades.SelectedIndex].Value) == -1)
-        {
-            __mensaje.Value = "Seleccione modalidad.";
-            __pagina.Value = "";
-            Modalidades.Focus();
-            return;
-        }
-
-        DataTable dt = (DataTable)Session["Tabla"];
-
-        if (Valida_Datos_Detalle((DataTable)Session["Tabla"], Servicios.Items[Servicios.SelectedIndex].Text, Modalidades.Items[Modalidades.SelectedIndex].Text) == true)
-        {
-            __mensaje.Value = "Servicio y modalidad ya existen.";
-            __pagina.Value = "";
-            return;
-        }
-
-        try
-        {
-            if (dt.Rows[0].ItemArray[0].ToString() == "")
-            {
-                dt.Rows[0].Delete();
-            }
-        }
-        catch (Exception) { }
-
-        dt.Rows.Add(Servicios.SelectedValue,
-               Servicios.Items[Servicios.SelectedIndex].Text,
-               Modalidades.SelectedValue,
-               Modalidades.Items[Modalidades.SelectedIndex].Text
-               );
-
-        Session["Tabla"] = dt;
-
-        Response.Clear();
-        Response.Redirect("solicitudservicio.aspx");
-        Response.Flush();
-        btnEnviarSolicitudServicio.Focus();
     }
 
     protected void Servicios_SelectedIndexChanged(object sender, EventArgs e)
@@ -296,10 +238,9 @@ public partial class Clientes_solicitudservicio : Page
         Modalidades.Focus();
     }
 
-
     private void ActualizaDetalleSolicitud(DataTable dt)
     {
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
         int k = 0;
 
         for (int i = 1; i < Table_.Rows.Count; i++)
@@ -325,7 +266,7 @@ public partial class Clientes_solicitudservicio : Page
                     k = 0;
                     tRow.CssClass = ResaltarFilaColor[k];
                 }
-                for (int j = 0; j < 5; j++)//Cabecera de la tabla
+                for (int j = 0; j < 6; j++)//Cabecera de la tabla
                 {
                     TableCell tCell = new TableCell();
                     switch (j)
@@ -359,6 +300,13 @@ public partial class Clientes_solicitudservicio : Page
                             break;
 
                         case 4:
+                            tCell.Text = dt.Rows[i]["DESCRIPCION"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 5:
                             Button b = new Button();
                             b.Text = "QUITAR";
                             b.CssClass = "btn btn-danger btn-sm btn-block";
@@ -384,8 +332,7 @@ public partial class Clientes_solicitudservicio : Page
 
     }
 
-
-    bool Valida_Datos_Detalle(DataTable dt, String _Servicio, String _Modalidad)
+    bool Valida_Datos_Detalle(DataTable dt, string _Servicio, string _Modalidad)
     {
         bool ok = false;
         for (int i = 0; i < dt.Rows.Count; i++)
@@ -405,22 +352,7 @@ public partial class Clientes_solicitudservicio : Page
         return dt;
     }
 
-    protected void Quitar_Servicio(object sender, EventArgs e)
-    {
-        int fila = Convert.ToInt32(Request.QueryString.Get("FILA").Trim());
-        Session["Tabla"] = _Lista.Eliminar_Fila_Tabla_Datos((DataTable)Session["Tabla"], fila);//actualizamos sesion.
-        if (((DataTable)Session["Tabla"]).Rows.Count == 0)//preguntamos si hay filas.
-        {
-            Session["Tabla"] = null;//anulamos sesion
-        }
-        Response.Clear();
-        Response.Redirect("solicitudservicio.aspx");
-        Response.Flush();
-
-    }
-
-
-    private void ObtenerSolicitudesPendientesServiciosSolicitados(String CodgoPersona)
+    private void ObtenerSolicitudesPendientesServiciosSolicitados(string CodgoPersona)
     {
         for (int i = 1; i < TableDSPSS.Rows.Count; i++)
         {
@@ -431,7 +363,7 @@ public partial class Clientes_solicitudservicio : Page
         }
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "table-info", "table-success", "table-warning", "table-danger" };
         int k = 0;
 
         for (int i = 1; i < TableSPSS.Rows.Count; i++)
@@ -561,10 +493,11 @@ public partial class Clientes_solicitudservicio : Page
                 _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
             servidor.cerrarconexion();
-            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor.", "CerrarSession.aspx");
+            _Lista.ShowMessage(__mensaje, __pagina, "Error inesperado al intentar conectarnos con el servidor." + e.Message.ToString()
+                , "CerrarSession.aspx");
         }
     }
 
@@ -579,7 +512,7 @@ public partial class Clientes_solicitudservicio : Page
         }
 
 
-        String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        string[] ResaltarFilaColor = { "table-info", "table-success", "table-warning", "table-danger" };
         int k = 0;
 
         for (int i = 1; i < TableDSPSS.Rows.Count; i++)
@@ -614,7 +547,7 @@ public partial class Clientes_solicitudservicio : Page
                             k = 0;
                             tRow.CssClass = ResaltarFilaColor[k];
                         }
-                        for (int j = 0; j < 5; j++)//Cabecera de la tabla
+                        for (int j = 0; j < 6; j++)//Cabecera de la tabla
                         {
                             TableCell tCell = new TableCell();
                             switch (j)
@@ -667,6 +600,13 @@ public partial class Clientes_solicitudservicio : Page
 
                                 case 4:
                                     tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
+                                    tCell.Visible = true;
+                                    tCell.ForeColor = Color.Black;
+                                    tRow.Cells.Add(tCell);
+                                    break;
+
+                                case 5:
+                                    tCell.Text = dt.Rows[i]["DESCRIPCION"].ToString();
                                     tCell.Visible = true;
                                     tCell.ForeColor = Color.Black;
                                     tRow.Cells.Add(tCell);
@@ -810,115 +750,6 @@ public partial class Clientes_solicitudservicio : Page
         //    servidor.cerrarconexion();
         //    this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");           
         //}
-
-    }
-
-    protected void btnEnviarSolicitudServicio_Click(object sender, EventArgs e)
-    {
-
-        DataTable dt = (DataTable)Session["Tabla"];
-        try
-        {
-            if (dt.Rows[0].ItemArray[0].ToString() == "")
-            {
-                dt.Rows[0].Delete();
-            }
-        }
-        catch (Exception) { }
-        int Filas = dt.Rows.Count;
-        if (Filas == 0)
-        {
-            __mensaje.Value = "No hay servicio(s) para enviar.";
-            __pagina.Value = "";
-            return;
-        }
-
-        try
-        {
-            policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-            servidor.cadenaconexion = Ruta;
-            if (servidor.abrirconexiontrans() == true)
-            {
-                servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
-                false,
-                0,/*Codigo de la solicitud de servicio.*/
-                0,/*Codigo estado solicitud de servicio.*/
-                CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
-                "N",
-                0, "");
-                int ID_CODIGO_SOLICITUD_SERVCIO = servidor.getRespuesta();
-                if (ID_CODIGO_SOLICITUD_SERVCIO > 0)
-                {
-                    String Mensage = "";
-                    /*Verificar si existen solicitudes para el mismo servicio en la misma fecha*/
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        servidor.ejecutar("[dbo].[_pa_verificar_Existencia_Solicitud_Servicio_Fecha_Actual]",
-                                                             false,
-                                                             CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
-                                                             Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
-                                                             0, "");
-                        if (servidor.getRespuesta() == 1)
-                        {
-                            Mensage += (i + 1).ToString() + ") " + dt.Rows[i]["SERVICIO"].ToString() + " DE UNA " + dt.Rows[i]["MODALIDAD"].ToString() + ".\n";
-                        }
-                    }
-                    if (Mensage.Trim() != "")
-                    {
-                        servidor.cancelarconexiontrans();
-                        Mensage = "Ud. hasta el " + Convert.ToDateTime(ObtenerFechaSistema()).ToShortDateString() + " tiene solicitudes pendientes por los siguientes servicios:" + "\n" + Mensage;
-                        _Lista.ShowMessage(__mensaje, __pagina, Mensage, "");
-                        return;
-                    }
-
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
-                                            false,
-                                            0,/*Codigo detalle solicitud de servicio*/
-                                            ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
-                                            Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
-                                            "N",
-                                            0, "");
-
-                    }
-                    if (servidor.getRespuesta() == 1)
-                    {
-                        ////=====================================================
-                        ////ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
-                        //_CsSignal.EnviarNotificacionAdministrador();
-                        ////=====================================================
-
-                        servidor.cerrarconexiontrans();
-                        Session["Tabla"] = null;
-                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx?EnviarNotificacion=SI");
-                    }
-                    else
-                    {
-                        servidor.cancelarconexiontrans();
-                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
-                    }
-
-                }
-                else
-                {
-                    servidor.cancelarconexiontrans();
-                    _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
-                }
-
-            }
-            else
-            {
-                servidor.cancelarconexiontrans();
-                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
-            }
-        }
-        catch (Exception ex)
-        {
-
-            _Lista.ShowMessage(__mensaje, __pagina, ex.Message.ToString()
-                + " Error inesperado al intentar conectarnos con el servidor.", "");
-        }
 
     }
 
@@ -1142,6 +973,7 @@ public partial class Clientes_solicitudservicio : Page
                             Convert.ToInt32(ds.Text),/*Codigo de la solicitud de servicio.*/
                             Convert.ToInt32(cs.Text),/*Codigo solicitud de servicio.*/
                             null,/*Codigo modalidad*/
+                            null,/*descripcion*/
                             "E",
                             0, "");
                             if (servidor.getRespuesta() == 1)
@@ -1194,4 +1026,184 @@ public partial class Clientes_solicitudservicio : Page
     }
 
 
+    //==================================================================
+    #region GENERAR SOLICITUD
+    protected void btnAgregar_Click(object sender, EventArgs e)
+    {
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        //Validamos datos
+        if (Convert.ToInt32(Servicios.Items[Servicios.SelectedIndex].Value) == -1)
+        {
+            __mensaje.Value = "Seleccione servicio.";
+            __pagina.Value = "";
+            Servicios.Focus();
+            return;
+        }
+
+        if (Convert.ToInt32(Modalidades.Items[Modalidades.SelectedIndex].Value) == -1)
+        {
+            __mensaje.Value = "Seleccione modalidad.";
+            __pagina.Value = "";
+            Modalidades.Focus();
+            return;
+        }
+
+        DataTable dt = (DataTable)Session["Tabla"];
+
+        if (Valida_Datos_Detalle((DataTable)Session["Tabla"], Servicios.Items[Servicios.SelectedIndex].Text
+            , Modalidades.Items[Modalidades.SelectedIndex].Text) == true)
+        {
+            __mensaje.Value = "Servicio y modalidad ya existen.";
+            __pagina.Value = "";
+            return;
+        }
+
+        try
+        {
+            if (dt.Rows[0].ItemArray[0].ToString() == "")
+            {
+                dt.Rows[0].Delete();
+            }
+        }
+        catch (Exception) { }
+
+        dt.Rows.Add(Servicios.SelectedValue,
+               Servicios.Items[Servicios.SelectedIndex].Text,
+               Modalidades.SelectedValue,
+               Modalidades.Items[Modalidades.SelectedIndex].Text,
+               txtDescripcion.Text.Trim()
+               );
+
+        Session["Tabla"] = dt;
+
+        Response.Clear();
+        Response.Redirect("solicitudservicio.aspx");
+        Response.Flush();
+        btnEnviarSolicitudServicio.Focus();
+    }
+    protected void Quitar_Servicio(object sender, EventArgs e)
+    {
+        int fila = Convert.ToInt32(Request.QueryString.Get("FILA").Trim());
+        Session["Tabla"] = _Lista.Eliminar_Fila_Tabla_Datos((DataTable)Session["Tabla"], fila);//actualizamos sesion.
+        if (((DataTable)Session["Tabla"]).Rows.Count == 0)//preguntamos si hay filas.
+        {
+            Session["Tabla"] = null;//anulamos sesion
+        }
+        Response.Clear();
+        Response.Redirect("solicitudservicio.aspx");
+        Response.Flush();
+
+    }
+    protected void btnEnviarSolicitudServicio_Click(object sender, EventArgs e)
+    {
+
+        DataTable dt = (DataTable)Session["Tabla"];
+        try
+        {
+            if (dt.Rows[0].ItemArray[0].ToString() == "")
+            {
+                dt.Rows[0].Delete();
+            }
+        }
+        catch (Exception) { }
+        int Filas = dt.Rows.Count;
+        if (Filas == 0)
+        {
+            __mensaje.Value = "No hay servicio(s) para enviar.";
+            __pagina.Value = "";
+            return;
+        }
+
+        try
+        {
+            policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+            servidor.cadenaconexion = Ruta;
+            if (servidor.abrirconexiontrans() == true)
+            {
+                servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
+                false,
+                0,/*Codigo de la solicitud de servicio.*/
+                0,/*Codigo estado solicitud de servicio.*/
+                CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
+                "N",
+                0, "");
+                int ID_CODIGO_SOLICITUD_SERVCIO = servidor.getRespuesta();
+                if (ID_CODIGO_SOLICITUD_SERVCIO > 0)
+                {
+                    string Mensage = "";
+                    /*Verificar si existen solicitudes para el mismo servicio en la misma fecha*/
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_verificar_Existencia_Solicitud_Servicio_Fecha_Actual]",
+                                        false,
+                                        CodigoPersona_S.Text.Trim(),/*Codigo del cliente*/
+                                        Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
+                                        0, "");
+                        if (servidor.getRespuesta() == 1)
+                        {
+                            Mensage += (i + 1).ToString() + ") " + dt.Rows[i]["SERVICIO"].ToString()
+                                + " DE UNA " + dt.Rows[i]["MODALIDAD"].ToString() + ".\n";
+                        }
+                    }
+                    if (Mensage.Trim() != "")
+                    {
+                        servidor.cancelarconexiontrans();
+                        Mensage = "Ud. hasta el " + Convert.ToDateTime(ObtenerFechaSistema()).ToShortDateString()
+                            + " tiene solicitudes pendientes por los siguientes servicios:" + "\n" + Mensage;
+                        _Lista.ShowMessage(__mensaje, __pagina, Mensage, "");
+                        return;
+                    }
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
+                                            false,
+                                            0,/*Codigo detalle solicitud de servicio*/
+                                            ID_CODIGO_SOLICITUD_SERVCIO,/*Codigo solicitud de servcio*/
+                                            Convert.ToInt32(dt.Rows[i]["CODIGOMODALIDAD"].ToString().Trim()),/*Codigo de la modalidad del servcio*/
+                                            Convert.ToString(dt.Rows[i]["DESCRIPCION"].ToString().Trim()),
+                                            "N",
+                                            0, "");
+
+                    }
+                    if (servidor.getRespuesta() == 1)
+                    {
+                        ////=====================================================
+                        ////ENVIAR NOTIFICACIONES A LOS ADMINISTRADORES
+                        //_CsSignal.EnviarNotificacionAdministrador();
+                        ////=====================================================
+
+                        servidor.cerrarconexiontrans();
+                        Session["Tabla"] = null;
+                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "solicitudservicio.aspx?EnviarNotificacion=SI");
+                    }
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
+                    }
+                }
+                else
+                {
+                    servidor.cancelarconexiontrans();
+                    _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensaje(), "");
+                }
+            }
+            else
+            {
+                servidor.cancelarconexiontrans();
+                _Lista.ShowMessage(__mensaje, __pagina, servidor.getMensageError(), "CerrarSession.aspx");
+            }
+        }
+        catch (Exception ex)
+        {
+            _Lista.ShowMessage(__mensaje, __pagina, ex.Message.ToString()
+                + " Error inesperado al intentar conectarnos con el servidor.", "");
+        }
+
+    }
+    #endregion
+    //==================================================================
 }

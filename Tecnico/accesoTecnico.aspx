@@ -35,8 +35,8 @@
         body {
             /*background-color: #fafafa;
             font-family: 'Roboto';*/
-             padding-top: 1rem;
-             background-color: #66ccff;
+            padding-top: 1rem;
+            background-color: #66ccff;
         }
 
         .login-img img {
@@ -74,13 +74,13 @@
                                             <input type="pass" class="form-control" id="pass" placeholder="Password" />
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-row">
                                         <button type="button" class="btn btn-danger btn-block">Submit</button>
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>

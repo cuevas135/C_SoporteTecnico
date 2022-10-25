@@ -191,7 +191,7 @@
                     <i class="fas fa-user-circle fa-fw" style="font-size: 24px; color: ghostwhite"></i>
                 </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                       <%-- <a class="dropdown-item" href="Usuario">Perfil de Usuario</a>
+                        <%-- <a class="dropdown-item" href="Usuario">Perfil de Usuario</a>
                         <div class="dropdown-divider">
                         </div>--%>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar
@@ -246,7 +246,7 @@
                                 <div class="container">
                                     <div class="table-responsive">
                                         <asp:Table ID="Table_" runat="server"
-                                            class="table table-bordered table-hover text-center"
+                                            class="table table-bordered table-sm table-hover text-center"
                                             BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
                                             GridLines="Both" Style="text-align: left" Font-Names="Arial">
                                             <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
@@ -294,7 +294,7 @@
                                 <div class="container">
                                     <div class="table-responsive">
                                         <asp:Table ID="TableVisita" runat="server"
-                                            class="table table-bordered table-hover text-center"
+                                            class="table table-bordered table-sm table-hover text-center"
                                             BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
                                             GridLines="Both" Style="text-align: left" Font-Names="Arial">
                                             <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
@@ -447,26 +447,26 @@
         </div>
 
         <%-- MODAL DE DETALLE DE SERVICIO TECNICO --%>
-         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">    
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <!-- Modal content-->
                 <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title"> Detalle solicitud</h5>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalle solicitud</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                  
-                    <div class="modal-body">                     
+
+                    <div class="modal-body">
                         <div class="panel-body">
                             <asp:Label ID="lblCliente" runat="server" Text=""></asp:Label>
                         </div>
                         <div class="container">
                             <div class="table-responsive">
                                 <asp:Table ID="Table_Detalle" runat="server"
-                                    class="table table-bordered table-hover text-center"
+                                    class="table table-bordered table-sm table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Small"
                                     GridLines="Both" Style="text-align: left" Font-Names="Arial">
                                     <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" TableSection="TableHeader">
@@ -481,13 +481,13 @@
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
             </div>
         </div>
-         <%-- FIN DE MODAL DE DETALLE DE SERVICIO TECNICO --%>
+        <%-- FIN DE MODAL DE DETALLE DE SERVICIO TECNICO --%>
 
-        
+
         <!-- Core plugin JavaScript-->
         <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 

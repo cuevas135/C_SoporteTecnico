@@ -100,6 +100,10 @@
             if (!confirm(men))
                 return false;
         }
+
+        function CambiaLetraMayuscula(Caja) {
+            document.getElementById(Caja).value = document.getElementById(Caja).value.toUpperCase();
+        }
     </script>
 </head>
 <body onload="MostrarMensaje()">
@@ -109,14 +113,14 @@
                 <div class="form-row">
                     <div class="col-md-12 text-center">
                         <asp:Button ID="btnGenerarSolicitud" runat="server" Text="Generar Solicitud"
-                            Width="140px" class="btn btn-success" CausesValidation="False"
+                            Width="150px" class="btn btn-success" CausesValidation="False"
                             UseSubmitBehavior="False" OnClick="btnGenerarSolicitud_Click"
                             PostBackUrl="~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO" />
                         <asp:Button ID="btnCancelarSolicitud" runat="server" Text="Ver Solicitudes"
-                            Width="140px" class="btn btn-warning" CausesValidation="False"
+                            Width="150px" class="btn btn-warning" CausesValidation="False"
                             UseSubmitBehavior="False" OnClick="btnCancelarSolicitud_Click" />
                         <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesion"
-                            Width="140px" class="btn btn-danger"
+                            Width="150px" class="btn btn-danger"
                             PostBackUrl="~/Clientes/CerrarSession.aspx" UseSubmitBehavior="False" />
                     </div>
                 </div>
@@ -164,6 +168,9 @@
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-3">
+                                <label for="name"><b>Descripcion</b></label>
+                                <asp:TextBox ID="txtDescripcion" runat="server" class="form-control"
+                                    onchange="CambiaLetraMayuscula('txtDescripcion')" MaxLength="100" Autocomplete="off"></asp:TextBox>
                             </div>
                             <div class="col-md-3">
                             </div>
@@ -184,7 +191,7 @@
                     <div class="form-group">
                         <div class="container">
                             <div class="table-responsive">
-                                <asp:Table ID="Table_" runat="server" class="table table-bordered table-hover text-center"
+                                <asp:Table ID="Table_" runat="server" class="table table-bordered table-sm table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
                                     Style="text-align: left">
                                     <asp:TableHeaderRow ID="TableRow1" runat="server" TableSection="TableHeader">
@@ -196,6 +203,8 @@
                                             ForeColor="White" Visible="False">CODIGOMODALIDAD</asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="MODALIDAD_" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="White">MODALIDAD</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="DESCRIPCION_" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White">DESCRIPCION</asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="QUITAR" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="#FFFF66">&nbsp;</asp:TableHeaderCell>
                                     </asp:TableHeaderRow>
@@ -229,12 +238,12 @@
                     <div class="form-group">
                         <div class="container">
                             <div class="table-responsive">
-                                <asp:Table ID="TableSPSS" runat="server" class="table table-bordered table-hover text-center"
+                                <asp:Table ID="TableSPSS" runat="server" class="table table-bordered table-sm table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
                                     Style="text-align: left">
                                     <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" TableSection="TableHeader">
                                         <asp:TableHeaderCell ID="TableHeaderCell1" runat="server" BackColor="Black" BorderColor="Black"
-                                            ForeColor="White" Visible="true">SELECCIONA</asp:TableHeaderCell>
+                                            ForeColor="White" Visible="true"></asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="CODIGOSOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="White" Visible="true">NRO. SOLICTUD </asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="FECHA" runat="server" BackColor="Black" BorderColor="Black"
@@ -267,20 +276,22 @@
                         <b>Detalle solicitud de servicio</b>
                         <div class="container">
                             <div class="table-responsive">
-                                <asp:Table ID="TableDSPSS" runat="server" class="table table-bordered table-hover text-center"
+                                <asp:Table ID="TableDSPSS" runat="server" class="table table-bordered table-sm table-hover text-center"
                                     BorderColor="White" CellPadding="2" CellSpacing="0" Font-Size="Smaller" GridLines="Both"
                                     Style="text-align: left">
                                     <asp:TableHeaderRow ID="TableHeaderRow2" runat="server" TableSection="TableHeader">
                                         <asp:TableHeaderCell ID="TableHeaderCell2" runat="server" BackColor="Black" BorderColor="Black"
-                                            ForeColor="White" Visible="true">SELECCIONA</asp:TableHeaderCell>
+                                            ForeColor="White" Visible="true"></asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="CODIGO_DETALLE_SOLICITUD" runat="server" BackColor="Black"
                                             BorderColor="Black" ForeColor="White" Visible="false">CODIGO_DETALLE_SOLICITUD </asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="CODIGO_SOLICITUD" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="White" Visible="false">NRO. SOLICITUD</asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="SERVIVIO" runat="server" BackColor="Black" BorderColor="Black"
-                                            ForeColor="White">SERVIVIO</asp:TableHeaderCell>
+                                            ForeColor="White">SERVICIO</asp:TableHeaderCell>
                                         <asp:TableHeaderCell ID="MODALIDAD" runat="server" BackColor="Black" BorderColor="Black"
                                             ForeColor="White">MODALIDAD</asp:TableHeaderCell>
+                                        <asp:TableHeaderCell ID="DESCRIPCION" runat="server" BackColor="Black" BorderColor="Black"
+                                            ForeColor="White">DESCRIPCION</asp:TableHeaderCell>
                                     </asp:TableHeaderRow>
                                 </asp:Table>
                                 <asp:HiddenField ID="_respuesta" runat="server" />
