@@ -6,11 +6,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <title>Acceso al Sistema</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Acceso al sistema</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/png" href="../Imagenes/icono.ico" />
 
     <%--<link rel="stylesheet" href="../Otros_css_js/styleMenu1.css" />--%>
 
@@ -24,7 +31,7 @@
 
     <style>
         body {
-            background-color: #66ccff;
+            background-color: #0e66bf;
         }
 
         .form-signin {
@@ -77,7 +84,7 @@
         }
 
         .login-title {
-            color: #555;
+            color: white;
             font-size: 18px;
             font-weight: 400;
             display: block;
@@ -173,19 +180,20 @@
                                         <asp:HiddenField ID="__mensaje" runat="server" />
                                         <asp:HiddenField ID="__pagina" runat="server" />
                                     </div>
+                                    <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-danger btn-block"
+                                        OnClick="Aceptar_Click"></asp:Button>
                                 </ContentTemplate>
-                                <Triggers>
+                                <%-- <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="Aceptar" EventName="Click" />
-                                </Triggers>
+                                </Triggers>--%>
                             </asp:UpdatePanel>
-                            <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" class="btn btn-primary btn-block"
-                                OnClick="Aceptar_Click"></asp:Button>
+
 
                             <a href="persona.aspx" class="pull-right need-help">Crear cuenta </a><span class="clearfix"></span>
                         </div>
 
                     </div>
-                    <a href="recuperarClientes.aspx" class="text-center new-account">Recuperar cuenta </a>
+                    <a href="recuperarClientes.aspx" class="text-center new-account" style="color: #FFFFFF">Recuperar cuenta </a>
                 </div>
             </div>
         </div>

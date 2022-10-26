@@ -19,7 +19,7 @@ public partial class acceso : System.Web.UI.Page
     }
     protected void Aceptar_Click(object sender, EventArgs e)
     {
-        Boolean ok;
+        bool ok;
 
         ok = rfvlogin.IsValid;
 

@@ -31,12 +31,51 @@
     <!-- Bootstrap -->
     <%--<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />--%>
 
+        <script type="text/javascript">
+        function MostrarMensaje() {
+            var mensaje = document.getElementById("__mensaje").value;
+            if (mensaje != "") {
+                alert(mensaje);
+                if (document.getElementById("__pagina").value != "")
+                    location.href = document.getElementById("__pagina").value;
+            }
+        }
+
+        function window_load() {
+            MostrarMensaje()
+        }
+
+
+        function SoloLetras(e) {
+            if (!(event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32 || event.keyCode == 193 || event.keyCode == 201 || event.keyCode == 205 || event.keyCode == 209 || event.keyCode == 211 || event.keyCode == 218 || event.keyCode == 220)) {
+                event.keyCode = 0;
+            }
+        }
+
+        function SoloLetrasMinusculas(e) {
+            if (!(event.keyCode >= 97 && event.keyCode <= 122 || event.keyCode == 32 || event.keyCode == 193 || event.keyCode == 201 || event.keyCode == 205 || event.keyCode == 209 || event.keyCode == 211 || event.keyCode == 218 || event.keyCode == 220)) {
+                event.keyCode = 0;
+            }
+        }
+
+        function LetrasNumeros(e) {
+            if (!(event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32 || event.keyCode == 193 || event.keyCode == 201 || event.keyCode == 205 || event.keyCode == 209 || event.keyCode == 211 || event.keyCode == 218 || event.keyCode == 220)) {
+                event.keyCode = 0;
+            }
+        }
+
+        function CambiaLetraMayuscula(Caja) {
+            document.getElementById(Caja).value = document.getElementById(Caja).value.toUpperCase();
+        }
+
+    </script>
+
     <style>
         body {
             /*background-color: #fafafa;
             font-family: 'Roboto';*/
             padding-top: 1rem;
-            background-color: #66ccff;
+            background-color: #0e66bf;
         }
 
         .login-img img {
@@ -45,12 +84,12 @@
         }
     </style>
 </head>
-<body>
+<body onload="MostrarMensaje();">
     <form id="form1" runat="server">
         <div class="container">
             <div class="row text-center mb-4">
                 <div class="col-md-12">
-                    <h4>Acceso al sistema</h4>
+                    <h4 style="color: #FFFFFF">Acceso al sistema</h4>
 
                 </div>
             </div>
@@ -59,24 +98,34 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="login-img">
-                                <img src="https://demos6.softaculous.com/PrestaShop/img/preston-login@2x.png" />
+                                <img src="../Imagenes/soporte.png" />
                             </div>
                             <div class="login-title">
-                                <h4>Tecnico</h4>
+                                <h4 style="color: #000000">Tecnico</h4>
                             </div>
                             <div class="login-form mt-4">
                                 <div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <input id="email" name="Full Name" placeholder="Email Address" class="form-control" type="text" />
+                                            <asp:TextBox ID="txtUsuario" runat="server" placeholder="Ingresar Usuario" autocomplete="off"
+                                                CssClass="form-control input" onchange="" onkeypress="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="rfvtxtUsuario" runat="server" ControlToValidate="txtUsuario"
+                                        Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <input type="pass" class="form-control" id="pass" placeholder="Password" />
+                                            <asp:TextBox ID="txtContraseña" runat="server" TextMode="Password" placeholder="Ingresar Contraseña"
+                                                autocomplete="off" CssClass="form-control input" onchange="" onKeyDown="if(event.keyCode==13) event.keyCode=9;"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="rfvtxtContraseña" runat="server" ControlToValidate="txtContraseña"
+                                        Display="Dynamic" ErrorMessage="*" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
 
                                     <div class="form-row">
-                                        <button type="button" class="btn btn-danger btn-block">Submit</button>
+                                        <asp:Button ID="Aceptar" runat="server" Text="Ingresar" type="submit" 
+                                            class="btn btn-danger btn-block" OnClick="Aceptar_Click"></asp:Button>
+                                        <asp:HiddenField ID="__mensaje" runat="server" />
+                                        <asp:HiddenField ID="__pagina" runat="server" />
+                                        <%--<button type="button" class="btn btn-danger btn-block">Submit</button>--%>
                                     </div>
                                 </div>
                             </div>

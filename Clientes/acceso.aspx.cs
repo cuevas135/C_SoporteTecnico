@@ -8,7 +8,7 @@ using System.Data;
 //using Servicios;
 using SEGURIDAD;
 
-public partial class Clientes_acceso2 : System.Web.UI.Page
+public partial class Clientes_acceso2 : Page
 {
     private string Ruta = System.Configuration.ConfigurationManager.AppSettings.Get("CadenaConeccion");
     private int intentos = 0;
@@ -61,6 +61,7 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
                         Session["__JSAR__"] = new string[] { dt.Rows[0]["CODIGO"].ToString(),
                                                              dt.Rows[0]["PERSONA"].ToString(),
                                                             };
+                        //Server.Transfer("solicitudservicio.aspx?EnviarNotificacion=NO");
 
                         Response.Clear();
                         Response.Redirect("~/Clientes/solicitudservicio.aspx?EnviarNotificacion=NO");
@@ -75,11 +76,12 @@ public partial class Clientes_acceso2 : System.Web.UI.Page
                 __pagina.Value = "";
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
-            //this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
-            //this.__pagina.Value = "";
+            //throw;
+            this.__mensaje.Value = "Error inesperado al intentar conectarnos con el servidor."
+                + ex.Message.ToString();
+            this.__pagina.Value = "";
         }
     }
 }
