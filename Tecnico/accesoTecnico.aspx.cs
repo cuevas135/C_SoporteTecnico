@@ -17,20 +17,13 @@ public partial class Tecnico_acceso : Page
         txtUsuario.Focus();
     }
 
-
-
     protected void Aceptar_Click(object sender, EventArgs e)
     {
         bool ok;
-
         ok = rfvtxtUsuario.IsValid;
-
         ok = ok && rfvtxtContraseña.IsValid;
-
         if (ok == false)
-        {
-            return;
-        }
+        { return; }
 
         string strLogin, strPassword;
         strLogin = txtUsuario.Text.Trim();
@@ -38,14 +31,13 @@ public partial class Tecnico_acceso : Page
         encriptar en = new encriptar();
         strPassword = en.EncriptarCadena(txtContraseña.Text.Trim());
 
-
         try
         {
             policia.clsaccesodatos servidor = new policia.clsaccesodatos();
             servidor.cadenaconexion = Ruta;
             if (servidor.abrirconexiontrans() == true)
             {
-                DataTable dt = servidor.consultar("[dbo].[_pa_validar_acceso_sistema_administracion]",
+                DataTable dt = servidor.consultar("[dbo].[PaValidarAccesoSistemaTecnico]",
                                     strLogin, strPassword).Tables[0];
 
 
@@ -66,7 +58,7 @@ public partial class Tecnico_acceso : Page
                                                             };
                         //Server.Transfer("solicitudes.aspx");
                         Response.Clear();
-                        Response.Redirect("~/Tecnico/solicitudes.aspx");
+                        Response.Redirect("~/Tecnico/solicitudesTecnico.aspx");
                         Response.Flush();
                     }
                 }
