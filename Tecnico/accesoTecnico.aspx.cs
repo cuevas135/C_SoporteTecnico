@@ -70,9 +70,11 @@ public partial class Tecnico_acceso : Page
                 __pagina.Value = "";
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor.";
+            __mensaje.Value = "Error inesperado al intentar conectarnos con el servidor. "
+                + ex.Message.ToString()
+                ;
             __pagina.Value = "";
         }
     }
