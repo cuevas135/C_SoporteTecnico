@@ -52,4 +52,23 @@ public class Utilitarios
         smtp.EnableSsl = true;//True si el servidor de correo permite ssl
         smtp.Send(correo);
     }
+
+    public void MensajeValidaciones(string Message, Page Currentpage)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<script type = 'text/javascript'>");
+        sb.Append("alert('");
+        sb.Append(Message + "');");
+        sb.Append("</script>");
+        ScriptManager.RegisterStartupScript(Currentpage, GetType(), "alert", string.Format("alert('{0}');", Message), true);
+    }
+
+    public void MensajeValidacionLink(string Mensaje, string Pagina, Page Currentpage)
+    {
+        var message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Mensaje);
+        var script = string.Format("alert({0});window.location ='" + Pagina + "';", message);
+        ScriptManager.RegisterClientScriptBlock(Currentpage, GetType(), "", script, true);
+        //Page.Response.Redirect(Page.Request.Url.ToString(), true);
+    }
+
 }

@@ -57,6 +57,7 @@ public partial class Tecnico_acceso : Page
                                                              dt.Rows[0]["COLABORADOR"].ToString(),
                                                             };
                         //Server.Transfer("solicitudes.aspx");
+                        
                         Response.Clear();
                         Response.Redirect("~/Tecnico/solicitudesTecnico.aspx");
                         Response.Flush();
