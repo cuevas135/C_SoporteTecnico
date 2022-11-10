@@ -53,7 +53,7 @@ public partial class Tecnico_acceso : Page
 
                     if (Persona.Equals("CO"))
                     {
-                        Session["__JSAR__"] = new string[] { dt.Rows[0]["CODIGO"].ToString(),
+                        Session["__JSAR__T"] = new string[] { dt.Rows[0]["CODIGO"].ToString(),
                                                              dt.Rows[0]["COLABORADOR"].ToString(),
                                                             };
                         //Server.Transfer("solicitudes.aspx");

@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data;
 //using Newtonsoft.Json;
 using System.Drawing;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 //using System.Net;
@@ -18,9 +17,6 @@ public partial class Tecnico_solicitudes : Page
     //CsSignal _CsSignal = new CsSignal();
     bool OSPSS = true;
     string EnviarNotificacion = "NO";
-
-
-
 
 
     private string ObtenerFechaSistema()
@@ -89,7 +85,7 @@ public partial class Tecnico_solicitudes : Page
         //Verificamos si el usuario ha iniciado sesion.
         __mensaje.Value = "";
         __pagina.Value = "";
-        string[] Datos = (string[])Session["__JSAR__"];
+        string[] Datos = (string[])Session["__JSAR__T"];
         if (Datos == null)
         {
             __mensaje.Value = "Ud. no esta autorizado para ingresar a esta página, inicie sesion por favor.";
@@ -99,8 +95,8 @@ public partial class Tecnico_solicitudes : Page
         //============================================================================================================
         string CODIGO = Convert.ToString(Datos[0]);
         //lblUsuario.Text = " [USUARIO: " + Convert.ToString(Datos[1]) + "]";
+        lblUsuario.Text = "  [USUARIO: " + Convert.ToString(Datos[1]) + "]";
 
-     
         //ActualizaDetalleSolicitud((DataTable)Session["Tabla"]);
         try
         {

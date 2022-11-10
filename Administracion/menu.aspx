@@ -146,7 +146,7 @@
 
                             <!--Card image-->
                             <div class="view overlay">
-                                <img class="card-img-top" src="../Imagenes/logoSoporteTecnico.jpeg" alt="Card image cap" />
+                                <img class="card-img-top" src="../Imagenes/logoAdministrador.png" alt="Card image cap" />
                                 <a href="#!">
                                     <div class="mask rgba-white-slight"></div>
                                 </a>

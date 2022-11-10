@@ -114,7 +114,7 @@
             <div class="card mb-3" runat="server" id="PANEL_CANCELAR_SOLCITUD" visible="true">
                 <div class="card-header">
                     <i class="fas fa-user-circle fa-fw"></i>Solicitudes pendientes de atención
-               
+                <asp:Label ID="lblUsuario" runat="server" ForeColor="Red"></asp:Label>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
