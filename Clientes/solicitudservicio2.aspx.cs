@@ -11,15 +11,24 @@ using System.Web.UI.WebControls;
 
 public partial class Clientes_solicitudservicio : Page
 {
+
     private string Ruta = ConfigurationManager.AppSettings.Get("CadenaConeccion");
     TableRow tRow;
     Lista _Lista = new Lista();
-    Utilitarios _Utilitarios = new Utilitarios();
     //CsSignal _CsSignal = new CsSignal();
     bool OSPSS = true;
     string EnviarNotificacion = "NO";
 
-   
+    public void MensajeValidaciones(string Message)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<script type = 'text/javascript'>");
+        sb.Append("alert('");
+        sb.Append(Message + "');");
+        sb.Append("</script>");
+        ScriptManager.RegisterStartupScript(this, GetType(), "alert", string.Format("alert('{0}');", Message), true);
+    }
+
     private void ObtenerSolicitudes()
     {
         policia.clsaccesodatos servidor = new policia.clsaccesodatos();
@@ -229,7 +238,99 @@ public partial class Clientes_solicitudservicio : Page
         Modalidades.Focus();
     }
 
-   
+    private void ActualizaDetalleSolicitud(DataTable dt)
+    {
+        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        int k = 0;
+
+        for (int i = 1; i < Table_.Rows.Count; i++)
+        {
+            Table_.Rows[i].Cells.Clear();
+        }
+
+        if (dt.Rows.Count == 0)
+        {
+            ;
+        }
+        else
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tRow = new TableRow();
+                if (k < 4)
+                {
+                    tRow.CssClass = ResaltarFilaColor[k];
+                }
+                else
+                {
+                    k = 0;
+                    tRow.CssClass = ResaltarFilaColor[k];
+                }
+                for (int j = 0; j < 6; j++)//Cabecera de la tabla
+                {
+                    TableCell tCell = new TableCell();
+                    switch (j)
+                    {
+                        case 0:
+                            tCell.Text = dt.Rows[i]["CODIGOSERVICIO"].ToString();
+                            tCell.Visible = false;
+                            tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 1:
+                            tCell.Text = dt.Rows[i]["SERVICIO"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 2:
+                            tCell.Text = dt.Rows[i]["CODIGOMODALIDAD"].ToString();
+                            tCell.Visible = false;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 3:
+                            tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 4:
+                            tCell.Text = dt.Rows[i]["DESCRIPCION"].ToString();
+                            tCell.Visible = true;
+                            tCell.ForeColor = Color.Black;
+                            tRow.Cells.Add(tCell);
+                            break;
+
+                        case 5:
+                            Button b = new Button();
+                            b.Text = "QUITAR";
+                            b.CssClass = "btn btn-danger btn-sm btn-block";
+                            b.BorderStyle = BorderStyle.None;
+                            b.CausesValidation = false;
+                            b.UseSubmitBehavior = true;
+                            //b.OnClientClick = "return Confirmar('¿Desea quitar servicio?');";
+                            b.PostBackUrl = "solicitudservicio.aspx?FILA=" + i.ToString();
+                            b.Click += new EventHandler(Quitar_Servicio);
+                            tCell.HorizontalAlign = HorizontalAlign.Center;
+                            tCell.ForeColor = Color.Black;
+                            tCell.Controls.Add(b);
+                            tRow.Cells.Add(tCell);
+                            break;
+                    }
+                }
+
+                Table_.Rows.Add(tRow);
+                k++;
+            }
+
+        }
+
+    }
 
     bool Valida_Datos_Detalle(DataTable dt, string _Servicio, string _Modalidad)
     {
@@ -429,7 +530,7 @@ public partial class Clientes_solicitudservicio : Page
                 if (dt.Rows.Count == 0)
                 {
                     servidor.cerrarconexion();
-                   _Utilitarios.MensajeValidaciones("Solicitud seleccionada no tiene servicios.", this);
+                    MensajeValidaciones("Solicitud seleccionada no tiene servicios.");
                     //Page.RegisterClientScriptBlock("", "<script> alert('Solicitud seleccionada no tiene servicios.');</script>");
                 }
                 else
@@ -522,119 +623,136 @@ public partial class Clientes_solicitudservicio : Page
             else
             {
                 servidor.cerrarconexion();
-                _Utilitarios.MensajeValidacionLink(
-              servidor.getMensageError(), "CerrarSession.aspx", this);
-                //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
             }
         }
         catch (Exception)
         {
             servidor.cerrarconexion();
-            _Utilitarios.MensajeValidacionLink(
-              servidor.getMensageError() + "Error inesperado al intentar conectarnos con el servidor", "CerrarSession.aspx", this);
-            //Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+            Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
         }
     }
 
-    
-
-   
-
-    //==================================================================
-    #region GENERAR SOLICITUD
-    private void ActualizaDetalleSolicitud(DataTable dt)
+    protected void Detalle_Solicitudes_Pendientes_Servicios_Solicitados(object sender, EventArgs e)
     {
-        string[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
-        int k = 0;
+        __mensaje.Value = "";
+        __pagina.Value = "";
 
-        for (int i = 1; i < Table_.Rows.Count; i++)
-        {
-            Table_.Rows[i].Cells.Clear();
-        }
+        int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
 
-        if (dt.Rows.Count == 0)
-        {
-            ;
-        }
-        else
-        {
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                tRow = new TableRow();
-                if (k < 4)
-                {
-                    tRow.CssClass = ResaltarFilaColor[k];
-                }
-                else
-                {
-                    k = 0;
-                    tRow.CssClass = ResaltarFilaColor[k];
-                }
-                for (int j = 0; j < 6; j++)//Cabecera de la tabla
-                {
-                    TableCell tCell = new TableCell();
-                    switch (j)
-                    {
-                        case 0:
-                            tCell.Text = dt.Rows[i]["CODIGOSERVICIO"].ToString();
-                            tCell.Visible = false;
-                            tCell.ForeColor = Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
-                            tRow.Cells.Add(tCell);
-                            break;
+        Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
 
-                        case 1:
-                            tCell.Text = dt.Rows[i]["SERVICIO"].ToString();
-                            tCell.Visible = true;
-                            tCell.ForeColor = Color.Black;
-                            tRow.Cells.Add(tCell);
-                            break;
+        //String[] ResaltarFilaColor = { "active", "success", "warning", "danger" };
+        //int k = 0;
 
-                        case 2:
-                            tCell.Text = dt.Rows[i]["CODIGOMODALIDAD"].ToString();
-                            tCell.Visible = false;
-                            tCell.ForeColor = Color.Black;
-                            tRow.Cells.Add(tCell);
-                            break;
+        //for (int i = 1; i < this.TableDSPSS.Rows.Count; i++)
+        //{
+        //    this.TableDSPSS.Rows[i].Cells.Clear();
+        //}
 
-                        case 3:
-                            tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
-                            tCell.Visible = true;
-                            tCell.ForeColor = Color.Black;
-                            tRow.Cells.Add(tCell);
-                            break;
+        //policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+        //try
+        //{
+        //    servidor.cadenaconexion = Ruta;
+        //    if (servidor.abrirconexion() == true)
+        //    {
+        //        System.Data.DataTable dt = servidor.consultar("[dbo].[_pa_obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados]", CODIGOSOLICTUDSERVICIO).Tables[0];
+        //        if (dt.Rows.Count == 0)
+        //        {
+        //            servidor.cerrarconexion();
+        //            this.Page.RegisterClientScriptBlock("", "<script> alert('Solicitud seleccionada no tiene servicios.');</script>");
+        //        }
+        //        else
+        //        {
+        //            for (int i = 0; i < dt.Rows.Count; i++)
+        //            {
+        //                tRow = new TableRow();
+        //                if (k < 4)
+        //                {
+        //                    tRow.CssClass = ResaltarFilaColor[k];
+        //                }
+        //                else
+        //                {
+        //                    k = 0;
+        //                    tRow.CssClass = ResaltarFilaColor[k];
+        //                }
+        //                for (int j = 0; j < 5; j++)//Cabecera de la tabla
+        //                {
+        //                    TableCell tCell = new TableCell();
+        //                    switch (j)
+        //                    {
+        //                        case 0:
+        //                            System.Web.UI.WebControls.CheckBox cb = new System.Web.UI.WebControls.CheckBox();
+        //                            //l.Text = dt.Rows[i]["Codigo"].ToString();
+        //                            tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+        //                            tCell.Controls.Add(cb);
+        //                            tRow.Cells.Add(tCell);
+        //                            break;
 
-                        case 4:
-                            tCell.Text = dt.Rows[i]["DESCRIPCION"].ToString();
-                            tCell.Visible = true;
-                            tCell.ForeColor = Color.Black;
-                            tRow.Cells.Add(tCell);
-                            break;
+        //                        case 1:
+        //                            //tCell.Text = dt.Rows[i]["CODIGO_DETALLE_SOLICITUD"].ToString();
+        //                            //tCell.Visible = false;
+        //                            //tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+        //                            //tRow.Cells.Add(tCell);
 
-                        case 5:
-                            Button b = new Button();
-                            b.Text = "QUITAR";
-                            b.CssClass = "btn btn-danger btn-sm btn-block";
-                            b.BorderStyle = BorderStyle.None;
-                            b.CausesValidation = false;
-                            b.UseSubmitBehavior = true;
-                            //b.OnClientClick = "return Confirmar('¿Desea quitar servicio?');";
-                            b.PostBackUrl = "solicitudservicio.aspx?FILA=" + i.ToString();
-                            b.Click += new EventHandler(Quitar_Servicio);
-                            tCell.HorizontalAlign = HorizontalAlign.Center;
-                            tCell.ForeColor = Color.Black;
-                            tCell.Controls.Add(b);
-                            tRow.Cells.Add(tCell);
-                            break;
-                    }
-                }
+        //                            System.Web.UI.WebControls.Label l = new System.Web.UI.WebControls.Label();
+        //                            l.Text = dt.Rows[i]["CODIGO_DETALLE_SOLICITUD"].ToString();
+        //                            tCell.Visible = false;
+        //                            tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+        //                            tCell.Controls.Add(l);
+        //                            tRow.Cells.Add(tCell);
+        //                            break;
 
-                Table_.Rows.Add(tRow);
-                k++;
-            }
+        //                        case 2:
+        //                            //tCell.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
+        //                            //tCell.Visible = false;
+        //                            //tCell.ForeColor = System.Drawing.Color.Black;
+        //                            //tRow.Cells.Add(tCell);
 
-        }
+        //                            l = new System.Web.UI.WebControls.Label();
+        //                            l.Text = dt.Rows[i]["CODIGO_SOLICITUD"].ToString();
+        //                            tCell.Visible = false;
+        //                            tCell.ForeColor = System.Drawing.Color.Black; /*Esto lo hacemos para ocultar el color de letra que por defecto asigna el framework.*/
+        //                            tCell.Controls.Add(l);
+        //                            tRow.Cells.Add(tCell);
+        //                            break;
+
+        //                        case 3:
+        //                            tCell.Text = dt.Rows[i]["SERVIVIO"].ToString();
+        //                            tCell.Visible = true;
+        //                            tCell.ForeColor = System.Drawing.Color.Black;
+        //                            tRow.Cells.Add(tCell);
+        //                            break;
+
+        //                        case 4:
+        //                            tCell.Text = dt.Rows[i]["MODALIDAD"].ToString();
+        //                            tCell.Visible = true;
+        //                            tCell.ForeColor = System.Drawing.Color.Black;
+        //                            tRow.Cells.Add(tCell);
+        //                            break;                               
+        //                    }
+        //                }
+
+        //                this.TableDSPSS.Rows.Add(tRow);
+        //                k++;
+        //            }
+        //            servidor.cerrarconexion();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        servidor.cerrarconexion();
+        //        this.Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+        //    }
+        //}
+        //catch (Exception)
+        //{
+        //    servidor.cerrarconexion();
+        //    this.Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");           
+        //}
 
     }
+
     protected void btnGenerarSolicitud_Click(object sender, EventArgs e)
     {
         __mensaje.Value = "";
@@ -642,11 +760,274 @@ public partial class Clientes_solicitudservicio : Page
 
         PANEL_GENERAR_SOLCITUD.Visible = true;
         PANEL_CANCELAR_SOLCITUD.Visible = false;
-        liMenu.Attributes.Add("class", "nav-item");
-        liGenerar.Attributes.Add("class", "nav-item active");
-        liVerSolicitud.Attributes.Add("class", "nav-item");
+
 
     }
+
+    protected void btnCancelarSolicitud_Click(object sender, EventArgs e)
+    {
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        Session["Tabla"] = null;
+
+        PANEL_GENERAR_SOLCITUD.Visible = false;
+        PANEL_CANCELAR_SOLCITUD.Visible = true;
+
+        if (OSPSS == false)
+            Page.RegisterClientScriptBlock("", "<script> alert('No hay solicitudes pendeientes de servicios solicitados.');</script>");
+
+    }
+
+    protected void btnEliminarSolicitud_Click(object sender, EventArgs e)
+    {
+
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+            {
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
+            }
+        }
+
+        bool ok = false;
+        for (int i = 1; i < TableSPSS.Rows.Count; i++)
+        {
+            CheckBox cb;
+            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
+            if (cb.Checked == true)
+            {
+                Label l;
+                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
+                ok = true;
+                try
+                {
+                    policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+                    servidor.cadenaconexion = Ruta;
+                    if (servidor.abrirconexiontrans() == true)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
+                        false,
+                        Convert.ToInt32(l.Text),/*Codigo de la solicitud de servicio.*/
+                        0,/*Codigo estado solicitud de servicio.*/
+                        null,/*Codigo del cliente*/
+                        "E",
+                        0, "");
+                        if (servidor.getRespuesta() == 1)
+                        {
+                            servidor.cerrarconexiontrans();
+                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                            {
+                                TableSPSS.Rows[i].Cells.RemoveAt(j);
+                            }
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
+                    }
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                    }
+                }
+                catch (Exception)
+                {
+                    Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                }
+            }
+        }
+
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
+        }
+    }
+
+    protected void btnCancelarSolicitudes_Click(object sender, EventArgs e)
+    {
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
+        {
+            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+            {
+                TableDSPSS.Rows[i].Cells.RemoveAt(j);
+            }
+        }
+
+        bool ok = false;
+        for (int i = 1; i < TableSPSS.Rows.Count; i++)
+        {
+            CheckBox cb;
+            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
+            if (cb.Checked == true)
+            {
+                Label l;
+                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
+                ok = true;
+                try
+                {
+                    policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+                    servidor.cadenaconexion = Ruta;
+                    if (servidor.abrirconexiontrans() == true)
+                    {
+                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
+                        false,
+                        Convert.ToInt32(l.Text),/*Codigo de la solicitud de servicio.*/
+                        0,/*Codigo estado solicitud de servicio.*/
+                        null,/*Codigo del cliente*/
+                        "M",
+                        0, "");
+                        if (servidor.getRespuesta() == 1)
+                        {
+                            servidor.cerrarconexiontrans();
+                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                            {
+                                TableSPSS.Rows[i].Cells.RemoveAt(j);
+                            }
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                        }
+                    }
+                    else
+                    {
+                        servidor.cancelarconexiontrans();
+                        Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                    }
+                }
+                catch (Exception)
+                {
+                    Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                }
+            }
+        }
+
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
+        }
+    }
+
+    protected void btnEliminarDetalleSolicitud_Click(object sender, EventArgs e)
+    {
+        //Detalle_Solicitudes_Pendientes_Servicios_Solicitados(sender, e);
+
+        //String rpta = "";
+        //for (int i = 1; i < this.TableDSPSS.Rows.Count; i++)
+        //{
+        //    System.Web.UI.WebControls.CheckBox cb;
+        //    cb = (System.Web.UI.WebControls.CheckBox)this.TableDSPSS.Rows[i].Cells[0].Controls[0];
+        //    if (cb.Checked == true)
+        //    {
+        //        System.Web.UI.WebControls.Label ds;//codigo detalle solicitud
+        //        ds = (System.Web.UI.WebControls.Label)this.TableDSPSS.Rows[i].Cells[1].Controls[0];
+
+        //        rpta += ds.Text;
+        //    }
+        //}
+
+
+
+        //this.Page.RegisterClientScriptBlock("", "<script> alert('" + rpta + "');</script>");
+
+        __mensaje.Value = "";
+        __pagina.Value = "";
+
+        bool ok = false;
+
+        try
+        {
+            int i = TableDSPSS.Rows.Count - 1;
+            while (i > 0 && i < TableDSPSS.Rows.Count)
+            {
+                CheckBox cb;
+                cb = (CheckBox)TableDSPSS.Rows[i].Cells[0].Controls[0];
+                if (cb.Checked == true)
+                {
+                    Label ds;//codigo detalle solicitud
+                    ds = (Label)TableDSPSS.Rows[i].Cells[1].Controls[0];
+
+                    Label cs;//codigo solicitud
+                    cs = (Label)TableDSPSS.Rows[i].Cells[2].Controls[0];
+                    ok = true;
+                    try
+                    {
+                        policia.clsaccesodatos servidor = new policia.clsaccesodatos();
+                        servidor.cadenaconexion = Ruta;
+                        if (servidor.abrirconexiontrans() == true)
+                        {
+                            servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
+                            false,
+                            Convert.ToInt32(ds.Text),/*Codigo de la solicitud de servicio.*/
+                            Convert.ToInt32(cs.Text),/*Codigo solicitud de servicio.*/
+                            null,/*Codigo modalidad*/
+                            null,/*descripcion*/
+                            "E",
+                            0, "");
+                            if (servidor.getRespuesta() == 1)
+                            {
+                                servidor.cerrarconexiontrans();
+                                for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
+                                {
+                                    TableDSPSS.Rows[i].Cells.RemoveAt(j);
+                                }
+                                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            }
+                            else
+                            {
+                                servidor.cancelarconexiontrans();
+                                Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
+                            }
+                        }
+                        else
+                        {
+                            servidor.cancelarconexiontrans();
+                            Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
+                    }
+
+                }
+                i = i - 1;
+            }
+            ObtenerSolicitudesPendientesServiciosSolicitados(CodigoPersona_S.Text.Trim());
+        }
+        catch (Exception) {; }
+
+
+        try
+        {
+            int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
+            Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
+        }
+        catch (Exception) {; }
+
+        if (ok == false)
+        {
+            Page.RegisterClientScriptBlock("", "<script> alert('Seleccione detalle(s).');</script>");
+        }
+
+
+    }
+
+
+    //==================================================================
+    #region GENERAR SOLICITUD
     protected void btnAgregar_Click(object sender, EventArgs e)
     {
         __mensaje.Value = "";
@@ -821,280 +1202,6 @@ public partial class Clientes_solicitudservicio : Page
             _Lista.ShowMessage(__mensaje, __pagina, ex.Message.ToString()
                 + " Error inesperado al intentar conectarnos con el servidor.", "");
         }
-
-    }
-    #endregion
-    //==================================================================
-
-
-    //==================================================================
-    #region VER SOLICITUD
-    protected void btnEliminarSolicitud_Click(object sender, EventArgs e)
-    {
-
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
-        {
-            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
-            {
-                TableDSPSS.Rows[i].Cells.RemoveAt(j);
-            }
-        }
-
-        bool ok = false;
-        for (int i = 1; i < TableSPSS.Rows.Count; i++)
-        {
-            CheckBox cb;
-            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
-            if (cb.Checked == true)
-            {
-                Label l;
-                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
-                ok = true;
-                try
-                {
-                    policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-                    servidor.cadenaconexion = Ruta;
-                    if (servidor.abrirconexiontrans() == true)
-                    {
-                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
-                        false,
-                        Convert.ToInt32(l.Text),/*Codigo de la solicitud de servicio.*/
-                        0,/*Codigo estado solicitud de servicio.*/
-                        null,/*Codigo del cliente*/
-                        "E",
-                        0, "");
-                        if (servidor.getRespuesta() == 1)
-                        {
-                            servidor.cerrarconexiontrans();
-                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
-                            {
-                                TableSPSS.Rows[i].Cells.RemoveAt(j);
-                            }
-                            _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }
-                        else
-                        {
-                            servidor.cancelarconexiontrans();
-                            _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }
-                    }
-                    else
-                    {
-                        servidor.cancelarconexiontrans();
-                        _Utilitarios.MensajeValidacionLink(servidor.getMensageError(), "CerrarSession.aspx", this);
-                        //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _Utilitarios.MensajeValidacionLink(ex.Message.ToString() +
-                        " Error inesperado al intentar conectarnos con el servidor", "CerrarSession.aspx", this);
-                    //Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
-                }
-            }
-        }
-
-        if (ok == false)
-        {
-            _Utilitarios.MensajeValidaciones("Seleccione solicitud por favor.", this);
-            //Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
-        }
-    }
-    protected void btnCancelarSolicitud_Click(object sender, EventArgs e)
-    {
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        Session["Tabla"] = null;
-
-        PANEL_GENERAR_SOLCITUD.Visible = false;
-        PANEL_CANCELAR_SOLCITUD.Visible = true;
-
-        if (OSPSS == false)
-            _Utilitarios.MensajeValidaciones("No hay solicitudes pendeientes de servicios solicitados", this);
-        //Page.RegisterClientScriptBlock("", "<script> alert('No hay solicitudes pendeientes de servicios solicitados.');</script>");
-        liMenu.Attributes.Add("class", "nav-item");
-        liGenerar.Attributes.Add("class", "nav-item");
-        liVerSolicitud.Attributes.Add("class", "nav-item active");
-    }
-    protected void btnCancelarSolicitudes_Click(object sender, EventArgs e)
-    {
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        for (int i = 1; i < TableDSPSS.Rows.Count; i++)
-        {
-            for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
-            {
-                TableDSPSS.Rows[i].Cells.RemoveAt(j);
-            }
-        }
-
-        bool ok = false;
-        for (int i = 1; i < TableSPSS.Rows.Count; i++)
-        {
-            CheckBox cb;
-            cb = (CheckBox)TableSPSS.Rows[i].Cells[0].Controls[0];
-            if (cb.Checked == true)
-            {
-                Label l;
-                l = (Label)TableSPSS.Rows[i].Cells[1].Controls[0];
-                ok = true;
-                try
-                {
-                    policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-                    servidor.cadenaconexion = Ruta;
-                    if (servidor.abrirconexiontrans() == true)
-                    {
-                        servidor.ejecutar("[dbo].[_pa_mantenimiento_Solicitud_Servicio]",
-                        false,
-                        Convert.ToInt32(l.Text),/*Codigo de la solicitud de servicio.*/
-                        0,/*Codigo estado solicitud de servicio.*/
-                        null,/*Codigo del cliente*/
-                        "M",
-                        0, "");
-                        if (servidor.getRespuesta() == 1)
-                        {
-                            servidor.cerrarconexiontrans();
-                            for (int j = TableSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
-                            {
-                                TableSPSS.Rows[i].Cells.RemoveAt(j);
-                            }
-                            _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }
-                        else
-                        {
-                            servidor.cancelarconexiontrans();
-                            _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensaje() + "');</script>");
-                        }
-                    }
-                    else
-                    {
-                        servidor.cancelarconexiontrans();
-                        _Utilitarios.MensajeValidacionLink(servidor.getMensageError(), "CerrarSession.aspx", this);
-                        //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _Utilitarios.MensajeValidacionLink(ex.Message.ToString() +
-                      " Error inesperado al intentar conectarnos con el servidor", "CerrarSession.aspx", this);
-                    //Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
-                }
-            }
-        }
-
-        if (ok == false)
-        {
-            _Utilitarios.MensajeValidaciones("Seleccione solicitud por favor.", this);
-            //Page.RegisterClientScriptBlock("", "<script> alert('Seleccione solicitud por favor.');</script>");
-        }
-    }
-
-    protected void Detalle_Solicitudes_Pendientes_Servicios_Solicitados(object sender, EventArgs e)
-    {
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
-
-        Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
-    }
-
-    protected void btnEliminarDetalleSolicitud_Click(object sender, EventArgs e)
-    {
-
-        __mensaje.Value = "";
-        __pagina.Value = "";
-
-        bool ok = false;
-
-        try
-        {
-            int i = TableDSPSS.Rows.Count - 1;
-            while (i > 0 && i < TableDSPSS.Rows.Count)
-            {
-                CheckBox cb;
-                cb = (CheckBox)TableDSPSS.Rows[i].Cells[0].Controls[0];
-                if (cb.Checked == true)
-                {
-                    Label ds;//codigo detalle solicitud
-                    ds = (Label)TableDSPSS.Rows[i].Cells[1].Controls[0];
-
-                    Label cs;//codigo solicitud
-                    cs = (Label)TableDSPSS.Rows[i].Cells[2].Controls[0];
-                    ok = true;
-                    try
-                    {
-                        policia.clsaccesodatos servidor = new policia.clsaccesodatos();
-                        servidor.cadenaconexion = Ruta;
-                        if (servidor.abrirconexiontrans() == true)
-                        {
-                            servidor.ejecutar("[dbo].[_pa_mantenimiento_Detalle_Solicitud_Servicio]",
-                            false,
-                            Convert.ToInt32(ds.Text),/*Codigo de la solicitud de servicio.*/
-                            Convert.ToInt32(cs.Text),/*Codigo solicitud de servicio.*/
-                            null,/*Codigo modalidad*/
-                            null,/*descripcion*/
-                            "E",
-                            0, "");
-                            if (servidor.getRespuesta() == 1)
-                            {
-                                servidor.cerrarconexiontrans();
-                                for (int j = TableDSPSS.Rows[i].Cells.Count - 1; j >= 0; j--)
-                                {
-                                    TableDSPSS.Rows[i].Cells.RemoveAt(j);
-                                }
-                                _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            }
-                            else
-                            {
-                                servidor.cancelarconexiontrans();
-                                _Utilitarios.MensajeValidaciones(servidor.getMensaje(), this);
-                            }
-                        }
-                        else
-                        {
-                            servidor.cancelarconexiontrans();
-                            _Utilitarios.MensajeValidacionLink(servidor.getMensageError(), "CerrarSession.aspx", this);
-                            //Page.RegisterClientScriptBlock("", "<script> alert('" + servidor.getMensageError() + "'); location.href = 'CerrarSession.aspx';</script>");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _Utilitarios.MensajeValidacionLink(ex.Message.ToString() +
-                          " Error inesperado al intentar conectarnos con el servidor", "CerrarSession.aspx", this);
-                        //Page.RegisterClientScriptBlock("", "<script> alert('Error inesperado al intentar conectarnos con el servidor.'); location.href = 'CerrarSession.aspx';</script>");
-                    }
-
-                }
-                i = i - 1;
-            }
-            ObtenerSolicitudesPendientesServiciosSolicitados(CodigoPersona_S.Text.Trim());
-        }
-        catch (Exception) {; }
-
-
-        try
-        {
-            int CODIGOSOLICTUDSERVICIO = Convert.ToInt32(Request.QueryString.Get("CODIGOSOLICTUDSERVICIO").Trim());
-            Obtener_Detalle_Solicitudes_Pendientes_Servicios_Solicitados(CODIGOSOLICTUDSERVICIO);
-        }
-        catch (Exception) {; }
-
-        if (ok == false)
-        {
-            _Utilitarios.MensajeValidaciones("Seleccione detalle, por favor.", this);
-            // Page.RegisterClientScriptBlock("", "<script> alert('Seleccione detalle(s).');</script>");
-        }
-
 
     }
     #endregion
