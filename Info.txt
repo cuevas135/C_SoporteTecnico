@@ -8,3 +8,16 @@ https://www.smarterasp.net/
 -- CADENA DE CONEXION (22-11-2022 HASTA EL 21-01-2023)
 "Data Source=SQL8001.site4now.net;Initial Catalog=db_a903d8_bdsoportetecnico;
 User Id=db_a903d8_bdsoportetecnico_admin;Password=transportes*1234
+
+--ACCESOS
+CLIENTES --> https://soportetecnico2020.azurewebsites.net/
+SISTEMAS
+Y4G9
+-----------------------------------------------------------------------------
+ADMINISTRADOR --> https://soportetecnico2020.azurewebsites.net/Administracion/acceso.aspx
+SISTEMAS
+Y4G9
+-----------------------------------------------------------------------------
+TECNICO --> https://soportetecnico2020.azurewebsites.net/tecnico/accesoTecnico.aspx
+SISTEMAS
+Y4G9
